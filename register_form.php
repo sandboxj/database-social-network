@@ -2,14 +2,8 @@
  <?php require_once("server/functions.php");?>
  <?php require_once("server/db_connection.php");?>
  <?php require_once("server/validations_register.php");?>
-
-<!DOCTYPE html>
-
-<html lang="en">
-	<head>
-		<title>Registration</title>
-	</head>
-	<body>
+<?php $context_access="public"; $page_title="Registration"?>
+<?php include("includes/header.php"); ?>
 		<h2>Registration</h2>
 		
 		<?php 
@@ -23,11 +17,11 @@
 			First name: <input type="text" name="first_name" value="<?php echo htmlspecialchars($first_name); ?>" /><br />
 			Last name: <input type="text" name="last_name" value="<?php echo htmlspecialchars($last_name); ?>" /><br />
 			Date of Birth: <input type="date" name="date_of_birth" value="<?php echo htmlspecialchars($date_of_birth); ?>" /><br />
+			Gender: <input type="radio" name="gender" value="male" />Male<input type="radio" name="gender" value="female" checked />Female<br />
 			<br />
 			<input type="submit" name="register" value="Register" />
 		</form>
 		<br />
         <a href="login.php">Back</a>
 
-    </body>
-</html>
+<?php include("includes/footer.php"); ?>

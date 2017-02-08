@@ -1,20 +1,15 @@
 <?php require_once("server/sessions.php");?>
-<?php require_once("server/functions.php");?>
 <?php require_once("server/db_connection.php");?>
+<?php require_once("server/functions.php");?>
 <?php require_once("server/validations_login.php");?>
+<?php $context_access="public"; $page_title="Login"?>
+<?php include("includes/header.php"); ?>
 
-<!DOCTYPE html>
-
-<html lang="en">
-    <head>
-        <title>Registration</title>
-    </head>
-    <body>
         <h2>Login</h2>
-        <?php 
-			echo message();
-			echo $message;
-		?><br />		
+        <?php
+            echo message();
+            echo $message;
+        ?><br />        
         <form action="login.php" method="post">
             <!--Escape special chars on userinput-->
             Username: <input type="text" name="username" value="" /><br />
@@ -28,5 +23,4 @@
         <?php $link_text = rawurldecode($link_page); ?>
         <a href="<?php echo htmlspecialchars($link_text);?>">Register</a>
 
-    </body>
-</html>
+<?php include("includes/footer.php"); ?>

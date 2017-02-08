@@ -63,14 +63,36 @@ function find_user_by_username($username)
     global $conn;
     $safe_username = mysqli_real_escape_string($conn, $username);
 
-    $query = "SELECT * FROM User WHERE ";
+    $query = "SELECT * FROM User ";
+    $query .= "WHERE ";
     $query .= "UserID = '{$safe_username}' ";
     $query .= "LIMIT 1";
     $user_set = mysqli_query($conn, $query);
 	confirm_query($user_set);
 	if ($user = mysqli_fetch_assoc($user_set)) {
+        mysqli_free_result($user_set);
 		return $user;
 	} else {
 		return null;
 	}
+}
+
+function logged_in() {
+    return isset($_SESSION["UserID"]);
+}
+
+function confirm_logged_in() {
+    if(!logged_in()) {
+        redirect_to("../login.php");
+    }
+}
+
+function find_blogs($userid) {
+            global $conn;
+			$query = "SELECT * FROM Blog ";
+			$query .= "WHERE ";
+    		$query .= "UserID = '{$userid}'";
+			$blog_results = mysqli_query($conn, $query);	
+			confirm_query($blog_results);
+            return $blog_results;
 }
