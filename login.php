@@ -1,8 +1,9 @@
 <?php require_once("server/sessions.php");?>
 <?php require_once("server/db_connection.php");?>
 <?php require_once("server/functions.php");?>
+<?php require_once("server/validation_functions.php");?>
 <?php require_once("server/validations_login.php");?>
-<?php $context_access="public"; $page_title="Login"?>
+<?php $page_title="Login"?>
 <?php include("includes/header.php"); ?>
 
         <h2>Login</h2>

@@ -1,5 +1,3 @@
-<?php require_once("server/sessions.php");?>
-<?php require_once("server/validation_functions.php"); ?>
 <?php
 if (isset($_POST["register"])) {
     $username = isset($_POST["username"]) ? trim($_POST["username"]) : "";
@@ -39,7 +37,7 @@ if (isset($_POST["register"])) {
             redirect_to("login.php");
         } else {
             // Failure
-            $_SESSION["message"] = "User creation failed. Username already exists.";
+            $_SESSION["message"] = "User creation failed. Some information was not valid or username already exists.";
             redirect_to("register_form.php");
         }
     } else {

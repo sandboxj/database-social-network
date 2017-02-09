@@ -91,8 +91,22 @@ function find_blogs($userid) {
             global $conn;
 			$query = "SELECT * FROM Blog ";
 			$query .= "WHERE ";
-    		$query .= "UserID = '{$userid}'";
+    		$query .= "UserID = '{$userid}' ";
+            $query .= "ORDER BY ";
+            $query .= "DatePosted DESC";
 			$blog_results = mysqli_query($conn, $query);	
 			confirm_query($blog_results);
             return $blog_results;
+}
+
+function find_profile_pic($userid) {
+            global $conn;
+            // $search_term = $userid . "_profilepicture% ";
+			$query = "SELECT * FROM Photo ";
+			$query .= "WHERE ";
+    		$query .= "PhotoID LIKE '{$userid}_profilepicture%' ";
+            $query .= "LIMIT 1";
+			$pic_results = mysqli_query($conn, $query);	
+			confirm_query($pic_results);
+            return $pic_results;
 }

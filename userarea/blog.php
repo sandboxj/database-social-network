@@ -1,14 +1,17 @@
 <?php require_once("../server/sessions.php"); ?>
 <?php require_once("../server/db_connection.php");?>
 <?php require_once("../server/functions.php");?>
-<?php $context_access="public"; $page_title="Blogs"?>
+<?php require_once("../server/validation_functions.php");?>
+<?php require_once("../server/validation_blog.php");?>
+<?php $page_title="Blogs"?>
 <?php confirm_logged_in(); ?>
 <?php include("../includes/header.php"); ?>
+<?php include("navbar.php"); ?>
 
 		<h2>Your Blogs</h2>
 		<p>Nice to see you again, <?php echo htmlentities($_SESSION["FirstName"]);?> !</p>
 		<?php echo message()?>
-		<form action="../server/validation_blog.php" method="post">
+		<form action="blog.php" method="post">
 			<textarea style="width: 80%" name="blog_content"></textarea><br />
 			<input type="submit" name="blog_post" value="Post" />
 		</form>

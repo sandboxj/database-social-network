@@ -1,5 +1,3 @@
-<?php require_once("server/validation_functions.php");?>
-
 <?php
 if (isset($_POST["login"])) {
     $username = isset($_POST["username"]) ? trim($_POST["username"]) : "";

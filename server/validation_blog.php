@@ -1,8 +1,3 @@
-<?php require_once("sessions.php");?>
-<?php require_once("db_connection.php");?>
-<?php require_once("functions.php");?>
-<?php require_once("validation_functions.php");?>
-
 <?php
 if (isset($_POST["blog_post"])) {
     // Check if post is blank
@@ -22,8 +17,6 @@ if (isset($_POST["blog_post"])) {
         redirect_to("../userarea/blog.php");
     }
 } else {
-    // redirect back and state post failed
-    $_SESSION["message"] = "Blog post error.";
-    redirect_to("../userarea/blog.php");
+    // Do nothing
 }
 
