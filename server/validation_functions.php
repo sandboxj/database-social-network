@@ -61,3 +61,4 @@ function fieldname_as_text($fieldname)
     $fieldname = ucfirst($fieldname);
     return $fieldname;
 }
+
