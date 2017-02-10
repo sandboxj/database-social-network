@@ -6,7 +6,7 @@
 
 <?php
 	$_SESSION = array();
-	redirect_to("../login.php");
+	redirect_to("login.php");
 ?>
 
 <?php include("../includes/footer.php"); ?>

@@ -15,9 +15,11 @@
                 $pic_result = find_profile_pic($_SESSION["UserID"]);
                 $profile_picture = mysqli_fetch_assoc($pic_result);
                 $profile_picture_src = "img/" . $profile_picture["PhotoID"];
+                $uncached_src = $profile_picture_src . "?" . filemtime($profile_picture_src);
+                mysqli_free_result($pic_result);
                 
             ?>
-            <img src="<?php echo htmlentities($profile_picture_src); ?>" alt="Profile picture">
+            <img src="<?php echo htmlentities($profile_picture_src); ?>" class="img-responsive" alt="Profile picture">
             <?php echo message();?>
             <form action="profile.php" method="post" enctype="multipart/form-data">
                 Select image to upload:

@@ -12,7 +12,7 @@ if (isset($_POST["login"])) {
         if ($found_user) {
             $_SESSION["UserID"] = $found_user["UserID"];
             $_SESSION["FirstName"] = $found_user["FirstName"];
-            redirect_to("userarea/blog.php");
+            redirect_to("blog.php");
         } else {
             $message = "Username/Password not found.";
         }
