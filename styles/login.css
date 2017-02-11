@@ -1,4 +1,4 @@
-body {
+/*body {
     font-family: 'Roboto', sans-serif;
     font-weight: 300;
 }
@@ -26,12 +26,12 @@ header nav {
 header p {
     padding: 0 20px;
     margin: 0;
-}
+}*/
 
 .jumbotron {
     display: flex;
     align-items: center;
-    background-image: url("../../userarea/img/blue.jpg");
+    background-image: url("../userarea/img/blue.jpg");
     background-size: cover;
     color: #eeeaec;
     height: 300px;

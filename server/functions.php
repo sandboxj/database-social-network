@@ -100,8 +100,9 @@ function find_blogs($userid) {
 function find_profile_pic($userid) {
             global $conn;
             // $search_term = $userid . "_profilepicture% ";
-			$query = "select * from photo p, user u
-			where u.ProfilePhotoID = p.PhotoID and u.UserID = '{$userid}'";
+			$query = "SELECT * FROM user u, photo p ";
+            $query .= "WHERE u.ProfilePhotoID = p.PhotoID AND u.UserID = '{$userid}' ";
+            $query .= "LIMIT 1";
 			$pic_results = mysqli_query($conn, $query);	
 			confirm_query($pic_results);
             return $pic_results;
