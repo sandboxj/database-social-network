@@ -3,10 +3,10 @@ Database Connection Details
 ------------------------------------------------------------------------------
 YOU NEED TO ADD YOUR IP ADDRESS TO THE FIREWALL SETTINGS ON THE AZURE DATABASE FIRST. AFTER THAT YOU CAN CONNECT TO THE DATABASE WITH THE INFO BELOW.
 
-Database Name = SoShallNetwork
-Server Name = soshallnetwork.database.windows.net
-Username = GC0624
-Password = Dowellondaprowl2017+
+Database Name = soshallnetwork
+Server Name = eu-cdbr-azure-west-d.cloudapp.net
+Username = bfd14cc083b66f
+Password = 77230adb
 
 
 ------------------------------------------------------------------------------
@@ -14,7 +14,7 @@ Website Connection Details
 ------------------------------------------------------------------------------
 Host Name = waws-prod-ln1-003.ftp.azurewebsites.windows.net
 Username = SoShallNetwork\$SoShallNetwork
-Password = ke4xfwja9ruacfpcLbiTpPjZwcgpwhczmZqWPkXPyrvtDEr6033n1MBDjz3l
+Password = q7i9DSDY6iRPJHqfliTLB2D0eG5oXEGiDBZvaE2lSGBEDfBGJbKNhfE3lGlg
 
 
 ------------------------------------------------------------------------------
