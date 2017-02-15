@@ -43,9 +43,9 @@ function password_check($password, $existing_hash)
     }
 }
 
-function attempt_login($username, $password)
+function attempt_login($email, $password)
 {
-	$user = find_user_by_username($username, $password);
+	$user = find_user_by_email($email, $password);
 	if($user) {
 		// if user matches check password 
 		if(password_check($password, $user["Password"])) {
@@ -58,14 +58,14 @@ function attempt_login($username, $password)
 	}
 }
 
-function find_user_by_username($username)
+function find_user_by_email($email)
 {
     global $conn;
-    $safe_username = mysqli_real_escape_string($conn, $username);
+    $safe_email = mysqli_real_escape_string($conn, $email);
 
     $query = "SELECT * FROM User ";
     $query .= "WHERE ";
-    $query .= "UserID = '{$safe_username}' ";
+    $query .= "Email = '{$safe_email}' ";
     $query .= "LIMIT 1";
     $user_set = mysqli_query($conn, $query);
 	confirm_query($user_set);
@@ -83,15 +83,16 @@ function logged_in() {
 
 function confirm_logged_in() {
     if(!logged_in()) {
-        redirect_to("../login.php");
+        redirect_to("login.php");
     }
 }
 
 function find_blogs($userid) {
             global $conn;
 			$query = "SELECT * FROM Blog ";
-			$query .= "WHERE ";
-    		$query .= "UserID = '{$userid}' ";
+            $query .= "LEFT JOIN User ";
+            $query .= "ON Blog.UserID = User.UserID ";
+    		$query .= "AND Blog.UserID = '{$userid}' ";
             $query .= "ORDER BY ";
             $query .= "DatePosted DESC";
 			$blog_results = mysqli_query($conn, $query);	

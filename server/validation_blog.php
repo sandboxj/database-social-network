@@ -1,3 +1,4 @@
+<?php require_once("../server/validation_functions.php");?>
 <?php
 if (isset($_POST["blog_post"])) {
     // Check if post is blank

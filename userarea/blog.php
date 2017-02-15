@@ -1,7 +1,6 @@
 <?php require_once("../server/sessions.php"); ?>
-<?php require_once("../server/db_connection.php");?>
 <?php require_once("../server/functions.php");?>
-<?php require_once("../server/validation_functions.php");?>
+<?php require_once("../server/db_connection.php");?>
 <?php require_once("../server/validation_blog.php");?>
 <?php $page_title="Blogs"?>
 <?php confirm_logged_in(); ?>
@@ -25,7 +24,7 @@
 		?>
 			<div>
 				<?php 
-					$output = "Author: " . $blog_posts["UserID"];
+					$output = "Author: " . $blog_posts["FirstName"] . " " . $blog_posts["LastName"];
 					$output .= " , " . $blog_posts["DatePosted"] . "<br />";
 					$output .= $blog_posts["Content"] . "<br />";
 					echo $output;
@@ -36,7 +35,6 @@
 		<?php
 			mysqli_free_result($blog_results);
 		?>
-		<!--<img src="img/greatsuccess.jpg">-->
 		<hr />
 		<a href="logout.php">Logout</a>
 

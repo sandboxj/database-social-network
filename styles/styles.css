@@ -1,1 +1,10 @@
+body {
+    margin: 10px;
+}
 
+hr {
+    border-color: black;
+    border-style: solid black;
+    border-width: 1px;
+    margin: 18px 0;
+}

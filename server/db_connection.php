@@ -1,10 +1,17 @@
 <?php
 
-//1. ------> LOCAL database connection:
-$servername='localhost:3306';
-$username='group24';
-$password='group24';
-$database='socialnetwork_db';
+// ------> LOCAL database connection:
+// $servername='localhost:3306';
+// $username='group24';
+// $password='group24';
+// $database='socialnetwork_db';
+// $conn=New mysqli($servername,$username,$password,$database);
+
+// ------> Azure Database connection
+$servername='eu-cdbr-azure-west-d.cloudapp.net';
+$username='bfd14cc083b66f';
+$password='77230adb';
+$database='soshallnetwork';
 $conn=New mysqli($servername,$username,$password,$database);
 
 //Connection error handling:

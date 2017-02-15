@@ -1,7 +1,6 @@
 <?php require_once("../server/sessions.php");?>
-<?php require_once("../server/db_connection.php");?>
 <?php require_once("../server/functions.php");?>
-<?php require_once("../server/validation_functions.php");?>
+<?php require_once("../server/db_connection.php");?>
 <?php require_once("../server/validations_login.php");?>
 <?php $page_title="Login"?>
 <?php include("../includes/header.php"); ?>
@@ -13,7 +12,7 @@
         ?><br />        
         <form action="login.php" method="post">
             <!--Escape special chars on userinput-->
-            Username: <input type="text" name="username" value="" /><br />
+            Email: <input type="text" name="email" value="" /><br />
             Password: <input type="password" name="password" value="" /><br />
             <br />
             <input type="submit" name="login" value="Login" />
