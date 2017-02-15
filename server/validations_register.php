@@ -40,7 +40,7 @@ if (isset($_POST["register"])) {
         $ismale = ($_POST["gender"]==="male") ? 1 : 0;
 
         // Insert
-        $query = "INSERT INTO User (Password, Email, FirstName, LastName, DateJoined, Dob, Gender) ";
+        $query = "INSERT INTO User (Password, Email, FirstName, LastName, DateJoined, DateOfBirth, Gender) ";
         $query .= "VALUES (";
         $query .= "'{$hashed_password}', '{$user_email}', '{$first_name}', '{$last_name}', '{$date_joined}', '{$date_of_birth}', '{$ismale}'";
         $query .= ")";
