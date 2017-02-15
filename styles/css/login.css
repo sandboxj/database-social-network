@@ -31,7 +31,7 @@ header p {
 .jumbotron {
     display: flex;
     align-items: center;
-    background-image: url("../userarea/img/blue.jpg");
+    background-image: url("../../userarea/img/blue.jpg");
     background-size: cover;
     color: #eeeaec;
     height: 300px;
