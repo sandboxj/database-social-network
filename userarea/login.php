@@ -5,6 +5,7 @@
 <?php $page_title = "Login" ?>
 <?php include("../includes/header.php"); ?>
 <?php include("../includes/footer.php"); ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,7 +15,8 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
     <!-- Bootstrap -->
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" >
+    <link rel="stylesheet" type="text/css" href="../css/login.css">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -23,21 +25,24 @@
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
-
-<h2>Login</h2>
-<?php
-echo message();
-echo $message;
-?><br/>
 <body>
-<div class="container">
-    <div class="col-md-4"></div>
-    <div class="col-md-4">
+<section class="jumbotron">
+    <div class="container">
+        <div class="row text-center">
+            <h1> Login </h1>
+            <?php
+            echo message();
+            echo $message;
+            ?></div>
+        </div>
+</section>
+    <div class="container">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
             <div class="panel panel-default">
                 <div class="panel-body">
                     <form action="login.php" method="post">
                         <div class="form-group">
-                            <!--Escape special chars on userinput-->
                             <label>Username</label>
                             <input type="text" name="email" value="" placeholder="E-Mail">
                         </div>
@@ -45,8 +50,8 @@ echo $message;
                             <label>Password</label>
                             <input type="password" name="password" value="" placeholder="Password">
                         </div>
-                            <br/>
-                            <input type="submit" name="login" value="Login" class="btn btn-primary"/>
+                        <br/>
+                        <input type="submit" name="login" value="Login" class="btn btn-primary"/>
 
                     </form>
                     <br/>
@@ -56,8 +61,9 @@ echo $message;
                     <a href="<?php echo htmlspecialchars($link_text); ?>">Register</a>
                 </div>
             </div>
+        </div>
+        <div class="col-md-4"></div>
     </div>
-    <div class="col-md-4"></div>
-</div>
+</section>
 </body>
 </html>
