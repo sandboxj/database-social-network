@@ -89,12 +89,9 @@ function confirm_logged_in() {
 
 function find_blogs($userid) {
             global $conn;
-			$query = "SELECT * FROM Blog ";
-            $query .= "LEFT JOIN User ";
-            $query .= "ON Blog.UserID = User.UserID ";
-    		$query .= "AND Blog.UserID = '{$userid}' ";
-            $query .= "ORDER BY ";
-            $query .= "DatePosted DESC";
+			$query = "SELECT * FROM user u, blog b
+			WHERE u.UserID = b.UserID AND b.UserID = '{$userid}'
+			ORDER BY DatePosted DESC;";
 			$blog_results = mysqli_query($conn, $query);	
 			confirm_query($blog_results);
             return $blog_results;
@@ -103,10 +100,8 @@ function find_blogs($userid) {
 function find_profile_pic($userid) {
             global $conn;
             // $search_term = $userid . "_profilepicture% ";
-			$query = "SELECT * FROM Photo ";
-			$query .= "WHERE ";
-    		$query .= "PhotoID LIKE '{$userid}_profilepicture%' ";
-            $query .= "LIMIT 1";
+			$query = "select * from photo p, user u
+			where u.ProfilePhotoID = p.PhotoID and u.UserID = '{$userid}'";
 			$pic_results = mysqli_query($conn, $query);	
 			confirm_query($pic_results);
             return $pic_results;
