@@ -10,16 +10,14 @@
         <h2>Your Profile</h2>
         <div class="row">
             <div class="col-sm-4">
-            <?php
-                
-                $pic_result = find_profile_pic($_SESSION["UserID"]);
-                $profile_picture = mysqli_fetch_assoc($pic_result);
-                $profile_picture_src = "img/" . $profile_picture["PhotoID"];
-                $uncached_src = $profile_picture_src . "?" . filemtime($profile_picture_src);
-                mysqli_free_result($pic_result);
-                
-            ?>
-            <img src="<?php echo htmlentities($profile_picture_src); ?>" class="img-responsive" alt="Profile picture">
+              <link rel="stylesheet" href="../styles/ProfileThumbnail.css">
+              <div class="portrait">
+                <img src= <?php $result = find_profile_pic($_SESSION["UserID"]);
+                while($pic = mysqli_fetch_assoc($result)) {
+                $output = $pic["FileSource"];
+                echo $output;
+                }?>>
+                </div>
             <?php echo message();?>
             <form action="profile.php" method="post" enctype="multipart/form-data">
                 Select image to upload:
@@ -28,9 +26,9 @@
             </form>       
             </div>
             <div class="col-sm-8">
-                Last name: <br /><br />
-                First name: <?php echo $_SESSION["FirstName"]?> <br /><br />
-                Date of Birth: <br /> <br />
+              First name: <?php echo $_SESSION["FirstName"]?> <br /><br />
+              Last name: <?php echo $_SESSION["LastName"]?> <br /><br />
+              Date of Birth: <?php echo $_SESSION["DateOfBirth"]?> <br /> <br />
             </div>
         </div>
         <hr />
