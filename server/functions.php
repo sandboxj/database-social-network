@@ -45,17 +45,17 @@ function password_check($password, $existing_hash)
 
 function attempt_login($email, $password)
 {
-	$user = find_user_by_email($email, $password);
-	if($user) {
-		// if user matches check password 
-		if(password_check($password, $user["Password"])) {
-			return $user;
-		} else {
-			return false;
-		}
-	} else {
-		return false;
-	}
+    $user = find_user_by_email($email, $password);
+    if ($user) {
+        // if user matches check password
+        if (password_check($password, $user["Password"])) {
+            return $user;
+        } else {
+            return false;
+        }
+    } else {
+        return false;
+    }
 }
 
 function find_user_by_email($email)
@@ -68,42 +68,56 @@ function find_user_by_email($email)
     $query .= "Email = '{$safe_email}' ";
     $query .= "LIMIT 1";
     $user_set = mysqli_query($conn, $query);
-	confirm_query($user_set);
-	if ($user = mysqli_fetch_assoc($user_set)) {
+    confirm_query($user_set);
+    if ($user = mysqli_fetch_assoc($user_set)) {
         mysqli_free_result($user_set);
-		return $user;
-	} else {
-		return null;
-	}
+        return $user;
+    } else {
+        return null;
+    }
 }
 
-function logged_in() {
+function logged_in()
+{
     return isset($_SESSION["UserID"]);
 }
 
-function confirm_logged_in() {
-    if(!logged_in()) {
+function confirm_logged_in()
+{
+    if (!logged_in()) {
         redirect_to("login.php");
     }
 }
 
-function find_blogs($userid) {
+function find_blogs($userid)
+{
             global $conn;
-			$query = "SELECT * FROM user u, blog b
+            $query = "SELECT * FROM user u, blog b
 			WHERE u.UserID = b.UserID AND b.UserID = '{$userid}'
 			ORDER BY DatePosted DESC;";
-			$blog_results = mysqli_query($conn, $query);	
-			confirm_query($blog_results);
+            $blog_results = mysqli_query($conn, $query);
+            confirm_query($blog_results);
             return $blog_results;
 }
 
-function find_profile_pic($userid) {
+function find_profile_pic($userid)
+{
             global $conn;
             // $search_term = $userid . "_profilepicture% ";
-			$query = "SELECT * FROM user u, photo p ";
+            $query = "SELECT * FROM user u, photo p ";
             $query .= "WHERE u.ProfilePhotoID = p.PhotoID AND u.UserID = '{$userid}' ";
             $query .= "LIMIT 1";
-			$pic_results = mysqli_query($conn, $query);	
-			confirm_query($pic_results);
+            $pic_results = mysqli_query($conn, $query);
+            confirm_query($pic_results);
             return $pic_results;
+}
+
+function find_collections($userid)
+{
+    global $conn;
+    $query = "SELECT * FROM Photo_Collection ";
+    $query .= "WHERE UserID = '{$userid}';";
+    $collection_results = mysqli_query($conn, $query);
+    confirm_query($collection_results);
+    return $collection_results;
 }

@@ -15,7 +15,7 @@
                     $profile_picture = mysqli_fetch_assoc($pic_result);
                     $profile_picture_src = "img/" . $profile_picture["FileSource"];
                     $uncached_src = $profile_picture_src . "?" . filemtime($profile_picture_src);
-                    mysqli_free_result($pic_result);              
+                    mysqli_free_result($pic_result);
                 ?>
             <img src="<?php echo htmlentities($profile_picture_src); ?>" class="img-responsive" alt="Profile picture">
             <?php echo message();?>
@@ -26,9 +26,12 @@
             </form>       
             </div>
             <div class="col-sm-8">
-              First name: <?php echo $_SESSION["FirstName"]?> <br /><br />
-              Last name: <?php echo $_SESSION["LastName"]?> <br /><br />
-              Date of Birth: <?php echo $_SESSION["DateOfBirth"]?> <br /> <br />
+              <?php
+                $found_user = find_user_by_email($_SESSION["Email"]);
+              ?>
+              First name: <?php echo $found_user["FirstName"]?> <br /><br />
+              Last name: <?php echo $found_user["LastName"]?> <br /><br />
+              Date of Birth: <?php echo $found_user["DateOfBirth"]?> <br /> <br />
             </div>
         </div>
         <hr />
