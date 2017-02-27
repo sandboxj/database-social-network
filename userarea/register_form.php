@@ -21,7 +21,7 @@
             <div class="panel-body">
                 <form action="register_form.php" method="post">
                     <div class="form-group">
-                        <label for="email_address">Username</label>
+                        <label for="email_address">E-mail</label>
                         <input type="email" class="form-control" id="email_address" name="email" value="" placeholder="Username@mail.com">
                     </div>
                     <div class="form-group">
@@ -57,7 +57,6 @@
                 </form>
                 <br/>
                 <a href="login.php">Back</a>
-                <?php include("../includes/footer.php"); ?>
             </div>
         </div>
     </div>
