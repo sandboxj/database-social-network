@@ -42,7 +42,7 @@
                         <input type="date" class="form-control" id="dob" name="date_of_birth" value="" placeholder="<?php echo date("d/m/Y");?>">
                     </div>
                     <div class="form-group">
-                        <input type="radio" name="gender" value="male"/> Male    <input type="radio" name="gender" value="female" checked/> Female<br/>
+                        <input type="radio" name="gender" value="male" checked/> Male    <input type="radio" name="gender" value="female"/> Female<br/>
                     </div>
 					<div class="form-group">
                 <label for="location">Location</label>
