@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <?php require_once("../server/sessions.php"); ?>
 <?php require_once("../server/functions.php"); ?>
 <?php require_once("../server/db_connection.php"); ?>
@@ -14,10 +13,6 @@
             <?php
             echo message();
             echo $message;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> e976a29... addressed comments of last merge, uncached image of updated profile page, reorganized css, session fix outstanding
             ?></div>
         </div>
 </section>
@@ -28,34 +23,15 @@
                 <div class="panel-body">
                     <form action="login.php" method="post">
                         <div class="form-group">
-                            <label for="email_address">Username</label>
-                            <input type="text" class="form-control" id="email_address" name="email" value="" placeholder="Username@mail.com">
+                            <label>Username</label>
+                            <input type="text" name="email" value="" placeholder="E-Mail">
                         </div>
                         <div class="form-group">
-                            <label for="password">Password</label>
-                            <input type="password" class="form-control" id="password" name="password" value="" placeholder="Password" aria-describedby="password_helper">
+                            <label>Password</label>
+                            <input type="password" name="password" value="" placeholder="Password">
                         </div>
                         <br/>
                         <input type="submit" name="login" value="Login" class="btn btn-primary"/>
-<<<<<<< HEAD
-=======
-        ?><br />        
-        <form action="login.php" method="post">
-            <!--Escape special chars on userinput-->
-            Email: <input type="text" name="email" value="" /><br />
-            Password: <input type="password" name="password" value="" /><br />
-            <br />
-            <input type="submit" name="login" value="Login" />
-        </form>
-        <br />
-        
-        <?php $link_page = "register_form.php"; ?>
-        <?php $link_text = rawurldecode($link_page); ?>
-        <a href="<?php echo htmlspecialchars($link_text);?>">Register</a>
->>>>>>> d303cd2... connected to azure, changed login to use email instead, created skeleton
-=======
->>>>>>> e976a29... addressed comments of last merge, uncached image of updated profile page, reorganized css, session fix outstanding
-
                     </form>
                     <br/>
 

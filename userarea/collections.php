@@ -9,6 +9,7 @@
 
         <h2>Your Photo Collections</h2>
         <button type="button" class="btn"  data-toggle="modal" data-target="#addCollection">Add new collection</button>
+        <?php echo message()?>
         <!-- Modal -->
         <div id="addCollection" class="modal fade" role="dialog">
         <div class="modal-dialog">
