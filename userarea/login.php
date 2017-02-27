@@ -23,15 +23,16 @@
                 <div class="panel-body">
                     <form action="login.php" method="post">
                         <div class="form-group">
-                            <label>Username</label>
-                            <input type="text" name="email" value="" placeholder="E-Mail">
+                            <label for="email_address">Username</label>
+                            <input type="text" class="form-control" id="email_address" name="email" value="" placeholder="Username@mail.com">
                         </div>
                         <div class="form-group">
-                            <label>Password</label>
-                            <input type="password" name="password" value="" placeholder="Password">
+                            <label for="password">Password</label>
+                            <input type="password" class="form-control" id="password" name="password" value="" placeholder="Password" aria-describedby="password_helper">
                         </div>
                         <br/>
                         <input type="submit" name="login" value="Login" class="btn btn-primary"/>
+
                     </form>
                     <br/>
 
@@ -44,5 +45,4 @@
         <div class="col-md-4"></div>
     </div>
 </section>
-</body>
-</html>
+<?php include("../includes/footer.php"); ?>
