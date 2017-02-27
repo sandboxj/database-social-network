@@ -1,6 +1,4 @@
 <?php
- $check_id = "";
-
 if (isset($_POST["submit"])) {
     // Check if any file has been selected
     if (!empty($_FILES["fileToUpload"]["name"])) {

@@ -37,11 +37,6 @@
               Location: <?php echo $found_user["CurrentLocation"]?> <br /> <br />
               Email: <?php echo $found_user["Email"]?> <br /> <br />
               Phone Number: <?php echo $found_user["PhoneNumber"]?> <br /> <br />
-              <?php 
-                    if ($check_id) {
-                        echo ("Id : " . $check_id);
-                    } 
-                ?>
             </div>
         </div>
         <hr />
