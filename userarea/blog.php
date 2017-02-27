@@ -20,11 +20,11 @@
 		<?php
 			$blog_results = find_blogs($_SESSION["UserID"]);
 			while($blog_posts = mysqli_fetch_assoc($blog_results)) { 
-      $output = "Author: " . $blog_posts["FirstName"] . " " . $blog_posts["LastName"];
-		  $output .= " , " . $blog_posts["DatePosted"] . "<br />";
-			$output .= $blog_posts["Content"] . "<br />";
-			echo $output;
-      }
+				$output = "Author: " . $blog_posts["FirstName"] . " " . $blog_posts["LastName"];
+				$output .= " , " . $blog_posts["DatePosted"] . "<br />";
+				$output .= $blog_posts["Content"] . "<br />";
+				echo $output;
+      		}
 		?>
 		<?php
 			mysqli_free_result($blog_results);
