@@ -46,11 +46,11 @@
                     </div>
 					<div class="form-group">
                 <label for="location">Location</label>
-                <input type="text" class="form-control" id="location" name="location" value="" placeholder=""">
+                <input type="text" class="form-control" id="location" name="location" value="" placeholder="">
               </div>
               <div class="form-group">
                 <label for="phonenum">Phone Number</label>
-                <input type="text" class="form-control" id="phonenum" name="phone_number" value="" placeholder=""">
+                <input type="text" class="form-control" id="phonenum" name="phone_number" value="" placeholder="">
               </div>
                     <br/>
                     <input type="submit" name="register" value="Register" class="btn btn-primary"/>
