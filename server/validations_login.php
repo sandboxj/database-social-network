@@ -15,7 +15,7 @@ if (isset($_POST["login"])) {
             $_SESSION["FirstName"] = $found_user["FirstName"];
             $_SESSION["LastName"] = $found_user["LastName"];
             $_SESSION["Email"] = $found_user["Email"];
-            redirect_to("blog.php");
+            redirect_to("profile.php");
         } else {
             $message = "Username/Password not found.";
         }
