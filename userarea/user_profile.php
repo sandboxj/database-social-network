@@ -49,6 +49,7 @@
             }
         }
         if ($inviter && !$isfriend) { ?>
+
         <form action="user_profile.php" method="get">
           <input type ="hidden" name ="id" value ="<?php echo $user["UserID"]?>">
           <input type="submit" name="cancel" value="Cancel Request">
@@ -57,6 +58,7 @@
         <form action="user_profile.php" method="get">
             <input type ="hidden" name ="id" value ="<?php echo $user["UserID"]?>">
             <input type="submit" name="unfriend" value="Unfriend">
+
 				</form>
         <?php } else {
             $friends2 = "SELECT * FROM friendship f

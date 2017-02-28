@@ -89,16 +89,7 @@ function confirm_logged_in()
     }
 }
 
-function find_blogs($userid)
-{
-            global $conn;
-            $query = "SELECT * FROM user u, blog b
-			WHERE u.UserID = b.UserID AND b.UserID = '{$userid}'
-			ORDER BY DatePosted DESC;";
-            $blog_results = mysqli_query($conn, $query);
-            confirm_query($blog_results);
-            return $blog_results;
-}
+
 
 function find_profile_pic($userid)
 {

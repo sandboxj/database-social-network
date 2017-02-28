@@ -1,4 +1,7 @@
 <?php require_once("../server/sessions.php"); ?>
+
+<?php require("../server/blog_functions.php");?>
+
 <?php require_once("../server/functions.php");?>
 <?php require_once("../server/db_connection.php");?>
 <?php $query = "SELECT * FROM user u

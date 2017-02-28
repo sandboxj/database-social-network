@@ -43,6 +43,7 @@
                     </div>
                     <div class="form-group">
                         <input type="radio" name="gender" value="male" checked/> Male    <input type="radio" name="gender" value="female"/> Female<br/>
+
                     </div>
 					<div class="form-group">
                 <label for="location">Location</label>
@@ -64,4 +65,6 @@
 </div>
 </section>
 
+
 <?php include("../includes/footer.php"); ?>
+

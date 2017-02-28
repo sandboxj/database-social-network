@@ -1,5 +1,6 @@
 <?php require_once("../server/sessions.php"); ?>
 <?php require_once("../server/functions.php");?>
+<?php require("../server/blog_functions.php");?>
 <?php require_once("../server/db_connection.php");?>
 <?php require_once("../server/validation_blog.php");?>
 <?php $page_title="{$_SESSION["FirstName"]} {$_SESSION["LastName"]}'s Blogs"?>
@@ -14,16 +15,20 @@
 <form action="blogs.php" method="post">
     <h4>Title</h4><textarea rows="1" style="width: 20%" name="blog_title"></textarea><br />
     <h4>Content</h4><textarea rows="8" style="width: 60%" name="blog_content"></textarea><br />
+
     <select name ="access">
         <option value="me">Only me</option>
         <option selected="friends">Friends</option>
         <option value="everybody">Everybody</option>
         <option value="circles">Circles</option>
+
     </select>
 		<input type="submit" name="blog_post" value="Post" />
 </form>
 
 <hr />
+
+
 
 <!--Blogs below-->
 <?php

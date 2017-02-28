@@ -7,6 +7,7 @@
 <?php include("navbar.php"); ?>
 
 		<h2><?php $title = "{$_GET['title']}"; echo $title ?></h2>
+
 		<?php
 		$query = "SELECT * from blog
 				  WHERE blog.UserID = '{$_GET['user']}'
@@ -79,6 +80,7 @@
 		mysqli_free_result($blog_results);
 		mysqli_free_result($comments_results);
 		}
+
 		?>
 		<a href="logout.php">Logout</a>
 
