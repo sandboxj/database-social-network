@@ -1,52 +1,25 @@
 <?php require_once("../server/sessions.php"); ?>
 <?php require_once("../server/functions.php");?>
 <?php require_once("../server/db_connection.php");?>
-<?php $page_title="{$_SESSION["FirstName"]} {$_SESSION["LastName"]}'s Friends"?>
+<?php $query = "SELECT * FROM user u
+                WHERE u.UserID like '{$_POST['user']}'";
+                $displayed_user = mysqli_query($conn, $query);
+                confirm_query($displayed_user);
+                $user = mysqli_fetch_assoc($displayed_user) ?>
+<?php $page_title="{$user["FirstName"]} {$user["LastName"]}'s Friends"?>
 <?php confirm_logged_in(); ?>
 <?php include("../includes/header.php"); ?>
 <?php include("navbar.php"); ?>
 
-		<h2>Your Friends</h2>
-<?php $pending = "SELECT * FROM friendship f
-                 WHERE f.User2ID = '{$_SESSION["UserID"]}'
-                 AND f.Status = 'Pending'";
-    $p_friends = mysqli_query($conn, $pending);
-    confirm_query($p_friends);
-    $p = mysqli_fetch_assoc($p_friends);
-    $exists_pending = ($p["User1ID"] == "") ? 0 : 1;
-    if ($exists_pending) { ?>
-        <h5>Pending Friend Requests</h5>
-        <?php
-        $pending_friends = "SELECT * FROM friendship f
-                            WHERE f.User2ID = '{$_SESSION["UserID"]}'
-                            AND f.Status = 'Pending'";
-        $pending_friendship = mysqli_query($conn, $pending_friends);
-        confirm_query($pending_friendship);
-        while ($pf = mysqli_fetch_assoc($pending_friendship)) {
-            $pending_query = "select * from user u
-                              where u.UserID = '{$pf["User1ID"]}'";
-            $pu = mysqli_query($conn, $pending_query);
-            confirm_query($pu);
-            $pending_user = mysqli_fetch_assoc($pu);
-            $pending_pic = find_profile_pic($pending_user["UserID"]);
-            $pending_picture = mysqli_fetch_assoc($pending_pic);
-            $pending_out = "../userarea/img/" . $pending_picture["FileSource"];
-            $pending_image = "<td><a href='user_profile.php?id={$pending_user["UserID"]}'><img src={$pending_out} class=\"img-rounded\" alt=\"Cinque Terre\" width=\"304\" height=\"236\"></a></td><br/>";
-            echo $pending_image;
-            $pending_output = "<td><a href='user_profile.php?id={$pending_user["UserID"]}'>" . $pending_user["FirstName"] . " " . $pending_user["LastName"] . "</a></td>";
-            echo "<h4>" . $pending_output . "</h4>";
-        }
-        echo "<hr/>";
-    }
-?>
+<h2><?php echo "{$user["FirstName"]} {$user["LastName"]}'s Friends" ?></h2>
 <?php
     $friends1 = "SELECT * FROM friendship f
-                 WHERE f.User1ID = '{$_SESSION["UserID"]}'
+                 WHERE f.User1ID = '{$_POST['user']}'
                  AND f.Status = 'Accepted'";
     $friendship1 = mysqli_query($conn, $friends1);
     confirm_query($friendship1);
     $friends2 = "SELECT * FROM friendship f
-                 WHERE f.User2ID = '{$_SESSION["UserID"]}'
+                 WHERE f.User2ID = '{$_POST['user']}'
                  AND f.Status = 'Accepted'";
     $friendship2 = mysqli_query($conn, $friends2);
     confirm_query($friendship2);
@@ -79,7 +52,7 @@
         echo "<h4>" . $output2 . "</h4>";
     }
 		?>
-		<hr />
-		<a href="logout.php">Logout</a>
+<hr />
+<a href="logout.php">Logout</a>
 
 <?php include("../includes/footer.php"); ?>

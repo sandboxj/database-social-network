@@ -10,34 +10,26 @@ if (isset($_POST["search_result"])) {
         // Search DB
         
         $query = "SELECT * FROM user u
-                  WHERE u.FirstName like '{$search_array[0]}'
-                  OR u.LastName like '{$search_array[1]}'";
+                  WHERE (u.FirstName like '{$search_array[0]}'
+                  OR u.LastName like '{$search_array[1]}')
+                  AND u.UserID NOT LIKE '{$_SESSION["UserID"]}'";
         $result = mysqli_query($conn, $query);
         confirm_query($result);
         
-        if (!$user = mysqli_fetch_assoc($result)) {
+        if (!$result) {
             mysqli_free_result($result);
             $query = "SELECT * FROM user u
-                      WHERE u.LastName like '%{$search_array[0]} %'
-                      OR u.LastName like '% {$search_array[0]}%'";
+                      WHERE (u.LastName like '%{$search_array[0]} %'
+                      OR u.LastName like '% {$search_array[0]}%')
+                      AND u.UserID NOT LIKE '{$_SESSION["UserID"]}'";
             $result = mysqli_query($conn, $query);
             confirm_query($result);
             
-            if (!$user_set = mysqli_fetch_assoc($result)) {
+            if (!$result) {
                 $result = null;
             }
         }
-        
-        if ($result) {
-            redirect_to("../userarea/search.php");
-            while($user = mysqli_fetch_assoc($result)) { 
-                $output = "Author: " . $user["FirstName"] . " " . $user["LastName"];
-		            $output .= " , " . $user["DatePosted"] . "<br />";
-	              $output .= $user["Content"] . "<br />";
-                echo $output;
-            }
-            mysqli_free_result($result);
-        } else {
+        if (!$result) {
             $_SESSION["message"] = "Your search query did not produce any results.";
             redirect_to("../userarea/search.php");
         }

@@ -38,11 +38,13 @@ if (isset($_POST["register"])) {
         $date_joined = date('Y-m-d H:i:s');
         // Enumerate gender
         $ismale = ($_POST["gender"]==="male") ? 1 : 0;
+        $location = ($_POST["location"]==="") ? null : $_POST["location"];
+        $phone_number = ($_POST["phone_number"]==="") ? null : $_POST["phone_number"];
 
         // Insert
-        $query = "INSERT INTO User (Password, Email, FirstName, LastName, DateJoined, DateOfBirth, Gender) ";
+        $query = "INSERT INTO User (Password, Email, FirstName, LastName, DateJoined, DateOfBirth, Gender, CurrentLocation, PhoneNumber) ";
         $query .= "VALUES (";
-        $query .= "'{$hashed_password}', '{$user_email}', '{$first_name}', '{$last_name}', '{$date_joined}', '{$date_of_birth}', '{$ismale}'";
+        $query .= "'{$hashed_password}', '{$user_email}', '{$first_name}', '{$last_name}', '{$date_joined}', '{$date_of_birth}', '{$ismale}', '{$location}', '{$phone_number}'";
         $query .= ")";
         $result = mysqli_query($conn, $query);
         if ($result) {

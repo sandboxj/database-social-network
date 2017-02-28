@@ -1,21 +1,36 @@
 <?php require_once("../server/sessions.php"); ?>
 <?php require_once("../server/functions.php");?>
 <?php require_once("../server/db_connection.php");?>
-<?php $page_title="{$_GET['title']}"?>
+<?php require_once("../server/validation_blog.php");?>
+<?php $page_title="{$_SESSION["FirstName"]} {$_SESSION["LastName"]}'s Blogs"?>
 <?php confirm_logged_in(); ?>
 <?php include("../includes/header.php"); ?>
 <?php include("navbar.php"); ?>
 
-		<h2><?php $title = "{$_GET['title']}"; echo $title ?></h2>
-    <!--Blog-->
-		<?php
-    $query = "SELECT * from blog
-              WHERE blog.UserID = '{$_SESSION["UserID"]}'
-              AND blog.Title = '{$_GET['title']}'";
-    $blog_results = mysqli_query($conn, $query);
-    confirm_query($blog_results);
-		while($blog = mysqli_fetch_assoc($blog_results)) {
-        $datetime = explode(' ', $blog["DatePosted"], 2);
+<h2>Your Blogs</h2>
+
+<?php echo message()?>
+
+<form action="blogs.php" method="post">
+    <h4>Title</h4><textarea rows="1" style="width: 20%" name="blog_title"></textarea><br />
+    <h4>Content</h4><textarea rows="8" style="width: 60%" name="blog_content"></textarea><br />
+    <select name ="access">
+        <option value="me">Only me</option>
+        <option selected="friends">Friends</option>
+        <option value="everybody">Everybody</option>
+        <option value="circles">Circles</option>
+    </select>
+		<input type="submit" name="blog_post" value="Post" />
+</form>
+
+<hr />
+
+<!--Blogs below-->
+<?php
+    $blog_results = find_blogs($_SESSION["UserID"]);
+		while($blog_posts = mysqli_fetch_assoc($blog_results)) {
+        $output = "Title: <td><a href='blog.php?title={$blog_posts["Title"]}'>" . $blog_posts["Title"] . "</a></td><br />";
+		    $datetime = explode(' ', $blog_posts["DatePosted"], 2);
         $date = explode('-', $datetime[0], 3);
         $time = explode(':', $datetime[1], 3);
         if ($date[2] == 1) {
@@ -59,27 +74,11 @@
             $suffix = " a.m.";
         }
 				$output .= $date[2] . " " . $date[1] . " at " . $time[0] . ":" . $time[1] . $suffix . "<br />";
-				$output .= $blog["Content"] . "<br />";
-				echo $output . "<hr />";
-        $comments = "SELECT * from blog_comment
-                 WHERE blog_comment.BlogID = '{$blog["BlogID"]}'";
-        $comments_results = mysqli_query($conn, $comments);
-        confirm_query($comments_results);
-		    while($comment = mysqli_fetch_assoc($comments_results)) {
-            $commenter = "SELECT * from user
-                          WHERE user.UserID = '{$comment["CommenterUserID"]}'";
-            $user_results = mysqli_query($conn, $commenter);
-            confirm_query($user_results);
-            $user = mysqli_fetch_assoc($user_results);
-				    $output2 = "<td><a href='user_profile.php?id={$user["UserID"]}'>" . $user["FirstName"] . " " . $user["LastName"] . "</a></td>";
-				    $output2 .= " , " . $comment["DatePosted"] . "<br />";
-				    $output2 .= $comment["Content"] . "<br />";
-				    echo $output2;
-		    }
+				echo $output;
+        echo "<hr/>";
+    }
     mysqli_free_result($blog_results);
-    mysqli_free_result($comments_results);
-		}
-		?>
-    <br/><br/><a href="logout.php">Logout</a>
+?>
 
+<a href="logout.php">Logout</a>
 <?php include("../includes/footer.php"); ?>

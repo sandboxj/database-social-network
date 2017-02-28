@@ -4,7 +4,6 @@
 <?php require_once("../server/validations_login.php"); ?>
 <?php $page_title = "Login" ?>
 <?php include("../includes/header.php"); ?>
-<?php include("../includes/footer.php"); ?>
 
 <section class="jumbotron">
     <div class="container">
@@ -23,7 +22,7 @@
                 <div class="panel-body">
                     <form action="login.php" method="post">
                         <div class="form-group">
-                            <label for="email_address">Username</label>
+                            <label for="email_address">E-mail</label>
                             <input type="text" class="form-control" id="email_address" name="email" value="" placeholder="Username@mail.com">
                         </div>
                         <div class="form-group">
