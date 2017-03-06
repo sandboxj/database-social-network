@@ -1,13 +1,21 @@
 <?php require_once("../server/validation_functions.php");?>
 <?php
+
+
+//currently not in use.
 if (isset($_POST["blog_post"])) {
+
+    $blog_content = $_POST["blog_content"];
+
 
     // Check if post is blank
     if (strlen(trim($_POST["blog_content"]))) {
         if (strlen(trim($_POST["blog_title"]))) {
             // Gather content 
-            $blog_content = mysqli_real_escape_string($conn, $_POST["blog_content"]);
+            $blog_content = mysqli_real_escape_string($conn, $blog_content);
             $blog_title = mysqli_real_escape_string($conn, $_POST["blog_title"]);
+
+            echo "after trim and escaping we have: {$blog_content}";
             $title_check = "SELECT * FROM blog
                             WHERE blog.UserID = '{$_SESSION["UserID"]}'
                             AND blog.Title = '{$_POST["blog_title"]}'";

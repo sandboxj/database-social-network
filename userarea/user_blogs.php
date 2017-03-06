@@ -1,72 +1,67 @@
 <?php require_once("../server/sessions.php"); ?>
-
 <?php require("../server/blog_functions.php");?>
-
+<?php require("../server/user_functions.php");?>
 <?php require_once("../server/functions.php");?>
 <?php require_once("../server/db_connection.php");?>
-<?php $query = "SELECT * FROM user u
-                WHERE u.UserID like '{$_POST['user']}'";
-                $displayed_user = mysqli_query($conn, $query);
-                confirm_query($displayed_user);
-                $user = mysqli_fetch_assoc($displayed_user) ?>
-<?php $page_title="{$user["FirstName"]} {$user["LastName"]}'s Blogs"?>
 <?php confirm_logged_in(); ?>
 <?php include("../includes/header.php"); ?>
 <?php include("navbar.php"); ?>
 
-<h2><?php $name = "{$user["FirstName"]} {$user["LastName"]}'s Blogs";
-		  echo $name ?></h2>
-<!--Blog-->
 <?php
-    $blog_results = find_blogs($user["UserID"]);
+
+//blog author
+$friend_userid = $_POST['user'];
+
+$friend_full_name = find_full_name($friend_userid);
+$first_name= $friend_full_name['FirstName'];
+$last_name = $friend_full_name['LastName'];
+
+$page_title="{$first_name} {$last_name}'s Blogs";
+
+
+$name = "{$first_name} {$last_name}'s Blogs";
+?>
+
+<h2><?php echo $name ?></h2>
+<!--Blogs-->
+<?php
+    $blog_results = find_blogs($friend_userid);
 		while($blog_posts = mysqli_fetch_assoc($blog_results)) {
-				$output = "Title: <td><a href='user_blog.php?title={$blog_posts["Title"]}&user={$_POST['user']}'>" . $blog_posts["Title"] . "</a></td><br />";
-        $datetime = explode(' ', $blog_posts["DatePosted"], 2);
-        $date = explode('-', $datetime[0], 3);
-        $time = explode(':', $datetime[1], 3);
-        if ($date[2] == 1) {
-            $date[2] = "1st";
-        } elseif ($date[2] == 2) {
-            $date[2] = "2nd";
-        } elseif ($date[2] == 3) {
-            $date[2] = "3rd";
-        } else {
-            $date[2] = "{$date[2]}th";
-        }
-        if ($date[1] == 1) {
-            $date[1] = "Jan";
-        } elseif ($date[1] == 2) {
-            $date[1] = "Feb";
-        } elseif ($date[1] == 3) {
-            $date[1] = "Mar";
-        } elseif ($date[1] == 4) {
-            $date[1] = "Apr";
-        } elseif ($date[1] == 5) {
-            $date[1] = "May";
-        } elseif ($date[1] == 6) {
-            $date[1] = "Jun";
-        } elseif ($date[1] == 7) {
-            $date[1] = "Jul";
-        } elseif ($date[1] == 8) {
-            $date[1] = "Aug";
-        } elseif ($date[1] == 9) {
-            $date[1] = "Sep";
-        } elseif ($date[1] == 10) {
-            $date[1] = "Oct";
-        } elseif ($date[1] == 11) {
-            $date[1] = "Nov";
-        } else {
-            $date[1] = "Dec";
-        }
-        if ($time[0] > 12 || $time[0] == 00) {
-            $time[0] = $time[0] - 12;
-            $suffix = " p.m.";
-        } else {
-            $suffix = " a.m.";
-        }
-				$output .= $date[2] . " " . $date[1] . " at " . $time[0] . ":" . $time[1] . $suffix . "<br />";
-				echo $output;
-		}
+
+            $title = $blog_posts["Title"];
+
+            $date_posted = $blog_posts["DatePosted"];
+            $formatted_date  = display_formatted_date($date_posted);
+
+
+            $output = "Title: <td><a href='user_blog.php?title={$title}&user={$friend_userid}'> {$title} </a></td><br />";
+            $access_rights  = $blog_posts['AccessRights'];
+
+
+            //hardcoded the two booleans for now; preliminary confirm access rights method
+            $check = confirm_access_rights($access_rights, true, true);
+
+            /*
+             * Check will return true if the blog should be visible to the currently connected user.
+             * Posts which are not visible (e.g. only me access) will not be rendered
+             */
+            if($check == true) {
+
+
+                ?>
+
+                <br>
+
+                <div class="individual-blog">
+
+                    <?php echo $output; ?>
+                    <h6><?php echo $formatted_date ?></h6>
+
+                </div>
+
+                <?php } //closing if statement
+
+}// closing while loop
     mysqli_free_result($blog_results);
 ?>	
 <hr />

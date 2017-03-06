@@ -19,8 +19,9 @@ if (!isset($page_title)) {
 <!--        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">-->
 
         <link rel="stylesheet" href="../styles/login.css">
-
+        <link rel="stylesheet" href="../styles/blog.css">
         <link rel="stylesheet" href="../styles/styles.css">
+<!--
             <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
             <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
             <!--[if lt IE 9]>
@@ -30,6 +31,9 @@ if (!isset($page_title)) {
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <script src="../scripts/collections.js"></script>
+<!--        AJAX-->
+
+       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     </head>
-    <body>
+    <body style=" background: url('../userarea/img/iceberg.jpg') no-repeat center; ">
     

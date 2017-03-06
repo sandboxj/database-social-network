@@ -1,87 +1,172 @@
 <?php require_once("../server/sessions.php"); ?>
 <?php require_once("../server/functions.php");?>
+<?php require("../server/user_functions.php");?>
+<?php require("../server/blog_functions.php");?>
 <?php require_once("../server/db_connection.php");?>
 <?php $page_title="{$_GET['title']}"?>
 <?php confirm_logged_in(); ?>
 <?php include("../includes/header.php"); ?>
 <?php include("navbar.php"); ?>
 
-		<h2><?php $title = "{$_GET['title']}"; echo $title ?></h2>
+<!--THIS PAGE IS FOR AN EXTERNAL VIEW OF THE BLOG i.e. when viewing the blogs of other users-->
+<?php
 
-		<?php
-		$query = "SELECT * from blog
-				  WHERE blog.UserID = '{$_GET['user']}'
-				  AND blog.Title = '{$_GET['title']}'";
-		$blog_results = mysqli_query($conn, $query);
-		confirm_query($blog_results);
-		while($blog = mysqli_fetch_assoc($blog_results)) {
-				$output .= "Author: " . $blog["FirstName"] . " " . $blog["LastName"] . "</td><br/>";
-				$datetime = explode(' ', $blog["DatePosted"], 2);
-        $date = explode('-', $datetime[0], 3);
-        $time = explode(':', $datetime[1], 3);
-        if ($date[2] == 1) {
-            $date[2] = "1st";
-        } elseif ($date[2] == 2) {
-            $date[2] = "2nd";
-        } elseif ($date[2] == 3) {
-            $date[2] = "3rd";
-        } else {
-            $date[2] = "{$date[2]}th";
-        }
-        if ($date[1] == 1) {
-            $date[1] = "Jan";
-        } elseif ($date[1] == 2) {
-            $date[1] = "Feb";
-        } elseif ($date[1] == 3) {
-            $date[1] = "Mar";
-        } elseif ($date[1] == 4) {
-            $date[1] = "Apr";
-        } elseif ($date[1] == 5) {
-            $date[1] = "May";
-        } elseif ($date[1] == 6) {
-            $date[1] = "Jun";
-        } elseif ($date[1] == 7) {
-            $date[1] = "Jul";
-        } elseif ($date[1] == 8) {
-            $date[1] = "Aug";
-        } elseif ($date[1] == 9) {
-            $date[1] = "Sep";
-        } elseif ($date[1] == 10) {
-            $date[1] = "Oct";
-        } elseif ($date[1] == 11) {
-            $date[1] = "Nov";
-        } else {
-            $date[1] = "Dec";
-        }
-        if ($time[0] > 12 || $time[0] == 00) {
-            $time[0] = $time[0] - 12;
-            $suffix = " p.m.";
-        } else {
-            $suffix = " a.m.";
-        }
-				$output .= $date[2] . " " . $date[1] . " at " . $time[0] . ":" . $time[1] . $suffix . "<br />";
-				$output .= $blog["Content"] . "<br />";
-				echo $output . "<hr />";
-				$comments = "SELECT * from blog_comment
-							 WHERE blog_comment.BlogID = '{$blog["BlogID"]}'";
-				$comments_results = mysqli_query($conn, $comments);
-				confirm_query($comments_results);
-				while($comment = mysqli_fetch_assoc($comments_results)) {
-						$commenter = "SELECT * from user
-									  WHERE user.UserID = '{$comment["CommenterUserID"]}'";
-						$user_results = mysqli_query($conn, $commenter);
-						confirm_query($user_results);
-						$user = mysqli_fetch_assoc($user_results);
-						$output2 = "<td><a href='user_profile.php?id={$user["UserID"]}'>" . $user["FirstName"] . " " . $user["LastName"] . "</a></td>";
-						$output2 .= " , " . $comment["DatePosted"] . "<br />";
-						$output2 .= $comment["Content"] . "<br />";
-						echo $output2;
-				}
-		mysqli_free_result($blog_results);
-		mysqli_free_result($comments_results);
-		}
+//currently connected user
+$viewer_userID = $_SESSION["UserID"];
 
-		?>
+//blog author
+$friend_userid = $_GET['user'];
+
+$friend_full_name = find_full_name($friend_userid);
+$first_name= $friend_full_name['FirstName'];
+$last_name = $friend_full_name['LastName'];
+
+
+$blog_title = $_GET['title'];
+$blogID = find_blog_id($friend_userid,$blog_title);
+$blog_content = find_blog_content($blogID);
+$blog_access_rights=find_blog_access_rights($blogID);
+
+$date_posted= find_blog_date($blogID);
+$formatted_datetime = display_formatted_date($date_posted);
+
+$author_output = "Author: {$first_name} {$last_name} <td><br>";
+
+
+
+//blog comment validation and insertion
+/*
+ * After pressing the post comment button. Validates the comment and inserts it in the db
+ */
+if (isset($_POST["blog_comment"])){
+    $comment_content = $_POST["blog_comment"];
+
+    $check = validate_comment_input($comment_content);
+    if($check == true){
+
+        insert_comment($blogID,$viewer_userID,$comment_content);
+    }
+
+}
+
+?>
+
+<!--TITLE, AUTHOR and DATE-->
+
+<div class="container-fluid"  >
+    <div class="row top-buffer" >
+        <div class="col-md-7" id="card-header" >
+<!--NEED TO DOUBLE CHECK THIS CSS -->
+                <div class="card-title" >
+                    <h2><?php echo "Title: {$blog_title}" ?></h2>
+                    <h3><?php echo $author_output;?></h3>
+                    <h5 ><?php echo $formatted_datetime ?></h5>
+                    <br>
+                </div>
+
+        </div>
+
+
+    </div>
+    <br>
+
+<!--    BLOG CONTENT (EDITABLE)-->
+    <div class="row top-buffer">
+        <div class="col-md-7" id="card-content">
+            <br>
+            <div class="card-content">
+                <p><?php echo $blog_content ?></p>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!--Comment section header-->
+<div class="container-fluid comment-section">
+    <div class="row top-buffer">
+        <div class="col-md-3">
+            <h3>Comments:</h3>
+        </div>
+    </div>
+</div>
+
+<!--Comments-->
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-7" id="comment">
+
+            <?php $blog_comment_results = find_blog_comments($blogID);
+
+            while($blog_comments = mysqli_fetch_assoc($blog_comment_results)) {
+                $commenter_userID = $blog_comments['CommenterUserID'];
+                $commenter_full_name = find_full_name($commenter_userID);
+                $commenter_first_name= $commenter_full_name["FirstName"];
+                $commenter_last_name = $commenter_full_name["LastName"];
+
+                $comment_author = "{$commenter_first_name} {$commenter_last_name}";
+
+                $comment_date = $blog_comments['DatePosted'];
+                $comment_date_formatted = display_formatted_date($comment_date);
+
+
+                $comment_content = $blog_comments['Content'];
+
+                ?>
+
+                <br>
+                <?php
+                /*
+                 * If statement here to change the hyperlink from the commenter name. It will send users
+                 * to their own profile view (profile.php) if they click on their own name; it will send them
+                 * to the correct profile if they press another user's name (user_profile.php)
+                 */
+                if($commenter_userID == $viewer_userID) {
+
+
+                    ?>
+                    <p><?php echo "<a href='profile.php'>" . $comment_author . "</a>" ?>
+                        said: <?php echo "<h4>{$comment_content}</h4>"; ?></p>
+                    <hr>
+                    <?php
+                }else{
+                    ?>
+                    <p><?php echo "<a href='user_profile.php?id={$commenter_userID}'>" . $comment_author . "</a>" ?>
+                        said: <?php echo "<h4>{$comment_content}</h4>"; ?></p>
+                    <hr>
+
+        <?php
+                }//closing else
+                    ?>
+
+                <p><?php echo $comment_date_formatted; ?></p>
+
+                <?php
+//bracket to close the while loop
+            }
+            ?>
+        </div>
+    </div>
+</div>
+<br>
+
+
+<!--ADD A COMMENT -->
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-7">
+            <form action="user_blog.php?title=<?php echo $blog_title?>&user=<?php echo $friend_userid;?>" method="post">
+                <h4>Comment</h4><textarea style="width:95%;"  name="blog_comment" placeholder="Write your comment here..."></textarea><br />
+                <button type="submit" class="btn btn-primary">Add a comment</button>
+
+            </form>
+        </div>
+    </div>
+</div>
 		<a href="logout.php">Logout</a>
+
 
 <?php include("../includes/footer.php"); ?>
