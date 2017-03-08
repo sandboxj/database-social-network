@@ -1,5 +1,4 @@
 <?php
-
 // ------> LOCAL database connection:
 // $servername='localhost:3306';
 // $username='group24';
@@ -8,11 +7,12 @@
 // $conn=New mysqli($servername,$username,$password,$database);
 
 // ------> Azure Database connection
-$servername='eu-cdbr-azure-west-d.cloudapp.net';
-$username='bfd14cc083b66f';
-$password='77230adb';
-$database='soshallnetwork';
-$conn=New mysqli($servername,$username,$password,$database);
+defined("DB_SERVER") ? null : define("DB_SERVER", "eu-cdbr-azure-west-d.cloudapp.net");
+defined("DB_USER") ? null : define("DB_USER", "bfd14cc083b66f");
+defined("DB_PASS") ? null : define("DB_PASS", "77230adb");
+defined("DB_NAME") ? null : define("DB_NAME", "soshallnetwork");
+
+$conn=New mysqli(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
 
 //Connection error handling:
 

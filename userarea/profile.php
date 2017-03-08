@@ -12,20 +12,22 @@
             <div class="col-sm-4">
 
                 <?php
+                    $collection_id = "Profilepictures" . $_SESSION['UserID'];
                     $pic_result = find_profile_pic($_SESSION["UserID"]);
                     $profile_picture = mysqli_fetch_assoc($pic_result);
-                    $profile_picture_src = "img/" . $profile_picture["FileSource"];
+                    $profile_picture_src = file_exists("img/" . $collection_id . "/" . $profile_picture["FileSource"]) ? "img/" . $collection_id . "/" . $profile_picture["FileSource"] : "img/" . $profile_picture["FileSource"];
                     $uncached_src = $profile_picture_src . "?" . filemtime($profile_picture_src);
                     mysqli_free_result($pic_result);
                 ?>
 
                 <img src="<?php echo $uncached_src ?>" class="img-responsive" alt="Profile picture">
                 <?php echo message();?>
-                  <br />
 
-            <form action="profile.php" method="post" enctype="multipart/form-data">
+            <button class="btn" onclick="$('#edit_profile_pic').toggleClass();">Edit profile picture</button>
+            <form id="edit_profile_pic" class="hidden" action="profile.php" method="post" enctype="multipart/form-data">
                 Select image to upload:
                 <input type="file" name="fileToUpload" id="fileToUpload">
+                <input type="text" name="collectionid" value="<?php echo $collection_id?>" class="hidden" readonly>
                 <input type="submit" value="Upload Image" name="submit">
             </form>       
             </div>

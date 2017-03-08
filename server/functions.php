@@ -112,3 +112,32 @@ function find_collections($userid)
     confirm_query($collection_results);
     return $collection_results;
 }
+
+function find_photos_from_collection($collection_id)
+{
+    global $conn;
+    $query = "SELECT * FROM Photo ";
+    $query .= "WHERE CollectionID = '{$collection_id}' ";
+    $query .= "ORDER BY DatePosted DESC";
+    $photos_results = mysqli_query($conn, $query);
+    confirm_query($photos_results);
+    return $photos_results;
+}
+
+function find_photo_comments($photo_id) {
+    global $conn;
+    $query = "SELECT * FROM Photo_comment ";
+    $query .= "WHERE PhotoID = '{$photo_id}';";
+    $photo_comments_results = mysqli_query($conn, $query);
+    confirm_query($photo_comments_results);
+    return $photo_comments_results;
+}
+
+function print_access_selector() {
+    echo ("<select name='access'>
+                <option value='0'>Only me</option>
+                <option selected value='1'>Friends</option>
+                <option value='2'>Everybody</option>
+                <option value='3'>Circles</option>
+            </select>");
+}
