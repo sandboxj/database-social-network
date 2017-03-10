@@ -10,7 +10,9 @@
                     href="collections.php">Photos</a></li>
         <li role="presentation" <?php if ($page_title == "Circles") { ?> class="active" <?php }; ?> ><a
                     href="circles.php">Circles</a></li>
-        <li role="presentation" <?php if ($page_title == "Messages") { ?> class="active" <?php }; ?> ><a
+        <li role="presentation" <?php if ($page_title == "Messages") { ?> class="active" <?php }
+                                      elseif ($page_title == "Message Inbox"){ ?> class="active" <?php }
+                                      elseif ($page_title == "Message Outbox"){ ?> class="active" <?php }; ?> ><a
                     href="messages.php">Messages</a></li>
         <li role="presentation" <?php if ($page_title == "{$_SESSION["FirstName"]} {$_SESSION["LastName"]}'s Friends") { ?> class="active" <?php }; ?> >
             <a href="friends.php">Friends</a></li>

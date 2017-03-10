@@ -2,6 +2,7 @@ body {
     margin: 10px;
 }
 
+
 hr {
     border-color: black;
     border-style: solid;
@@ -9,6 +10,40 @@ hr {
     margin: 18px 0;
 }
 
+.jumbotron {
+    display: flex;
+    align-items: center;
+    background-image: url("../userarea/img/blue.jpg");
+    background-size: cover;
+    color: #eeeaec;
+    height: 250px;
+    text-shadow: 1px 1px 1px #000000;
+}
 
 
+
+.message_label {
+    margin: 3px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.message_date {
+    margin: 3px;
+    font-size: 12px;
+}
+
+.table {
+    border-style: none;
+}
+
+.p {
+    margin: 3px;
+}
+
+.error_message {
+    font-style: oblique;
+    color: darkred;
+    text-align: center;
+}
 
