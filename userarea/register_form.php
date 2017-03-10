@@ -65,7 +65,7 @@
                   <div class="form-group">
                         <label for="password">Password</label>
                         <input type="password" class="form-control" id="password" name="password" value="" placeholder="Password" aria-describedby="password_helper" required>
-                        <small id="password_helper" class="form-text text-muted">min 8 characters!</small>
+
                     </div>
                     <div class="form-group">
                         <label for="password-confirm">Confirm Password</label>

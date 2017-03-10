@@ -180,7 +180,7 @@ function display_formatted_date($date_posted){
  * @param $isCircle
  * @return bool
  */
-function confirm_access_rights($access_rights, $isFriend, $isCircle){
+function confirm_access_rights($access_rights, $is_friend, $is_circle){
 
     $check = false;
 
@@ -415,6 +415,9 @@ function check_blog_title($userid, $blog_title){
 
     if(strlen(trim($blog_title))) {
 
+        //make sure that this did not mess up anything
+        $blog_title = mysqli_real_escape_string($blog_title);
+
         $title_check = "SELECT Title FROM blog
                     WHERE blog.userID = '{$userid}' 
                     AND blog.Title = '{$blog_title}'";
@@ -483,7 +486,7 @@ function insert_blog_post($userid, $blog_title, $blog_content, $access_rights){
     $blog_title = mysqli_real_escape_string($conn, $blog_title);
 
     $blog_content = mysqli_real_escape_string($conn, $blog_content);
-    echo $blog_content;
+
 
 
     $query = "INSERT INTO blog (UserID, DatePosted, Title, Content, AccessRights)

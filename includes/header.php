@@ -19,9 +19,11 @@ if (!isset($page_title)) {
 <!--        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">-->
 
         <link rel="stylesheet" href="../styles/login.css">
-        <link rel="stylesheet" href="../styles/blog.css">
+        <link rel="stylesheet" href="../styles/blog.css?v=1">
+        <link rel="stylesheet" href="../styles/circles.css">
         <link rel="stylesheet" href="../styles/styles.css">
 <!--
+
             <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
             <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
             <!--[if lt IE 9]>
