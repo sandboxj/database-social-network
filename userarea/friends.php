@@ -30,7 +30,7 @@
                 <a href="user_profile.php?id=<?php echo $p_friend['UserID']?>"><img src="<?php echo $uncached_src ?>" class="img-responsive" alt="Friend's profile picture'"></a>
             </div>
             <div class="col-md-9">
-                <h4><?php echo $p_friend["FirstName"] . " " . $p_friend["LastName"]?></h4><br /><br />
+                <a href="user_profile.php?id=<?php echo $p_friend['UserID']?>"><h4><?php echo $p_friend["FirstName"] . " " . $p_friend["LastName"]?></h4></a><br /><br />
                 <form method="post">
                     <button class="btn btn-primary" type="submit" name="add_friend" value="<?php echo $p_friend['FriendshipID']?>">
                         Accept

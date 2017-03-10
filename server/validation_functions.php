@@ -61,3 +61,10 @@ function fieldname_as_text($fieldname)
     $fieldname = ucfirst($fieldname);
     return $fieldname;
 }
+function regex_clean($string) {
+    $clean_string = str_replace(' ', '-', $string);
+    $clean_string = preg_replace('/[^A-Za-z0-9\-]/', '', $clean_string);
+    $clean_string = str_replace('-', '|', $clean_string);
+    $clean_string = preg_replace('/-+/', '-', $clean_string); // Replaces multiple hyphens with single one.
+    return $clean_string;
+}
