@@ -212,12 +212,14 @@ while($blog_comments = mysqli_fetch_assoc($blog_comment_results)) {
     ?>
 
         <br>
+
+            <?php
             /*
-            * If statement here to change the hyperlink from the commenter name. It will send users
-            * to their own profile view (profile.php) if they click on their own name; it will send them
-            * to the correct profile if they press another user's name (user_profile.php)
-            */
-            <?php if($commenter_userID == $userid) {
+           * If statement here to change the hyperlink from the commenter name. It will send users
+           * to their own profile view (profile.php) if they click on their own name; it will send them
+           * to the correct profile if they press another user's name (user_profile.php)
+           */
+            if($commenter_userID == $userid) {
 
 
                 ?>

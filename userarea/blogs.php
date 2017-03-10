@@ -131,5 +131,5 @@ global $conn;
 </div>
 
 
-<a href="../logout.php">Logout</a>
+<a href="logout.php">Logout</a>
 <?php include("../includes/footer.php"); ?>
