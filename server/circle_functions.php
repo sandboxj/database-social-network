@@ -276,6 +276,7 @@ function add_circle_member($circleID, $userid_to_add){
     global $conn;
 
     $date_joined = date('Y-m-d H:i:s');
+
     $query = "INSERT INTO circle_member (CircleID, MemberUserID, DateJoined)
     VALUES('{$circleID}', '{$userid_to_add}', '{$date_joined}')";
 
@@ -327,7 +328,22 @@ function is_in_another_user_circle($userid, $user_viewer){
     
 }
 
+//userid of the currently connected user
+function leave_circle($circleID, $userid){
+    global $conn;
 
+    $query = "DELETE FROM circle_member
+    WHERE CircleID ='{$circleID}' AND MemberUserID = '{$userid}'";
 
+    $result = mysqli_query($conn, $query);
+
+    if($result){
+        echo "<script>alert('Left circle') </script>";
+
+    }else{
+        echo "<script>alert('Could not leave circle') </script>";
+    }
+
+}
 ?>
 

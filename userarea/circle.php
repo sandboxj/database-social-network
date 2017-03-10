@@ -3,10 +3,14 @@
 <?php require_once("../server/db_connection.php");?>
 <?php require("../server/circle_functions.php");?>
 <?php require("../server/user_functions.php");?>
+<?php require("../server/functions_friends.php");?>
 <?php $page_title="Circles"?>
 <?php confirm_logged_in(); ?>
 
 <?php
+
+$viewer_userID = $_SESSION['UserID'];
+
 if(isset($_POST['delete_circle'])){
     $circleID = $_GET['circleID'];
 
@@ -14,14 +18,22 @@ if(isset($_POST['delete_circle'])){
     redirect_to("../userarea/circles.php");
 }
 
+if(isset($_POST['leave_circle'])){
+    $circleID = $_GET['circleID'];
+
+    leave_circle($circleID, $viewer_userID);
+    redirect_to("../userarea/circles.php");
+}
+
 
 if(isset($_POST['invitation'])){
    
     $circleID = $_GET['circleID'];
-    $invited_friendsID[] = $_POST['invited_friends'];
- 
+    $invited_friendsID = $_POST['invited_friends'];
+
+    echo $circleID;
     foreach($invited_friendsID as $invited_friendID){
-        echo $invited_friendID;
+        
         add_circle_member($circleID, $invited_friendID);
     }
 
@@ -36,7 +48,6 @@ if(isset($_POST['invitation'])){
 <?php
 
 
-$viewer_userID = $_SESSION['UserID'];
 $circleID = $_GET['circleID'];
 
 $circle_title = find_circle_title($circleID);
@@ -48,6 +59,15 @@ $circle_members_results = find_circle_members($circleID);
 $circle_member_count = count_circle_members($circleID);
 
 $circle_adminID = find_circle_admin($circleID);
+
+$friend_results_db = find_accepted($viewer_userID);
+while ($friend_results  = mysqli_fetch_assoc($friend_results_db)){
+    $friendID = $friend_results['UserID'];
+    $friend_first_name = $friend_results['FirstName'];
+    $friend_last_name  = $friend_results['LastName'];
+
+    $friend_output = "<li class='list-group-item'><input type='checkbox' name='invited_friends[]' value='{$friendID}'/> {$friend_first_name} {$friend_last_name}</li>";
+}
 
 ?>
 
@@ -66,18 +86,21 @@ $circle_adminID = find_circle_admin($circleID);
                 <h4>Number of members: <?php echo $circle_member_count; ?> </h4>
                 </div>
 
-<?php if($viewer_userID == $circle_adminID){?>
+
             <div class="col-md-2 pull-right">
                  <form action="circle.php?circleID=<?php echo $circleID; ?>" method="post">
 
-
+                 
+                <?php if($viewer_userID == $circle_adminID){?>
                 <button type="submit" onclick="return confirm('Are you sure you want to delete this circle?')" name="delete_circle" class="btn btn-danger "><span class="glyphicon glyphicon-trash"></span>
                 </button>
+                <?php } ?>
+                <button type="submit" onclick="return confirm('Are you sure you leave this circle?')" name="leave_circle" class="btn btn-primary btn-block">Leave Circle</button>
 
             </form>
             </div>
 
-            <?php } ?>
+            
         </div>
     </div>
 </div>
@@ -143,10 +166,7 @@ while($circle_members=mysqli_fetch_assoc($circle_members_results)){
         <ul class="list-group">
 
         <!--PUT THE ID IN THE VALUE AND THE NAME-->
-
-        <li class="list-group-item"><input type="checkbox" name="invited_friends[]" value="Name 1"/> Name Here</li>
-        <li class="list-group-item"><input type="checkbox" name="invited_friends[]" value="Name 2"/> Name Here</li>
-        <li class="list-group-item"><input type="checkbox" name="invited_friends[]" value="Name 3"/> Name Here</li>
+        <?php echo $friend_output; ?>
         </ul>
 
         <button type="submit" class="btn btn-primary" name="invitation" >Invite Friends</button>

@@ -25,6 +25,8 @@ function find_accepted($userid) {
     confirm_query($result);
     return $result;
 }
+
+
 function find_friendship($user1ID, $user2ID) {
     global $conn;
     $query = "SELECT * FROM friendship ";
