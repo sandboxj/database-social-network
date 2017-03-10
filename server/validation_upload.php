@@ -111,5 +111,6 @@ if (isset($_POST["submit"])) {
     } else {
         $_SESSION["message"] .= "Sorry, you have not selected any file to upload.";
     }
-    redirect_to("");
+    $actual_link = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+    redirect_to("{$actual_link}");
 }

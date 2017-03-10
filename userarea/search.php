@@ -1,24 +1,68 @@
 <?php require_once("../server/sessions.php"); ?>
 <?php require_once("../server/functions.php");?>
+<?php require_once("../server/functions_photos.php");?>
 <?php require_once("../server/db_connection.php");?>
+<?php require_once("../server/validation_search.php");?>
 <?php $page_title="Search"?>
 <?php confirm_logged_in(); ?>
 <?php include("../includes/header.php"); ?>
 <?php include("navbar.php"); ?>
 
-<h2>Search</h2>
-<?php echo message()?>
+<style>
+  input[type=text] {
+  width: 200px;
+  box-sizing: border-box;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  font-size: 18px;
+  background-color: white;
+  background-position: 10px 10px;
+  background-repeat: no-repeat;
+  padding: 5px 20px 5px 20px;
+  margin: 5px 0px 5px 0px;
+  -webkit-transition: width 0.4s ease-in-out;
+  transition: width 0.4s ease-in-out;
+}
 
-<form action="search_results.php" method="post">
-    <textarea rows="1" style="width: 20%" name="search_query"></textarea><br />
-    <input type="submit" name="search_result" value="Search" />
+input[type=text]:focus {
+  width: 100%;
+}
+</style>
+
+<h2>Find Friends</h2>
+<?php echo message()?>
+<form action="search.php" method="post">
+    <input type="text" name="search_query" placeholder="Name..."></input><br />
+    <button type="submit" name="search_result" value="Search" class="btn btn-primary">Search</button>
 </form>
+
+<?php
+    if (isset($_POST["search_result"])) {
+?>
+    <hr />
+    <h4>Search results</h4>
+<?php
+    while($u = mysqli_fetch_assoc($result)) {
+        $pic = find_profile_pic($u["UserID"]);
+        while($picture = mysqli_fetch_assoc($pic)) {
+            $out = "../userarea/img/" . $picture["FileSource"];
+        }
+        $image = "<td><a href='user_profile.php?id={$u["UserID"]}'><img src={$out} class=\"img-rounded\" alt=\"Cinque Terre\" width=\"304\" height=\"236\"></a></td><br/>";
+        echo $image;
+        $output = "<td><a href='user_profile.php?id={$u["UserID"]}'>" . $u["FirstName"] . " " . $u["LastName"] . "</a></td>";
+        echo "<h4>" . $output . "</h4>";
+    }
+    mysqli_free_result($result);
+    }
+?>
+
+
 
 <hr />
 
 <h4>People you may know</h4>
 
-<?php
+<!--<?php
     $friends1 = "SELECT * FROM friendship f
                  WHERE f.User1ID = '{$_SESSION["UserID"]}'
                  AND f.Status = 'Accepted'";
@@ -99,7 +143,7 @@
             echo "<h4>" . $name . "</h4>";
         }
     }
-?>
+?>-->
 
 
 <a href="logout.php">Logout</a>

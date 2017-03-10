@@ -1,5 +1,6 @@
 <?php require_once("../server/validation_functions.php");?>
 <?php
+$actual_link = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 if (isset($_POST["delete_photo"])) {
     $id_todelete = $_POST["delete_photo"];
     $userid = $_SESSION["UserID"];
@@ -25,6 +26,7 @@ if (isset($_POST["delete_photo"])) {
             $result2 = mysqli_query($conn, $query2);
             $_SESSION["message"] .= ($result2) ? "" : "Photo deleted but changing profile picture failed.";
     } else {}
+    redirect_to("{$actual_link}");
 } 
 elseif (isset($_POST["delete_all"])) {
     $id_todelete = $_POST["delete_all"];
@@ -49,6 +51,7 @@ elseif (isset($_POST["delete_all"])) {
         $result = mysqli_query($conn, $query);
         $_SESSION["message"] .= ($result) ? "" : "Photos deleted but setting default profile picture failed.";
     } else {}
+    redirect_to("{$actual_link}");
 }
 else {
     // Do nothing

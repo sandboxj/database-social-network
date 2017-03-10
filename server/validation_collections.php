@@ -1,5 +1,6 @@
 <?php require_once("../server/validation_functions.php");?>
 <?php
+$actual_link = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 if (isset($_POST["add_collection"])) {
     // Check if post is blank
     if (strlen(trim($_POST["title"]))) {
@@ -21,12 +22,11 @@ if (isset($_POST["add_collection"])) {
         $query .= "VALUES ('{$collection_id}', '{$userid}','{$create_time}', '{$collection_title}', '{$collection_access}')";
         $result = mysqli_query($conn, $query);
         $_SESSION["message"] = ($result) ? "" : "Adding new collection failed. No duplicate album titles allowed.";
-        // redirect_to("../userarea/collections.php");
     } 
     else {
         $_SESSION["message"] = "Adding new collection failed. Title cannot be empty.";
-        // redirect_to("../userarea/collections.php");
     }
+    redirect_to("{$actual_link}");
 } 
 elseif (isset($_POST["delete_collection"])) {
     $id_todelete = $_POST["delete_collection"];
@@ -52,6 +52,7 @@ elseif (isset($_POST["delete_collection"])) {
     $query .= "WHERE CollectionID = '{$id_todelete}'";
     $result = mysqli_query($conn, $query);
     $_SESSION["message"] = ($result) ? "" : "Deleting collection failed.";
+    redirect_to("{$actual_link}");
 }
 else {
     // Do nothing

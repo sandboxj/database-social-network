@@ -8,7 +8,6 @@
 <?php confirm_logged_in(); ?>
 <?php include("../includes/header.php"); ?>
 <?php include("navbar.php"); ?>
-
         <h2><?php echo $_SESSION["FirstName"] . " " . $_SESSION["LastName"]?>  <button class="btn" onclick="$('.edit_profile').toggleClass('hidden');">Edit profile picture</button></h2><br/>
         <div class="row">
             <div class="col-sm-4">

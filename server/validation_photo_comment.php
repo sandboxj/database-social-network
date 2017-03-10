@@ -1,5 +1,6 @@
 <?php require_once("../server/validation_functions.php");?>
 <?php
+$actual_link = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 if (isset($_POST["post_comment"])) {
     // Check if post is blank
     if (strlen(trim($_POST["comment"]))) {
@@ -13,11 +14,10 @@ if (isset($_POST["post_comment"])) {
                 $query .= "VALUES ('{$photoid}', '{$userid}', '{$post_time}', '{$content}')";
                 $result = mysqli_query($conn, $query);
                 $_SESSION["message"] = ($result) ? "" : "Post failed.";
-                redirect_to("");
     } else {
         $_SESSION["message"] = "Cannot post empty comment.";
-        redirect_to("");
     }
+    redirect_to("{$actual_link}");
 } 
 elseif (isset($_POST["delete_comment"])) {
     $id_todelete = $_POST["delete_comment"];
@@ -25,7 +25,7 @@ elseif (isset($_POST["delete_comment"])) {
     $query .= "WHERE PhotoCommentID = '{$id_todelete}'";
     $result = mysqli_query($conn, $query);
     $_SESSION["message"] = ($result) ? "" : "Deleting post failed.";
-    redirect_to("");
+    redirect_to("{$actual_link}");
 }
 else {
     // Do nothing

@@ -6,7 +6,8 @@
             <a href="profile.php">Profile</a></li>
         <li role="presentation" <?php if ($page_title == "{$_SESSION["FirstName"]} {$_SESSION["LastName"]}'s Blogs") { ?> class="active" <?php }; ?> >
             <a href="blogs.php">Blog</a></li>
-        <li role="presentation" <?php if ($page_title == "Photo Collections") { ?> class="active" <?php }; ?> ><a
+        <li role="presentation" <?php if ($page_title == "Photo Collections") { ?> class="active" <?php } 
+                    elseif ($page_title == "Photos"){ ?> class="active" <?php }?> ><a
                     href="collections.php">Photos</a></li>
         <li role="presentation" <?php if ($page_title == "Circles") { ?> class="active" <?php }; ?> ><a
                     href="circles.php">Circles</a></li>

@@ -1,5 +1,6 @@
 <?php require_once("../server/sessions.php"); ?>
 <?php require_once("../server/functions.php");?>
+<?php require_once("../server/functions_photos.php");?>
 <?php require_once("../server/db_connection.php");?>
 <?php require_once("../server/validation_search.php");?>
 <?php $page_title="Search results"?>
