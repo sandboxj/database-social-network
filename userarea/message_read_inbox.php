@@ -14,8 +14,8 @@ if (!$_GET['in']) {
 } else {
     $pageid2 = preg_replace("[^0-9]", "", $_GET['in']);
 }
-
-$query = retrieve_message_inbox($pageid2);
+$userid = $_SESSION['UserID'];
+$query = retrieve_message_inbox($pageid2, $userid);
 
 
 while ($row = mysqli_fetch_array($query)) {
@@ -55,7 +55,7 @@ update_status($pageid2);
     <div class="col-sm-8">
         <ul class="nav nav-pills nav-justified">
             <li role="presentation" class="active"><a href="message_inbox.php">Inbox <span
-                            class="badge"><?php echo($newMessages = check_new_mail_friends() + check_new_mail_circles()) ?></span></a>
+                            class="badge"><?php echo($newMessages = check_new_mail_friends($userid) + check_new_mail_circles($userid)) ?></span></a>
             </li>
             <li role="presentation"><a href="message_outbox.php">Outbox</a></li>
             <li role="presentation"><a href="messages.php">New Message</a></li>

@@ -6,6 +6,7 @@
 <?php include("../includes/header.php"); ?>
 <?php include("navbar.php"); ?>
 
+<?php $userid = $_SESSION['UserID'];?>
 
 
 <!-- The Jumbotron of the website -->
@@ -23,7 +24,7 @@
     <div class="col-sm-8">
         <ul class="nav nav-pills nav-justified">
             <li role="presentation" class="active"><a href="message_inbox.php">Inbox <span
-                            class="badge"><?php echo ($newMessages = check_new_mail_friends() + check_new_mail_circles())?></span></a></li>
+                            class="badge"><?php echo ($newMessages = check_new_mail_friends($userid) + check_new_mail_circles($userid))?></span></a></li>
             <li role="presentation"><a href="message_outbox.php">Outbox</a></li>
             <li role="presentation"><a href="messages.php">New Message</a></li>
     </div>
@@ -46,7 +47,7 @@
                         <th width="255">Date</th>
                     </tr>
                     <?php
-                    $result = check_all_inbox();
+                    $result = check_all_inbox($userid);
                     $count = mysqli_num_rows($result);
                     $msg_counter = 1;
 

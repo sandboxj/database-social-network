@@ -14,9 +14,9 @@ if (!$_GET['out']) {
 } else {
     $pageid2 = preg_replace("[^0-9]", "", $_GET['out']);
 }
+$userid = $_SESSION['UserID'];
 
-echo $pageid2;
-$query = retrieve_message_outbox($pageid2);
+$query = retrieve_message_outbox($pageid2, $userid);
 
 
 while ($row = mysqli_fetch_array($query)) {
@@ -63,7 +63,7 @@ update_status($pageid2);
     <div class="col-sm-8">
         <ul class="nav nav-pills nav-justified">
             <li role="presentation"><a href="message_inbox.php">Inbox <span
-                            class="badge"><?php echo($newMessages = check_new_mail_friends() + check_new_mail_circles()) ?></span></a>
+                            class="badge"><?php echo($newMessages = check_new_mail_friends($userid) + check_new_mail_circles($userid)) ?></span></a>
             </li>
             <li role="presentation" class="active"><a href="message_outbox.php">Outbox</a></li>
             <li role="presentation"><a href="messages.php">New Message</a></li>
@@ -86,7 +86,7 @@ update_status($pageid2);
             <div class="col-sm-6">
                 <p id="message_from"><?php print $message_receveiver?></p>
                 <p id="message_title"><?php print $Ititle ?></p>
-                <p id="message_content"><?php print $Icontent ?></p>
+                <p id="message_content" style="white-space: pre;"><?php print $Icontent ?></p>
             </div>
             <div class="col-sm-4">
                 <p class="message_date"><?php print $date_final?></p><br>

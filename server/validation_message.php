@@ -1,9 +1,10 @@
 <?php
 global $conn;
 $check = true;
+$check2 = false;
 
 if (isset($_POST['send'])) {
-    $userid = logged_in();
+    $userid = $_SESSION['UserID'];
     $message_content = $_POST['message_content'];
     $message_title = $_POST['title'];
     $receiver = $_POST['to_user'];
@@ -22,10 +23,10 @@ if (isset($_POST['send'])) {
         $message = "No receiver selected.";
     }
 
-    if (!$receiver_id === null) {
+    if (!$receiver_id == null) {
         if (strlen(trim($message_title))) {
             if (strlen(trim($message_content))) {
-                if (strlen(trim($message_content)) < 2540) {
+                if (strlen(trim($message_content)) < 2500) {
                     // Gather the content
                     $message_title = mysqli_real_escape_string($conn, $message_title);
                     $message_content = mysqli_real_escape_string($conn, $message_content);
@@ -35,28 +36,33 @@ if (isset($_POST['send'])) {
 
 
                     $sql = "INSERT INTO message
-               (SenderUserID, ReceiverType, ReceiverID, Title, Content, TimeSent)
-                VALUES ('$userid', '$receiver_type', '$receiver_id', '$message_title', '$message_content', '$date_time')";
+                            (SenderUserID, ReceiverType, ReceiverID, Title, Content, TimeSent)
+                            VALUES ('{$userid}', '{$receiver_type}', '{$receiver_id}', '{$message_title}', '{$message_content}', '{$date_time}')";
 
                     $result = mysqli_query($conn, $sql);
                     $message = "Message was sent!";
                     $check = true;
+                    $check2 = true;
                 } else {
                     $message = "Message too long. Please reduce length!";
                     $check = false;
+                    $check2 = false;
                 }
             } else {
                 $message = "No message content. Please type in a message!";
                 $check = false;
+                $check2 = false;
             }
 
         } else {
             $message = "No message title. Please type in a title!";
             $check = false;
+            $check2 = false;
         }
     } else {
         $message = "No receiver selected. Please chose one from the list.";
         $check = false;
+        $check2 = false;
     }
 }
 

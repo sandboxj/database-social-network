@@ -12,10 +12,10 @@ require_once "functions.php";
 
 
 // Check for new messages
-function check_new_mail_friends()
+function check_new_mail_friends($userid)
 {
     global $conn;
-    $userid = logged_in();
+
 
     $sqlCommand = "SELECT COUNT(ReceiverID) AS numbers
                    FROM message
@@ -38,10 +38,9 @@ function check_new_mail_friends()
 }
 
 // Check for new messages
-function check_new_mail_circles()
+function check_new_mail_circles($userid)
 {
     global $conn;
-    $userid = logged_in();
 
     $sqlCommand = "SELECT COUNT(ReceiverID) AS numbers
                    FROM message m, circle_member cm
@@ -66,9 +65,8 @@ function check_new_mail_circles()
 
 
 // Check for all inbox messages
-function check_all_inbox() {
+function check_all_inbox($userid) {
     global $conn;
-    $userid = logged_in();
 
     $sql = "SELECT DISTINCT MessageID, Title, Content, Status, TimeSent, SenderUserID, ReceiverID, FirstName, LastName
             FROM message m, circle_member cm, user u
@@ -87,10 +85,9 @@ function check_all_inbox() {
 
 
 // Check for all outbox messages
-function check_all_outbox()
+function check_all_outbox($userid)
 {
     global $conn;
-    $userid = logged_in();
 
     $sql = "(SELECT MessageID, Title, Content, TimeSent, SenderUserID, ReceiverID, ReceiverType, FirstName, LastName
             FROM message m, user u
@@ -108,14 +105,14 @@ function check_all_outbox()
 }
 
 
-function search_recipient() {
+function search_recipient($userid) {
     global $conn;
-    $userid = logged_in();
 
-    $sql = "SELECT UserID, FirstName, LastName, User1ID, User2ID, Status
+    $sql = "SELECT DISTINCT UserID, FirstName, LastName
             FROM user u, friendship f
-            WHERE ((u.UserID = f.User1ID = '$userid' AND Status = 1) OR
-            (u.UserID = f.User2ID = '$userid' AND Status = 1));";
+            WHERE ((u.UserID = f.User1ID LIKE '{$userid}' AND Status = '1') OR
+            (u.UserID = f.User2ID LIKE '{$userid}' AND Status = '1'));";
+
 
     $result = mysqli_query($conn, $sql);
     confirm_query($result);
@@ -124,13 +121,12 @@ function search_recipient() {
 }
 
 
-function search_circles() {
+function search_circles($userid) {
     global $conn;
-    $userid = logged_in();
 
     $sql = "SELECT CircleTitle, c.CircleID
             FROM user u, circle c, circle_member cm
-            WHERE (u.UserID = cm.MemberUserID LIKE '$userid' AND cm.CircleID = c.CircleID);";
+            WHERE (u.UserID = cm.MemberUserID LIKE '{$userid}' AND cm.CircleID = c.CircleID);";
 
     $result = mysqli_query($conn, $sql);
     confirm_query($result);
@@ -142,7 +138,6 @@ function search_circles() {
 
 function retrieve_message_inbox($MessageID) {
     global $conn;
-    $userid = logged_in();
 
     $sql = "SELECT MessageID, Title, Content, Status, TimeSent, SenderUserID, ReceiverID, FirstName, LastName
             FROM message m, user u
@@ -154,14 +149,13 @@ function retrieve_message_inbox($MessageID) {
     return $query;
 }
 
-function retrieve_message_outbox($MessageID) {
+function retrieve_message_outbox($MessageID, $userid) {
     global $conn;
-    $userid = logged_in();
 
     $sql = "SELECT MessageID, Title, Content, Status, TimeSent, SenderUserID, ReceiverType, ReceiverID, FirstName, LastName, CircleTitle
             FROM message m, user u, circle c
-            WHERE (SenderUserID = '$userid' AND MessageID = '$MessageID' AND ReceiverID = u.UserID)
-            OR (SenderUserID = '$userid' AND MessageID = '$MessageID' AND ReceiverID = c.CircleID);";
+            WHERE (SenderUserID = '{$userid}' AND MessageID = '$MessageID' AND ReceiverID = u.UserID)
+            OR (SenderUserID = '{$userid}' AND MessageID = '$MessageID' AND ReceiverID = c.CircleID);";
 
     $query = mysqli_query($conn, $sql);
     confirm_query($query);
