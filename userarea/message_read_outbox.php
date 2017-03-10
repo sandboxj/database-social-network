@@ -43,9 +43,6 @@ if ($Ireceivertype == 0) {
     $message_receveiver = $Ifirstname."".$Ilastname;
 }
 
-update_status($pageid2);
-
-
 ?>
 
 <!-- The Jumbotron of the website -->
