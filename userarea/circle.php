@@ -14,11 +14,18 @@ if(isset($_POST['delete_circle'])){
     redirect_to("../userarea/circles.php");
 }
 
-if(isset($_POST['invited_friends[]'])){
-    $circleID = $_GET['circleID'];
 
+if(isset($_POST['invitation'])){
+   
+    $circleID = $_GET['circleID'];
+    $invited_friendsID[] = $_POST['invited_friends'];
  
- var_dump($_POST['invited_friends[]']);
+    foreach($invited_friendsID as $invited_friendID){
+        echo $invited_friendID;
+        add_circle_member($circleID, $invited_friendID);
+    }
+
+
 
 }
 ?>
@@ -134,11 +141,16 @@ while($circle_members=mysqli_fetch_assoc($circle_members_results)){
 
         <form action="circle.php?circleID=<?php echo $circleID?>" method="post">
         <ul class="list-group">
+
+        <!--PUT THE ID IN THE VALUE AND THE NAME-->
+
         <li class="list-group-item"><input type="checkbox" name="invited_friends[]" value="Name 1"/> Name Here</li>
         <li class="list-group-item"><input type="checkbox" name="invited_friends[]" value="Name 2"/> Name Here</li>
         <li class="list-group-item"><input type="checkbox" name="invited_friends[]" value="Name 3"/> Name Here</li>
         </ul>
-        <button type="submit" class="btn btn-primary" >Invite Friends</button>
+
+        <button type="submit" class="btn btn-primary" name="invitation" >Invite Friends</button>
+
         </form>
       </div>
       <!--<div class="modal-footer">
