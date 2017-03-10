@@ -114,8 +114,8 @@ function search_recipient() {
 
     $sql = "SELECT UserID, FirstName, LastName, User1ID, User2ID, Status
             FROM user u, friendship f
-            WHERE ((u.UserID = f.User1ID = '$userid' AND Status = 'Accepted') OR
-            (u.UserID = f.User2ID = '$userid' AND Status = 'Accepted'));";
+            WHERE ((u.UserID = f.User1ID = '$userid' AND Status = 1) OR
+            (u.UserID = f.User2ID = '$userid' AND Status = 1));";
 
     $result = mysqli_query($conn, $sql);
     confirm_query($result);
