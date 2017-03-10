@@ -1,19 +1,12 @@
 <?php require_once("../server/sessions.php"); ?>
 <?php require_once("../server/functions.php");?>
+<?php require_once("../server/functions_photos.php");?>
 <?php require_once("../server/db_connection.php");?>
 <?php require_once("../server/validation_collections.php");?>
 <?php $page_title="Photo Collections"?>
 <?php confirm_logged_in(); ?>
 <?php include("../includes/header.php"); ?>
 <?php include("navbar.php"); ?>
-<style> 
-.polaroid {
-    background-color: white;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    border-radius: 10px;
-    padding: 10px;
-}
-</style>
 
         <h2>Your Photo Collections</h2>
         <button type="button" class="btn"  data-toggle="modal" data-target="#addCollection">Add new collection</button>

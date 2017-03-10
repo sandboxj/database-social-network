@@ -65,8 +65,8 @@ if (isset($_POST["submit"])) {
 
                 // in DB
                 mysqli_free_result($result);
-                $query = "INSERT INTO Photo_Collection (CollectionID, Caption, UserID, DateCreated, CollectionTitle) VALUES (";
-                $query .= "'{$collectionid}', '{$caption}', '{$userid}', '{$date_posted}', 'Profile pictures'";
+                $query = "INSERT INTO Photo_Collection (CollectionID, UserID, DateCreated, CollectionTitle) VALUES (";
+                $query .= "'{$collectionid}', '{$userid}', '{$date_posted}', 'Profile pictures'";
                 $query .= ") ";
                 $result = mysqli_query($conn, $query);
             } else {
@@ -74,9 +74,9 @@ if (isset($_POST["submit"])) {
             }
           
                 // Insert into photos
-                $query = "INSERT INTO Photo (CollectionID, DatePosted, AccessRights, FileSource) ";
+                $query = "INSERT INTO Photo (CollectionID, Caption, DatePosted, AccessRights, FileSource) ";
                 $query .= "VALUES (";
-                $query .= "'{$collectionid}', '{$date_posted}', '{$access_rights}', '{$new_filename}');";
+                $query .= "'{$collectionid}', '{$caption}', '{$date_posted}', '{$access_rights}', '{$new_filename}');";
                 $result = mysqli_query($conn, $query);
                 $new_id = mysqli_insert_id($conn);
 

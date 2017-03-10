@@ -1,5 +1,6 @@
 <?php require_once("../server/sessions.php"); ?>
 <?php require_once("../server/functions.php");?>
+<?php require_once("../server/functions_photos.php");?>
 <?php require_once("../server/db_connection.php");?>
 <?php require_once("../server/validation_photo_comment.php");?>
 <?php $page_title="Photos"?>
@@ -12,7 +13,15 @@
         </div>
         <div class="container">
                 <div class="span12">
+                        <figure>
                         <img src="img/<?php echo ($_GET["collection"] . "/" . $_GET["FileSource"]) ?>" alt="Collection Picture" class="center-block img-responsive">
+                        <figcaption style="text-align: center; background-color: white;">
+                        <?php 
+                                $caption = isset($_GET["Caption"]) ? trim($_GET["Caption"]) : "";
+                                echo $caption;
+                        ?>
+                        </figcaption>
+                        </figure>
                 </div>
         </div>
         <hr />

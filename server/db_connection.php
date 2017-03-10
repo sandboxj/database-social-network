@@ -1,10 +1,10 @@
 <?php
 // ------> LOCAL database connection:
-$servername='localhost';
-$username='root';
-$password='root';
-$database='soshallnetwork';
-$conn= New mysqli($servername,$username,$password,$database);
+// $servername='localhost';
+// $username='root';
+// $password='root';
+// $database='soshallnetwork';
+// $conn= New mysqli($servername,$username,$password,$database);
 
 // ------> Azure Database connection
 

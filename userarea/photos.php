@@ -1,5 +1,6 @@
 <?php require_once("../server/sessions.php"); ?>
 <?php require_once("../server/functions.php");?>
+<?php require_once("../server/functions_photos.php");?>
 <?php require_once("../server/db_connection.php");?>
 <?php require_once("../server/validation_upload.php");?>
 <?php require_once("../server/validation_photos.php");?>
@@ -34,8 +35,7 @@
                                 <input type="file" name="fileToUpload" id="fileToUpload">
                                 <input type="text" name="collectionid" value="<?php echo "{$_GET['collection']}"?>" class="hidden" readonly>                                    
                                 Caption: <input type="text" name="caption" placeholder="(optional)"></input><br />
-                                Access Rights: <?php print_access_selector(); ?>                            
-                                <br />
+                                Access Rights: <?php print_access_selector(); ?><br />
                                 <input type="submit" value="Upload Image" name="submit">
                             </form>
                         </div>
