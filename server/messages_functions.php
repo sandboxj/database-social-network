@@ -110,8 +110,9 @@ function search_recipient($userid) {
 
     $sql = "SELECT DISTINCT UserID, FirstName, LastName
             FROM user u, friendship f
-            WHERE ((u.UserID = f.User1ID LIKE '{$userid}' AND Status = '1') OR
-            (u.UserID = f.User2ID LIKE '{$userid}' AND Status = '1'));";
+            WHERE 
+            ((u.UserID = f.User1ID AND f.User2ID = '{$userid}' AND Status LIKE '1') OR
+            (u.UserID = f.User2ID AND f.User1ID = '{$userid}' AND Status LIKE '1'))";
 
 
     $result = mysqli_query($conn, $sql);
