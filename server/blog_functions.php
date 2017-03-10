@@ -416,7 +416,7 @@ function check_blog_title($userid, $blog_title){
     if(strlen(trim($blog_title))) {
 
         //make sure that this did not mess up anything
-        $blog_title = mysqli_real_escape_string($blog_title);
+        $blog_title = mysqli_real_escape_string($conn, $blog_title);
 
         $title_check = "SELECT Title FROM blog
                     WHERE blog.userID = '{$userid}' 
