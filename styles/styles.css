@@ -12,8 +12,6 @@ hr {
 .jumbotron {
     display: flex;
     align-items: center;
-    background-image: url("../userarea/img/blue.jpg");
-    background-size: cover;
     color: #eeeaec;
     height: 250px;
     text-shadow: 1px 1px 1px #000000;

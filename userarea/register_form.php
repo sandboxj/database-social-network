@@ -66,17 +66,7 @@
                         <label for="password">Password</label>
                         <input type="password" class="form-control" id="password" name="password" value="" placeholder="Password" aria-describedby="password_helper" required>
 
-
-                    </div>
-                    <div class="form-group">
-                        <label for="firstName">First Name</label>
-                        <input type="text" class="form-control" id="firstName" name="first_name" value="" placeholder="">
-                    </div>
-                    <div class="form-group">
-                        <label for="lastName">Last Name</label>
-                        <input type="text" class="form-control" id="lastName" name="last_name" value="" placeholder="">
-
-                    </div>
+        <br>
                     <div class="form-group">
                         <label for="password-confirm">Confirm Password</label>
                         <input type="password" class="form-control" id="password-confirm" name="password_confirm" value="" placeholder="Confirm Password" aria-describedby="password_confirm_helper" required>

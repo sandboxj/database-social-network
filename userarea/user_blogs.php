@@ -13,7 +13,7 @@
 $viewer_userID = $_SESSION['UserID'];
 
 //blog author
-$friend_userid = $_POST['user'];
+$friend_userid = $_GET['id'];
 
 $friend_full_name = find_full_name($friend_userid);
 $first_name= $friend_full_name['FirstName'];
@@ -23,7 +23,7 @@ $page_title="{$first_name} {$last_name}'s Blogs";
 
 
 $name = "{$first_name} {$last_name}'s Blogs";
-$is_in_user_circle = is_in_another_user_circle($friend_userID, $viewer_userID);
+$is_in_user_circle = is_in_another_user_circle($friend_userid, $viewer_userID);
 ?>
 
 <h2><?php echo $name ?></h2>

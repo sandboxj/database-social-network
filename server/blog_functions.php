@@ -31,11 +31,15 @@ function convert_access_rights_to_int($access_rights){
         case "Circles":
             $access_rights = 3;
             break;
+        case "Friends of friends":
+            $access_rights = 4;
+            break;
     }
 
 
     return $access_rights;
 }
+
 
 /**
  * This function converts access rights in integer form to a string equivalent so that this value
@@ -57,6 +61,9 @@ function convert_access_rights_to_string($access_rights){
             break;
         case 3:
             $access_rights = "Circles";
+            break;
+        case 4:
+            $access_rights = "Friends of friends";
             break;
     }
 
@@ -171,8 +178,8 @@ function display_formatted_date($date_posted){
 /**
  * This function checks the access rights of the blog and returns a boolean to determine whether the blog should
  * or should not be displayed in the blog page; note that the method uses the integer access_rights from the db.
- * $isFriend is a boolean that checks the currently connected user is friends with the user whose blogs he is trying to view
- * (true if yes, false if no). $isCircle checks whether a user is in the same circle as another.
+ * $is_Friend is a boolean that checks the currently connected user is friends with the user whose blogs he is trying to view
+ * (true if yes, false if no). $is_Circle checks whether a user is in the same circle as another.
  *
  *
  * @param $access_rights
@@ -191,7 +198,7 @@ function confirm_access_rights($access_rights, $is_friend, $is_circle){
             return $check;
         //friends
         case 1:
-            if($isFriend == true){
+            if($is_friend == true){
                 $check = true;
                 return $check;
 
@@ -204,7 +211,7 @@ function confirm_access_rights($access_rights, $is_friend, $is_circle){
             return $check;
         //circles
         case 3:
-            if($isCircle == true){
+            if($is_circle == true){
                 $check = true;
                 return $check;
             }else{

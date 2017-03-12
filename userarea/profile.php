@@ -8,8 +8,29 @@
 <?php confirm_logged_in(); ?>
 <?php include("../includes/header.php"); ?>
 <?php include("navbar.php"); ?>
-        <h2><?php echo $_SESSION["FirstName"] . " " . $_SESSION["LastName"]?>  <button class="btn" onclick="$('.edit_profile').toggleClass('hidden');">Edit profile picture</button></h2><br/>
-        <div class="row">
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-4">
+            <h2><?php echo $_SESSION["FirstName"] . " " . $_SESSION["LastName"]?></h2>
+        </div>
+        <div class="col-md-4" pull-right>
+            <br>
+            <div class="btn-toolbar" role="toolbar" aria-label="blog_options">
+                <div class="btn-group-horizontal" aria-label="blog_options">
+            <button class="btn btn-primary" onclick="$('.edit_profile').toggleClass('hidden');">Edit profile</button>
+                    <button class="btn"> <span class="glyphicon glyphicon-cog"></span> Privacy Settings</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<br>
+<br>
+
+<div class="container-fluid">
+<div class="row">
             <div class="col-sm-4">
 
                 <?php
@@ -49,6 +70,7 @@
               </form>
             </div>
         </div>
+</div>
         <hr />
         <a href="logout.php">Logout</a>
 

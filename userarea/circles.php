@@ -52,7 +52,7 @@ if (isset($_POST['create-circle'])){
             <hr>
             <h5>Circle members: <?php echo $member_count ?> </h5>
             <br>
-            <a href="circle.php?circleID=<?php echo $circleID ?>" class="btn btn-primary btn-block" type="button">See More</a>
+            <a href="circle.php?circleID=<?php echo $circleID;?>&count=<?php echo $member_count?>" class="btn btn-primary btn-block" type="button">See More</a>
         </div>
 
 </div>
@@ -67,19 +67,33 @@ if (isset($_POST['create-circle'])){
 <br>
 <br>
 
-<div class="container-fluid create-circle">
-    <div class="row ">
-        <h2>Create a new circle:</h2>
-        <br>
-    </div>
-    <div class="row content ">
+
+<!-- Trigger the modal with a button -->
+<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Create a circle</button>
+<br>
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Create a new circle:</h4>
+      </div>
+      <div class="modal-body">
+        
+         <div class="row content">
 
         <div class="col-md-3">
             <img class="img-responsive img-circle" src="img/1.jpg" />
 <!--            HAVE THE FUNCTION FROM THE UPLOAD PHOTOS-->
+        </div>
+        <div class="col-md-3">
             <input type="submit" value="Upload Photo" class="btn btn-default"/>
         </div>
-        <div class="col-md-5">
+        <div class="col-md-4 pull-right">
             <form action="circles.php" method="post">
                 <label for="circle_name">Circle Name:</label>
                 <input type="text" value="" name="circle_title" placeholder="Circle Name" required>
@@ -91,6 +105,18 @@ if (isset($_POST['create-circle'])){
         </div>
 
     </div>
+
+       
+      </div>
+      <!--<div class="modal-footer">
+        
+  
+  
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>-->
+    </div>
+
+  </div>
 </div>
 
 

@@ -162,6 +162,32 @@ function find_circle_members($circleID){
     return $members_results_db;
 }
 
+
+function find_circle_details($circleID){
+
+    global $conn;
+
+    $query = "SELECT CirclePhotoID, CircleTitle, CircleAdminUserID FROM circle
+            WHERE CircleID = '{$circleID}'";
+
+    $circle_details_results_db = mysqli_query($conn, $query);
+    confirm_query($circle_details_results_db);
+
+    $circle_details_array = mysqli_fetch_assoc($circle_details_results_db);
+    $circle_photoID = $circle_details_array['CirclePhotoID'];
+    $circle_title = $circle_details_array['CircleTitle'];
+    $circle_adminID = $circle_details_array['CircleAdminUserID'];
+
+
+    mysqli_free_result($circle_details_results_db);
+
+    $details_array = array("circle_photo" => $circle_photoID, "circle_title" =>$circle_title,"circle_admin" => $circle_adminID);
+    return $details_array;
+
+}
+
+
+//might not be needed anymore
 function find_circle_photoID($circleID){
 
     global $conn;
@@ -180,6 +206,7 @@ function find_circle_photoID($circleID){
 
 }
 
+//might not be needed anymore
 function find_circle_title($circleID){
 
     global $conn;
@@ -214,6 +241,8 @@ function find_circle_title($circleID){
 
 // }
 
+
+//might not be needed anymore
 function find_circle_admin($circleID){
 
     global $conn;
@@ -253,16 +282,19 @@ function is_in_specific_circle($userid, $circleID){
 //checks whether the given user belongs to a specified circle 
     global $conn;
 
-    $query =  "SELECT CircleID, MemberUserID FROM circle_member
-            WHERE CircleID='{$circleID}' AND '{$userid}' 
+    $query =  "SELECT * FROM circle_member
+            WHERE CircleID='{$circleID}' AND MemberUserID='{$userid}' 
             LIMIT 1";
 
-    $results = mysqli_query($conn, $query);
+    $results_db = mysqli_query($conn, $query);
 
     $is_in_Circle = false;
-    if($results){
+    
+    if($results = mysqli_fetch_assoc($results_db)){
         $is_in_Circle = true;
+       
         return $is_in_Circle;
+      
     }else{
         return $is_in_Circle;
 

@@ -17,3 +17,21 @@
 #circle-members-title{
     color: #FF6707;
 }
+
+/*html { */
+  /*background: url("../userarea/img/buildings.jpg") no-repeat center center fixed;*/
+  /*-webkit-background-size: cover;*/
+  /*-moz-background-size: cover;*/
+  /*-o-background-size: cover;*/
+  /*background-size: cover;*/
+/*}*/
+
+#bg {
+  position: fixed; 
+  top: 0; 
+  left: 0; 
+	
+  /* Preserve aspect ratio */
+  min-width: 100%;
+  min-height: 100%;
+}

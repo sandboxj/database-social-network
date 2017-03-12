@@ -97,7 +97,7 @@ if (isset($_POST["blog_comment"])){
 <!--Comments-->
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-7" id="comment">
+
 
             <?php $blog_comment_results = find_blog_comments($blogID);
 
@@ -116,7 +116,8 @@ if (isset($_POST["blog_comment"])){
                 $comment_content = $blog_comments['Content'];
 
                 ?>
-
+        <div class="container-fluid">
+        <div class="col-md-7" id="comment">
                 <br>
                 <?php
                 /*
@@ -142,13 +143,17 @@ if (isset($_POST["blog_comment"])){
                 }//closing else
                     ?>
 
-                <p><?php echo $comment_date_formatted; ?></p>
-
+                <p><?php echo "<h5>{$comment_date_formatted}</h5>"; ?></p>
+                <br>
+        </div>
+        </div>
+                <br>
                 <?php
+
 //bracket to close the while loop
             }
             ?>
-        </div>
+
     </div>
 </div>
 <br>

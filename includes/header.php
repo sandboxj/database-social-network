@@ -6,7 +6,7 @@ if (!isset($page_title)) {
 
 <!DOCTYPE html>
 
-<html lang="en">
+<html lang="en" >
     <head>
         <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
         <meta charset="utf-8">
@@ -37,7 +37,7 @@ if (!isset($page_title)) {
 
        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     </head>
-    <!--      <body style=" background: url('../userarea/img/iceberg.jpg') no-repeat center; ">   -->
+          
     <body>
 
 

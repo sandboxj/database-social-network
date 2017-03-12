@@ -77,6 +77,7 @@ if(isset($_GET['access'])){
     $updated_access_rights = $_GET['access'];
 
     update_blog_access_rights($current_blogID, $updated_access_rights);
+    redirect_to("blog.php?title={$blog_title}");
 }
 
 
@@ -105,7 +106,7 @@ if (isset($_POST["blog_comment"])){
 <!--TITLE, AUTHOR and DATE-->
 <div class="container-fluid"  >
     <div class="row top-buffer" >
-        <div class="col-md-7" id="card-header" >
+        <div class="col-md-9" id="card-header" >
 
                 <div class="card-title" >
                     <h1><?php echo "Title: {$trimmed_blog_title}" ?></h1>
@@ -155,7 +156,7 @@ if (isset($_POST["blog_comment"])){
 
 <!--    BLOG CONTENT-->
     <div class="row top-buffer">
-        <div class="col-md-7" id="card-content">
+        <div class="col-md-9" id="card-content">
             <br>
 
 
@@ -176,6 +177,8 @@ if (isset($_POST["blog_comment"])){
 
 </div>
 
+<br>
+<br>
 <!--Comment section header-->
 <div class="container-fluid comment-section">
     <div class="row top-buffer">
@@ -188,8 +191,8 @@ if (isset($_POST["blog_comment"])){
 
 <!--COMMENTS-->
 <div class="container-fluid">
-    <div class="row">
-        <div class="col-md-7" id="comment">
+    <div class="row ">
+
 <?php $blog_comment_results = find_blog_comments($current_blogID);
 
 while($blog_comments = mysqli_fetch_assoc($blog_comment_results)) {
@@ -211,6 +214,8 @@ while($blog_comments = mysqli_fetch_assoc($blog_comment_results)) {
 
     ?>
 
+   <div class="container-fluid">
+        <div class="col-md-7" id="comment">
         <br>
 
             <?php
@@ -236,10 +241,11 @@ while($blog_comments = mysqli_fetch_assoc($blog_comment_results)) {
             }//closing else
             ?>
 
-                <p><?php echo $comment_date_formatted; ?></p>
-
+    <p><?php echo "<h5>{$comment_date_formatted}</h5>"; ?></p>
+    <br>
         </div>
-        <div class="col-md-3">
+
+        <div class="col-md-3 " >
             <form action="blog.php?title=<?php echo $blog_title; ?>&blogID=<?php echo $current_blogID; ?>
             &commentID=<?php echo $commentID ?>" method="post">
 
@@ -248,14 +254,20 @@ while($blog_comments = mysqli_fetch_assoc($blog_comment_results)) {
                 </button>
 
             </form>
+
         </div>
-    </div>
+   </div>
+
+<br>
+
     <?php
 //bracket to close the while loop
 }
 ?>
 
 
+
+    </div>
 </div>
 <br>
 
