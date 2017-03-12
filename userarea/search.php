@@ -34,12 +34,12 @@ if (mysqli_num_rows($result)<1) {
     ?>
 <div class="row polaroid">
   <div class="col-md-3">
-    <a href="user_profile.php?id="
-      <?php echo $search_friend['UserID']?>"><img src=""<?php echo $uncached_src ?>" class="img-responsive" alt="Friend's profile picture'">
+    <a href="user_profile.php?id=
+      <?php echo $search_friend['UserID']?>"><img src="<?php echo $uncached_src ?>" class="img-responsive" alt="Friend's profile picture'">
     </a>
   </div>
   <div class="col-md-9">
-    <a href="user_profile.php?id="
+    <a href="user_profile.php?id=
       <?php echo $search_friend['UserID']?>"><h4>
         <?php echo $search_friend["FirstName"] . " " . $search_friend["LastName"]?>
       </h4>

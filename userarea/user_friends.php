@@ -1,8 +1,9 @@
 <?php require_once("../server/sessions.php"); ?>
 <?php require_once("../server/functions.php");?>
+<?php require_once("../server/functions_photos.php");?>
 <?php require_once("../server/db_connection.php");?>
 <?php $query = "SELECT * FROM user u
-                WHERE u.UserID like '{$_GET['user']}'";
+                WHERE u.UserID like '{$_GET['id']}'";
                 $displayed_user = mysqli_query($conn, $query);
                 confirm_query($displayed_user);
                 $user = mysqli_fetch_assoc($displayed_user) ?>
@@ -14,13 +15,13 @@
 <h2><?php echo "{$user["FirstName"]} {$user["LastName"]}'s Friends" ?></h2>
 <?php
     $friends1 = "SELECT * FROM friendship f
-                 WHERE f.User1ID = '{$_GET['user']}'
-                 AND f.Status = 'Accepted'";
+                 WHERE f.User1ID = '{$_GET['id']}'
+                 AND f.Status = '1'";
     $friendship1 = mysqli_query($conn, $friends1);
     confirm_query($friendship1);
     $friends2 = "SELECT * FROM friendship f
-                 WHERE f.User2ID = '{$_GET['user']}'
-                 AND f.Status = 'Accepted'";
+                 WHERE f.User2ID = '{$_GET['id']}'
+                 AND f.Status = '1'";
     $friendship2 = mysqli_query($conn, $friends2);
     confirm_query($friendship2);
     while ($f1 = mysqli_fetch_assoc($friendship1)) {
