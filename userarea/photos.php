@@ -6,6 +6,7 @@
 <?php require_once("../server/validation_photos.php");?>
 <?php $page_title="Photos"?>
 <?php confirm_logged_in(); ?>
+<?php exist_collection($_GET["collection"]);?>
 <?php include("../includes/header.php"); ?>
 <?php include("navbar.php"); ?>
 
@@ -49,7 +50,7 @@
         </div><br />
         <div class="container">
             <?php
-                $collection_id = $_GET["collection"];
+                $collection_id = $_GET["collection"]; 
                 $collection_photos = find_photos_from_collection($collection_id);
                 $count = 0;
 
@@ -86,7 +87,7 @@
                 }
                 mysqli_free_result($collection_photos);
             ?>
-        </div>
+        </div></div>
 
         <hr />
         <a href="logout.php">Logout</a>

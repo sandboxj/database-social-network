@@ -11,6 +11,26 @@ function find_profile_pic($userid)
             return $pic_results;
 }
 
+function find_collection($collection_id)
+{
+    global $conn;
+    $query = "SELECT * FROM Photo_Collection ";
+    $query .= "WHERE CollectionID = '{$collection_id}' ";
+    $collection_exist = mysqli_query($conn, $query);
+        if ($exist = mysqli_fetch_assoc($collection_exist)) {
+        mysqli_free_result($collection_exist);
+        return $exist;
+    } else {
+        return false;
+    }
+}
+
+function exist_collection($collection_id) {
+    if (!find_collection($collection_id)) {
+        redirect_to("collections.php");
+    }
+}
+
 function find_collections($userid)
 {
     global $conn;

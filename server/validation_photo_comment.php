@@ -7,7 +7,7 @@ if (isset($_POST["post_comment"])) {
                 
                 // Enter comment into DB
                 $photoid = $_GET["PhotoID"];
-                $userid = $_SESSION["UserID"];
+                $userid = ($is_owner) ? $_GET["id"] : $_SESSION["UserID"];
                 $post_time = date('Y-m-d H:i:s');
                 $content = mysqli_real_escape_string($conn, $_POST["comment"]);
                 $query = "INSERT INTO photo_comment (PhotoID, CommenterUserID, DatePosted, Content) ";
