@@ -2,7 +2,7 @@
 <?php require_once("../server/functions.php");?>
 <?php require_once("../server/db_connection.php");?>
 <?php $query = "SELECT * FROM user u
-                WHERE u.UserID like '{$_POST['user']}'";
+                WHERE u.UserID like '{$_GET['user']}'";
                 $displayed_user = mysqli_query($conn, $query);
                 confirm_query($displayed_user);
                 $user = mysqli_fetch_assoc($displayed_user) ?>
@@ -14,12 +14,12 @@
 <h2><?php echo "{$user["FirstName"]} {$user["LastName"]}'s Friends" ?></h2>
 <?php
     $friends1 = "SELECT * FROM friendship f
-                 WHERE f.User1ID = '{$_POST['user']}'
+                 WHERE f.User1ID = '{$_GET['user']}'
                  AND f.Status = 'Accepted'";
     $friendship1 = mysqli_query($conn, $friends1);
     confirm_query($friendship1);
     $friends2 = "SELECT * FROM friendship f
-                 WHERE f.User2ID = '{$_POST['user']}'
+                 WHERE f.User2ID = '{$_GET['user']}'
                  AND f.Status = 'Accepted'";
     $friendship2 = mysqli_query($conn, $friends2);
     confirm_query($friendship2);
