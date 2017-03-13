@@ -27,7 +27,9 @@
 						continue;
 					} else {}
 				} elseif ($access_rights == 3) {
-					// Check for circles
+					if(!is_in_another_user_circle($visited_user["UserID"], $viewer_userID)) {
+                        continue;
+                    }
 				} 
 
                 if (($count == 0)) {

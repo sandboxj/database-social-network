@@ -1,58 +1,90 @@
 <?php require_once("../server/sessions.php"); ?>
 <?php require_once("../server/functions.php");?>
 <?php require_once("../server/functions_photos.php");?>
+<?php require_once("../server/functions_friends.php");?>
 <?php require_once("../server/db_connection.php");?>
-<?php $query = "SELECT * FROM user u
-                WHERE u.UserID like '{$_GET['id']}'";
-                $displayed_user = mysqli_query($conn, $query);
-                confirm_query($displayed_user);
-                $user = mysqli_fetch_assoc($displayed_user) ?>
-<?php $page_title="{$user["FirstName"]} {$user["LastName"]}'s Friends"?>
+<?php require_once("../server/validation_friends.php");?>
+<?php $visited_user = find_user_by_id($_GET["id"]); ?>
+<?php $page_title= "{$visited_user["FirstName"]} {$visited_user["LastName"]}'s Friends"?>
 <?php confirm_logged_in(); ?>
 <?php include("../includes/header.php"); ?>
 <?php include("navbar.php"); ?>
 
-<h2><?php echo "{$user["FirstName"]} {$user["LastName"]}'s Friends" ?></h2>
+<h2><?php echo "{$visited_user["FirstName"]} {$visited_user["LastName"]}'s Friends" ?></h2>
+<?php include("user_navbar.php"); ?><br />
 <?php
-    $friends1 = "SELECT * FROM friendship f
-                 WHERE f.User1ID = '{$_GET['id']}'
-                 AND f.Status = '1'";
-    $friendship1 = mysqli_query($conn, $friends1);
-    confirm_query($friendship1);
-    $friends2 = "SELECT * FROM friendship f
-                 WHERE f.User2ID = '{$_GET['id']}'
-                 AND f.Status = '1'";
-    $friendship2 = mysqli_query($conn, $friends2);
-    confirm_query($friendship2);
-    while ($f1 = mysqli_fetch_assoc($friendship1)) {
-        $query1 = "select * from user u
-                  where u.UserID = '{$f1["User2ID"]}'";
-        $u1 = mysqli_query($conn, $query1);
-        confirm_query($u1);
-        $user1 = mysqli_fetch_assoc($u1);
-        $pic1 = find_profile_pic($user1["UserID"]);
-        $picture1 = mysqli_fetch_assoc($pic1);
-        $out1 = "../userarea/img/" . $picture1["FileSource"];
-        $image1 = "<td><a href='user_profile.php?id={$user1["UserID"]}'><img src={$out1} class=\"img-rounded\" alt=\"Cinque Terre\" width=\"304\" height=\"236\"></a></td><br/>";
-        echo $image1;
-        $output1 = "<td><a href='user_profile.php?id={$user1["UserID"]}'>" . $user1["FirstName"] . " " . $user1["LastName"] . "</a></td>";
-        echo "<h4>" . $output1 . "</h4>";
+    $accepted = find_accepted($visited_user["UserID"]);
+    if (mysqli_num_rows($accepted)<1) {
+        echo ("<p style='font-style: italic'>No friends to show. </p>");
     }
-     while ($f2 = mysqli_fetch_assoc($friendship2)) {
-        $query2 = "select * from user u
-                  where u.UserID = '{$f2["User1ID"]}'";
-        $u2 = mysqli_query($conn, $query2);
-        confirm_query($u2);
-        $user2 = mysqli_fetch_assoc($u2);
-        $pic2 = find_profile_pic($user2["UserID"]);
-        $picture2 = mysqli_fetch_assoc($pic2);
-        $out2 = "../userarea/img/" . $picture2["FileSource"];
-        $image2 = "<td><a href='user_profile.php?id={$user2["UserID"]}'><img src={$out2} class=\"img-rounded\" alt=\"Cinque Terre\" width=\"304\" height=\"236\"></a></td><br/>";
-        echo $image2;
-        $output2 = "<td><a href='user_profile.php?id={$user2["UserID"]}'>" . $user2["FirstName"] . " " . $user2["LastName"] . "</a></td>";
-        echo "<h4>" . $output2 . "</h4>";
+    while ($a_friend = mysqli_fetch_assoc($accepted)) {
+            $pic_result = find_profile_pic($a_friend["UserID"]);
+            $profile_picture = mysqli_fetch_assoc($pic_result);
+            $profile_picture_src = file_exists("img/Profilepictures" . $a_friend["UserID"] . "/" . $profile_picture["FileSource"]) ? "img/Profilepictures" . $a_friend["UserID"] . "/" . $profile_picture["FileSource"] : "img/" . $profile_picture["FileSource"];
+            $uncached_src = $profile_picture_src . "?" . filemtime($profile_picture_src);
+            mysqli_free_result($pic_result);
+    ?>
+    <!--Special case where visitors profile is displayed-->
+    <?php if($a_friend['UserID']===$_SESSION["UserID"]) { ?>
+        <div class="row polaroid">
+            <div class="col-md-3">
+                <a href="profile.php"><img src="<?php echo $uncached_src ?>" class="img-responsive" alt="Friend's profile picture'"></a>
+            </div>
+            <div class="col-md-9">
+                <a href="profile.php?>"><h4><?php echo $a_friend["FirstName"] . " " . $a_friend["LastName"]?></h4><br /><br /></a>
+            </div>
+        </div>
+    <!--Case for all other users-->
+    <?php } else { ?>
+        <div class="row polaroid">
+            <div class="col-md-3">
+                <a href="user_profile.php?id=<?php echo $a_friend['UserID']?>"><img src="<?php echo $uncached_src ?>" class="img-responsive" alt="Friend's profile picture'"></a>
+            </div>
+            <div class="col-md-9">
+                <a href="user_profile.php?id=<?php echo $a_friend['UserID']?>"><h4><?php echo $a_friend["FirstName"] . " " . $a_friend["LastName"]?></h4><br /><br /></a>
+                <?php 
+                $exist_relation = find_friendship($_SESSION["UserID"], $a_friend["UserID"]);
+                // If relation exists, accept or unfriend
+                if (mysqli_num_rows($exist_relation)>0) {
+                    $friendship = mysqli_fetch_assoc($exist_relation);
+                    if ($friendship["Status"]) {
+                ?>
+                    <form method="post" style="display: inline">
+                        <button type="submit" name="decline_friend" value="<?php echo $friendship["FriendshipID"] ?>" class="btn">Unfriend</button>
+                    </form>
+                <?php
+                    } else {
+                        // If friend request is sent to you, option to accept
+                        if ($friendship["User2ID"]===$_SESSION["UserID"]) {
+                ?>
+                            <form method="post" style="display: inline">
+                                <button type="submit" name="add_friend" value="<?php echo $friendship["FriendshipID"] ?>" class="btn btn-primary">Accept request</button>
+                            </form>
+                <?php
+                        } else {
+                ?>
+                        <form method="post" style="display: inline">
+                            <button type="submit" name="decline_friend" value="<?php echo $friendship["FriendshipID"] ?>" class="btn">Pending / Cancel request</button>
+                        </form>
+                <?php
+                        }
+                    }
+                } 
+                // If no relation exists, option to add friend
+                else {
+                ?>
+                    <form method="post" style="display: inline">
+                        <button type="submit" name="add_request" value="<?php echo $visited_user['UserID'] ?>" class="btn btn-primary">Add friend</button>
+                    </form>
+                <?php    
+                }
+                ?>
+            </div>
+        </div>
+<?php
+        }
     }
-		?>
+?>
 <hr />
 <a href="logout.php">Logout</a>
 

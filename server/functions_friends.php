@@ -5,6 +5,7 @@ function find_pending($userid) {
     $query .= "WHERE f.User2ID = '{$userid}' ";
     $query .= "AND f.Status = 0 ";
     $query .= "AND f.User1ID = u.UserID ";
+    $query .= "ORDER BY Date DESC";
     $result = mysqli_query($conn, $query);
     confirm_query($result);
     return $result;
