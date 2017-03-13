@@ -108,8 +108,7 @@ update_status($pageid2);
                     if(isset($_POST['send_reply'])) {
                         if (strlen(trim($_POST['reply_content']))) {
                             if (strlen(trim($_POST['reply_content'])) < 2500) {
-                                echo "Test working";
-                                echo $reply_content = $_POST['reply_content'];
+                                $reply_content = $_POST['reply_content'];
                                 $receiver_type = 1;
                                 send_reply($userid, $reply_title, $reply_content, $receiver_type, $reply_receiver);
                                 $check2 = true;
