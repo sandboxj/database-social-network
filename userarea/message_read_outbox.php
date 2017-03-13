@@ -2,7 +2,7 @@
 <?php require_once("../server/functions.php"); ?>
 <?php require_once("../server/messages_functions.php"); ?>
 <?php require_once("../server/db_connection.php"); ?>
-<?php $page_title = "Message Inbox" ?>
+<?php $page_title = "Message Outbox" ?>
 <?php include("../includes/header.php"); ?>
 <?php include("navbar.php"); ?>
 
@@ -76,24 +76,28 @@ if ($Ireceivertype == 0) {
         <div class="panel panel-primary">
             <div class="panel-heading"></div>
             <div class="panel-body">
-                <div class="col-sm-2">
-                    <label class="message_label" for="message_from">To:</label><br>
-                    <label class="message_label" for="message_title">Subject:</label><br>
-                    <label class="message_label" for="message_content">Message:</label><br>
-                </div>
-                <div class="col-sm-6">
-                    <p id="message_from"><?php print $message_receveiver ?></p>
-                    <p id="message_title"><?php print $Ititle ?></p>
-                    <p id="message_content" style="white-space: pre;"><?php print $Icontent ?></p>
-                </div>
-                <div class="col-sm-4">
-                    <p class="message_date"><?php print $date_final ?></p><br>
-                </div>
-
+                <table class="table" style="width: 100%">
+                    <tr class="noBorder">
+                        <td class="noBorder" width="200">Sent To:</td>
+                        <td width="500"><?php print $message_receveiver ?></td>
+                        <td width="280"><?php print $date_final ?></td>
+                    </tr>
+                    <tr class="noBorder">
+                        <td width="200">Subject:</td>
+                        <td width="500"><?php print $Ititle ?></td>
+                    </tr>
+                    <tr class="noBorder">
+                        <td width="200">Message:</td>
+                        <td width="500"><?php print $Icontent?></td>
+                    </tr>
+                </table>
             </div>
         </div>
     </div>
     <div class="col-md-1"></div>
+</div>
+<div class="container">
+
 </div>
 <hr/>
 <a href="logout.php">Logout</a>

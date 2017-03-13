@@ -40,7 +40,6 @@
             <div class="panel-heading"></div>
             <div class="panel-body">
                 <table class="table" style="width: 100%">
-                    <form name="form1" method="post" action="message_outbox.php">
                         <tr>
                             <th width="40">#</th>
                             <th width="450">Title</th>
@@ -69,7 +68,6 @@
                                 <td width="300"><?php echo $date_final; ?></td>
                             </tr>
                         <?php } ?>
-                    </form>
                 </table>
             </div>
         </div>
