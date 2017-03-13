@@ -175,3 +175,14 @@ function update_status($MessageID) {
     confirm_query($query);
 }
 
+function send_reply($userid, $message_title, $message_content, $receiver_type, $receiver_id) {
+    global $conn;
+    $date_time = date('Y-m-d H:i:s');
+
+
+    $sql = "INSERT INTO message
+            (SenderUserID, ReceiverType, ReceiverID, Title, Content, TimeSent)
+            VALUES ('{$userid}', '{$receiver_type}', '{$receiver_id}', '{$message_title}', '{$message_content}', '{$date_time}')";
+
+    $result = mysqli_query($conn, $sql);
+}

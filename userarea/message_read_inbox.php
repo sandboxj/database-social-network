@@ -10,13 +10,18 @@
 <?php
 
 if (!$_GET['in']) {
-    $pageid2 = '1';
+    echo "Internal error! Please go back to the inbox!";
+    $pageid2 = 0;
 } else {
     $pageid2 = preg_replace("[^0-9]", "", $_GET['in']);
 }
+
+
 $userid = $_SESSION['UserID'];
 $query = retrieve_message_inbox($pageid2, $userid);
 
+$check = true;
+$check2 = false;
 
 while ($row = mysqli_fetch_array($query)) {
     $Iid = $row['MessageID'];
@@ -81,14 +86,60 @@ update_status($pageid2);
                 <p id="message_content"><?php print $Icontent ?></p>
             </div>
             <div class="col-sm-4">
-                <p class="message_date"><?php print $date_final?></p><br>
+                <p class="message_date"><?php print $date_final ?></p><br>
             </div>
+            <div class="col-sm-8">
+                <td><br></td>
+                <td></td>
+                <form name="form1" method="post">
+                    <td align="top"><label class="message_label" for="message_reply">Reply:</label></td>
+                    <td><textarea class="form-control" contenteditable="true" id="reply_content" rows="5"
+                                  style="width: 100%" aria-describedby="message_helper"
+                                  name="reply_content" required></textarea>
+                        <small id="message_helper" class="form-text text-muted">Max. 2500 Characters</small>
+                    </td>
+                    <br>
+                    <input type="submit" name="send_reply" value="Send Message" class="btn btn-primary"/><br>
 
+                    <?php
+
+                    $reply_title = "RE: ".$Ititle;
+                    $reply_receiver = $Isenderid;
+                    if(isset($_POST['send_reply'])) {
+                        if (strlen(trim($_POST['reply_content']))) {
+                            if (strlen(trim($_POST['reply_content'])) < 2500) {
+                                echo "Test working";
+                                echo $reply_content = $_POST['reply_content'];
+                                $receiver_type = 1;
+                                send_reply($userid, $reply_title, $reply_content, $receiver_type, $reply_receiver);
+                                $check2 = true;
+                                $message = "Message was successfully sent!";
+                            } else {
+                                $check1 = false;
+                                $message = "Message was not sent!";
+                            }
+                        } else {
+                            $check1 = false;
+                            $message = "Message was not sent!";
+                        }
+                    }
+                    ?>
+                </form>
+            </div>
         </div>
     </div>
+    <?php
+    if ($check == false) { ?>
+        <div class="alert alert-danger"><?php echo "$message" ?></div>
+    <?php };
+    if ($check2 == true) { ?>
+        <div class="alert alert-success"><?php echo "$message" ?></div>
+    <?php };?>
 </div>
 <div class="col-md-3"></div>
 
+
 </section>
+<a href="logout.php">Logout</a>
 </html>
 <?php include("../includes/footer.php"); ?>

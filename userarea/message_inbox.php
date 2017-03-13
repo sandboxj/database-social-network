@@ -88,6 +88,7 @@
 </div>
 <div class="col-md-3"></div>
 
+<a href="logout.php">Logout</a>
 </section>
 </html>
 <?php include("../includes/footer.php"); ?>
