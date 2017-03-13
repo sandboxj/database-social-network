@@ -2,7 +2,7 @@
 <?php require_once("../server/functions.php"); ?>
 <?php require_once("../server/messages_functions.php"); ?>
 <?php require_once("../server/db_connection.php"); ?>
-<?php $page_title = "Message Inbox" ?>
+<?php $page_title = "Message Outbox" ?>
 <?php include("../includes/header.php"); ?>
 <?php include("navbar.php"); ?>
 
@@ -40,7 +40,7 @@ while ($row = mysqli_fetch_array($query)) {
 if ($Ireceivertype == 0) {
     $message_receveiver = $IcircleTitle;
 } else {
-    $message_receveiver = $Ifirstname."".$Ilastname;
+    $message_receveiver = $Ifirstname . "" . $Ilastname;
 }
 
 ?>
@@ -56,8 +56,8 @@ if ($Ireceivertype == 0) {
 
 <!-- This section includes the navigation-->
 <div class="container">
-    <div class="col-sm-2"></div>
-    <div class="col-sm-8">
+    <div class="col-sm-1"></div>
+    <div class="col-sm-10">
         <ul class="nav nav-pills nav-justified">
             <li role="presentation"><a href="message_inbox.php">Inbox <span
                             class="badge"><?php echo($newMessages = check_new_mail_friends($userid) + check_new_mail_circles($userid)) ?></span></a>
@@ -65,35 +65,40 @@ if ($Ireceivertype == 0) {
             <li role="presentation" class="active"><a href="message_outbox.php">Outbox</a></li>
             <li role="presentation"><a href="messages.php">New Message</a></li>
     </div>
-    <div class="col-sm-2"></div>
+    <div class="col-sm-1"></div>
 </div>
 
 
 <!-- This section is for the actual chat room / Message area-->
-<div class="col-sm-2"></div>
-<div class="col-sm-8">
-    <div class="panel panel-primary">
-        <div class="panel-heading"></div>
-        <div class="panel-body">
-            <div class="col-sm-2">
-                <label class="message_label" for="message_from">To:</label><br>
-                <label class="message_label" for="message_title">Subject:</label><br>
-                <label class="message_label" for="message_content">Message:</label><br>
+<div class="container">
+    <div class="col-sm-1"></div>
+    <div class="col-sm-10">
+        <div class="panel panel-primary">
+            <div class="panel-heading"></div>
+            <div class="panel-body">
+                <table class="table" style="width: 100%">
+                    <tr class="noBorder">
+                        <td class="noBorder" width="200">Sent To:</td>
+                        <td width="500"><?php print $message_receveiver ?></td>
+                        <td width="280"><?php print $date_final ?></td>
+                    </tr>
+                    <tr class="noBorder">
+                        <td width="200">Subject:</td>
+                        <td width="500"><?php print $Ititle ?></td>
+                    </tr>
+                    <tr class="noBorder">
+                        <td width="200">Message:</td>
+                        <td width="500"><?php print $Icontent?></td>
+                    </tr>
+                </table>
             </div>
-            <div class="col-sm-6">
-                <p id="message_from"><?php print $message_receveiver?></p>
-                <p id="message_title"><?php print $Ititle ?></p>
-                <p id="message_content" style="white-space: pre;"><?php print $Icontent ?></p>
-            </div>
-            <div class="col-sm-4">
-                <p class="message_date"><?php print $date_final?></p><br>
-            </div>
-
         </div>
     </div>
+    <div class="col-md-1"></div>
 </div>
-<div class="col-md-3"></div>
+<div class="container">
 
-</section>
-</html>
+</div>
+<hr/>
+<a href="logout.php">Logout</a>
 <?php include("../includes/footer.php"); ?>
