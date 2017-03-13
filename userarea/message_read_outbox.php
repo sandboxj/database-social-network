@@ -40,7 +40,7 @@ while ($row = mysqli_fetch_array($query)) {
 if ($Ireceivertype == 0) {
     $message_receveiver = $IcircleTitle;
 } else {
-    $message_receveiver = $Ifirstname."".$Ilastname;
+    $message_receveiver = $Ifirstname . "" . $Ilastname;
 }
 
 ?>
@@ -70,30 +70,31 @@ if ($Ireceivertype == 0) {
 
 
 <!-- This section is for the actual chat room / Message area-->
-<div class="col-sm-2"></div>
-<div class="col-sm-8">
-    <div class="panel panel-primary">
-        <div class="panel-heading"></div>
-        <div class="panel-body">
-            <div class="col-sm-2">
-                <label class="message_label" for="message_from">To:</label><br>
-                <label class="message_label" for="message_title">Subject:</label><br>
-                <label class="message_label" for="message_content">Message:</label><br>
-            </div>
-            <div class="col-sm-6">
-                <p id="message_from"><?php print $message_receveiver?></p>
-                <p id="message_title"><?php print $Ititle ?></p>
-                <p id="message_content" style="white-space: pre;"><?php print $Icontent ?></p>
-            </div>
-            <div class="col-sm-4">
-                <p class="message_date"><?php print $date_final?></p><br>
-            </div>
+<div class="container">
+    <div class="col-sm-2"></div>
+    <div class="col-sm-8">
+        <div class="panel panel-primary">
+            <div class="panel-heading"></div>
+            <div class="panel-body">
+                <div class="col-sm-2">
+                    <label class="message_label" for="message_from">To:</label><br>
+                    <label class="message_label" for="message_title">Subject:</label><br>
+                    <label class="message_label" for="message_content">Message:</label><br>
+                </div>
+                <div class="col-sm-6">
+                    <p id="message_from"><?php print $message_receveiver ?></p>
+                    <p id="message_title"><?php print $Ititle ?></p>
+                    <p id="message_content" style="white-space: pre;"><?php print $Icontent ?></p>
+                </div>
+                <div class="col-sm-4">
+                    <p class="message_date"><?php print $date_final ?></p><br>
+                </div>
 
+            </div>
         </div>
     </div>
+    <div class="col-md-3"></div>
 </div>
-<div class="col-md-3"></div>
-
-</section>
-</html>
+<hr/>
+<a href="logout.php">Logout</a>
 <?php include("../includes/footer.php"); ?>
