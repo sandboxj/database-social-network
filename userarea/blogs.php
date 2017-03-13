@@ -73,12 +73,14 @@ if(isset($_POST["blog_post"])){
                 <div class="row ">
                     <div class="col-md-12 blog-post-area" >
 
+
                         <form action="blogs.php" method="post">
                             <h4>Title</h4><textarea rows="1" style="width: 20%" name="blog_title" required></textarea><br />
                             <h4>Content</h4><textarea class="col-md-12" rows="20" name="blog_content" contenteditable="true" required></textarea><br />
 
                             <br>
                             <br>
+
                             <select name ="access">
                                 <option value="0">Only me</option>
                                 <option value="1" selected="1">Friends</option>
@@ -87,7 +89,9 @@ if(isset($_POST["blog_post"])){
                                 <option value="4">Friends of friends</option>
 
                             </select>
-                            <button type="submit" class="btn btn-primary" name="blog_post" >Post</button>
+
+                            <button type="submit" class="btn btn-primary pull-right" name="blog_post" >Post</button>
+
                             <!--                                <input type="submit" name="blog_post" value="Post" />-->
 
                         </form>
@@ -98,12 +102,16 @@ if(isset($_POST["blog_post"])){
 
 
             </div>
+
             <!--<div class="modal-footer">
 
 
 
+
               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
             </div>-->
+
         </div>
 
     </div>
@@ -130,7 +138,13 @@ global $conn;
 
     $blog_results = find_blogs($_SESSION["UserID"]);
 
-    if($blog_posts = mysqli_fetch_assoc($blog_results)) {
+
+
+
+    if(mysqli_num_rows($blog_results)>0) {
+
+
+     
 
 
         while ($blog_posts = mysqli_fetch_assoc($blog_results)) {
@@ -138,9 +152,9 @@ global $conn;
             //blog_title variable used below; using $title here for the output
             $title = $blog_posts["Title"];
 
+
             //escaping the title to put in db
             $escaped_title = mysqli_real_escape_string($conn, $blog_posts["Title"]);
-
 
             $date_posted = $blog_posts["DatePosted"];
             $formatted_date = display_formatted_date($date_posted);
