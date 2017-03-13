@@ -70,11 +70,11 @@ function check_all_inbox($userid) {
 
     $sql = "SELECT DISTINCT MessageID, Title, Content, Status, TimeSent, SenderUserID, ReceiverID, FirstName, LastName
             FROM message m, circle_member cm, user u
-            WHERE (NOT SenderUserID LIKE 1)
-            AND (m.ReceiverType LIKE 0 
+            WHERE (NOT SenderUserID = '{$userid}')
+            AND (m.ReceiverType LIKE '0' 
                  AND (m.ReceiverID = cm.CircleID AND cm.MemberUserID = '{$userid}')
                  AND (SenderUserID = u.UserID)) 
-            OR (m.ReceiverType LIKE 1 AND (m.ReceiverID LIKE '{$userid}')) AND (SenderUserID = u.UserID)
+            OR (m.ReceiverType LIKE '1' AND (m.ReceiverID = '{$userid}')) AND (SenderUserID = u.UserID)
             ORDER by TimeSent DESC;";
 
     $query = mysqli_query($conn, $sql);
@@ -91,11 +91,11 @@ function check_all_outbox($userid)
 
     $sql = "(SELECT MessageID, Title, Content, TimeSent, SenderUserID, ReceiverID, ReceiverType, FirstName, LastName
             FROM message m, user u
-            WHERE m.SenderUserID='{$userid}' AND (m.ReceiverType LIKE 1 AND m.ReceiverID=u.UserID))
+            WHERE m.SenderUserID='{$userid}' AND (m.ReceiverType LIKE '1' AND m.ReceiverID=u.UserID))
             UNION
             (SELECT MessageID, Title, Content, TimeSent, SenderUserID, ReceiverID, ReceiverType, CircleTitle as FirstName, CircleTitle as LastName
             FROM message m, circle c
-            WHERE m.ReceiverType LIKE 0 AND m.ReceiverID=c.CircleId AND m.SenderUserID='{$userid}')
+            WHERE m.ReceiverType LIKE '0' AND m.ReceiverID=c.CircleId AND m.SenderUserID='{$userid}')
             ORDER by TimeSent DESC;";
 
     $query = mysqli_query($conn, $sql);

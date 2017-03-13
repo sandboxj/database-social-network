@@ -56,8 +56,8 @@ if ($Ireceivertype == 0) {
 
 <!-- This section includes the navigation-->
 <div class="container">
-    <div class="col-sm-2"></div>
-    <div class="col-sm-8">
+    <div class="col-sm-1"></div>
+    <div class="col-sm-10">
         <ul class="nav nav-pills nav-justified">
             <li role="presentation"><a href="message_inbox.php">Inbox <span
                             class="badge"><?php echo($newMessages = check_new_mail_friends($userid) + check_new_mail_circles($userid)) ?></span></a>
@@ -65,14 +65,14 @@ if ($Ireceivertype == 0) {
             <li role="presentation" class="active"><a href="message_outbox.php">Outbox</a></li>
             <li role="presentation"><a href="messages.php">New Message</a></li>
     </div>
-    <div class="col-sm-2"></div>
+    <div class="col-sm-1"></div>
 </div>
 
 
 <!-- This section is for the actual chat room / Message area-->
 <div class="container">
-    <div class="col-sm-2"></div>
-    <div class="col-sm-8">
+    <div class="col-sm-1"></div>
+    <div class="col-sm-10">
         <div class="panel panel-primary">
             <div class="panel-heading"></div>
             <div class="panel-body">
@@ -93,7 +93,7 @@ if ($Ireceivertype == 0) {
             </div>
         </div>
     </div>
-    <div class="col-md-3"></div>
+    <div class="col-md-1"></div>
 </div>
 <hr/>
 <a href="logout.php">Logout</a>
