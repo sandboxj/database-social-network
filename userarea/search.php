@@ -86,7 +86,7 @@ mysqli_free_result($result);
         $user2 = mysqli_fetch_assoc($u2);
         $friends[] = $user2["UserID"];
     }
-    
+    $friends_of_friends = [];
     foreach($friends as $friend) {
         $friends_of_friends1 = "SELECT * FROM friendship f
                      WHERE f.User1ID = '{$friend}'
@@ -142,16 +142,27 @@ mysqli_free_result($result);
                     $recommend = mysqli_fetch_assoc($recommendable);
                     $profile_picture = find_profile_pic($recommend["UserID"]);
                     $picture = mysqli_fetch_assoc($profile_picture);
-                    $source = "../userarea/img/" . $picture["FileSource"];
-                    $profile_pic = "<td><a href='user_profile.php?id={$recommend["UserID"]}'><img src={$source} class=\"img-rounded\" alt=\"Cinque Terre\" width=\"304\" height=\"236\"></a></td><br/>";
-                    echo $profile_pic;
+                    $picture_src = file_exists("img/Profilepictures" . $recommend["UserID"] . "/" . $picture["FileSource"]) ? "img/Profilepictures" . $recommend["UserID"] . "/" . $picture["FileSource"] : "img/" . $picture["FileSource"];
+                    $uncached_src = $picture_src . "?" . filemtime($picture_src);
                     ?>
-                    <form action="search.php?id=<?php echo $fof ?>" method="post">
-                        <input type="submit" name="do_not_recommend" value="Don't know this person" />
-                    </form>
+                    <div class="row polaroid">
+                        <div class="col-md-3">
+                            <a href="user_profile.php?id=<?php echo $recommend['UserID']?>"><img src="<?php echo $uncached_src ?>" class="img-responsive" alt="Recommended user's profile picture'"></a>
+                                </div>
+                                    <div class="col-md-9">
+                                        <a href="user_profile.php?id=
+                                            <?php echo $recommend['UserID']?>"><h4>
+                                            <?php echo $recommend["FirstName"] . " " . $recommend["LastName"]?>
+                                        </h4>
+                                        </a><br /><br />
+                                        <form action="search.php?id=<?php echo $fof ?>" method="post">
+                                            <input type="submit" name="do_not_recommend" value="Don't know this person" />
+                                        </form>
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
                     <?php
-                    $name = "<td><a href='user_profile.php?id={$recommend["UserID"]}'>" . $recommend["FirstName"] . " " . $recommend["LastName"] . "</a></td>";
-                    echo "<h4>" . $name . "</h4>";
                 }
             $no_recommends--;
             }
