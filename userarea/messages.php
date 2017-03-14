@@ -106,7 +106,7 @@ while ($row = mysqli_fetch_array($result2)) {
                             <td align="top"><label class="message_label" for="search">Message:</label></td>
                             <td><textarea class="form-control" contenteditable="true" id="message_content_field"
                                           rows="5" style="width: 100%" aria-describedby="message_helper"
-                                          name="message_content" required<?php echo $message_content ?>"></textarea>
+                                          name="message_content" required<?php echo htmlentities(strip_tags($message_content))?>"></textarea>
                                 <small id="message_helper" class="form-text text-muted">Max. 2500 Characters</small>
                             </td>
 
