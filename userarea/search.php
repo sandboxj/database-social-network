@@ -1,8 +1,11 @@
 <?php require_once("../server/sessions.php"); ?>
 <?php require_once("../server/functions.php");?>
 <?php require_once("../server/functions_photos.php");?>
+<?php require_once("../server/functions_friends.php");?>
 <?php require_once("../server/db_connection.php");?>
 <?php require_once("../server/validation_search.php");?>
+<?php require_once("../server/validation_friends.php");?>
+<?php require_once("../userarea/unrecommend.php");?>
 <?php $page_title="Search"?>
 <?php confirm_logged_in(); ?>
 <?php include("../includes/header.php"); ?>
@@ -26,34 +29,86 @@ if (mysqli_num_rows($result)<1) {
     echo ("<p style='font-style: italic'>No matches.</p>");
 } else {
     while ($search_friend = mysqli_fetch_assoc($result)) {
-        $pic_result = find_profile_pic($search_friend["UserID"]);
-        $profile_picture = mysqli_fetch_assoc($pic_result);
-        $profile_picture_src = file_exists("img/Profilepictures" . $search_friend["UserID"] . "/" . $profile_picture["FileSource"]) ? "img/Profilepictures" . $search_friend["UserID"] . "/" . $profile_picture["FileSource"] : "img/" . $profile_picture["FileSource"];
-        $uncached_src = $profile_picture_src . "?" . filemtime($profile_picture_src);
-        mysqli_free_result($pic_result);
-    ?>
-<div class="row polaroid">
-  <div class="col-md-3">
-    <a href="user_profile.php?id=<?php echo $search_friend['UserID']?>">
-    <img src="<?php echo $uncached_src ?>" class="img-responsive" alt="Friend's profile picture'">
-    </a>
-  </div>
-  <div class="col-md-9">
-    <a href="user_profile.php?id=<?php echo $search_friend['UserID']?>">
-        <h4><?php echo $search_friend["FirstName"] . " " . $search_friend["LastName"]?></h4>
-    </a>
-    <br />
-    <br />
-  </div>
-</div>
-<?php
+        $friendshipz = find_friendship($_SESSION["UserID"], $search_friend["UserID"]);
+        $isfriend = (mysqli_fetch_assoc($friendshipz)["User1ID"] == "") ? 0 : 1;
+        if ($isfriend || $search_friend["PrivacySetting"] == "2") {
+            $pic_result = find_profile_pic($search_friend["UserID"]);
+            $profile_picture = mysqli_fetch_assoc($pic_result);
+            $profile_picture_src = file_exists("img/Profilepictures" . $search_friend["UserID"] . "/" . $profile_picture["FileSource"]) ? "img/Profilepictures" . $search_friend["UserID"] . "/" . $profile_picture["FileSource"] : "img/" . $profile_picture["FileSource"];
+            $uncached_src = $profile_picture_src . "?" . filemtime($profile_picture_src);
+            mysqli_free_result($pic_result);
+            ?>
+            <div class="row polaroid">
+              <div class="col-md-3">
+                <a href="user_profile.php?id=
+                  <?php echo $search_friend['UserID']?>">
+                  <img src="<?php echo $uncached_src ?>" class="img-responsive" alt="Friend's profile picture'">
+                </a>
+              </div>
+            <div class="col-md-9">
+                <a href="user_profile.php?id=
+                  <?php echo $search_friend['UserID']?>">
+                  <h4>
+                    <?php echo $search_friend["FirstName"] . " " . $search_friend["LastName"]?>
+                  </h4>
+                </a>
+                <br />
+                <br />
+              </div>
+            </div>
+        <?php
+        } elseif ($search_friend["PrivacySetting"] == "1") {
+            $friends_of_searched_result = find_accepted($search_friend["UserID"]);
+            while ($f_of_s = mysqli_fetch_assoc($friends_of_searched_result)) {
+                $fs_of_searched[] = $f_of_s["UserID"];
+            }
+            $friends_result = find_accepted($_SESSION["UserID"]);
+            while ($f = mysqli_fetch_assoc($friends_result)) {
+                $fs[] = $f["UserID"];
+            }
+            $is_friend_of_friend = 0;
+            foreach($fs_of_searched as $f) {
+                if (in_array($f , $fs)) {
+                    $is_friend_of_friend = 1;
+                }
+            }
+            if ($is_friend_of_friend) {
+                $pic_result = find_profile_pic($search_friend["UserID"]);
+                $profile_picture = mysqli_fetch_assoc($pic_result);
+                $profile_picture_src = file_exists("img/Profilepictures" . $search_friend["UserID"] . "/" . $profile_picture["FileSource"]) ? "img/Profilepictures" . $search_friend["UserID"] . "/" . $profile_picture["FileSource"] : "img/" . $profile_picture["FileSource"];
+                $uncached_src = $profile_picture_src . "?" . filemtime($profile_picture_src);
+                mysqli_free_result($pic_result);
+                ?>
+                <div class="row polaroid">
+                  <div class="col-md-3">
+                    <a href="user_profile.php?id=
+                      <?php echo $search_friend['UserID']?>">
+                      <img src="<?php echo $uncached_src ?>" class="img-responsive" alt="Friend's profile picture'">
+                    </a>
+                  </div>
+                  <div class="col-md-9">
+                    <a href="user_profile.php?id=
+                      <?php echo $search_friend['UserID']?>">
+                      <h4>
+                        <?php echo $search_friend["FirstName"] . " " . $search_friend["LastName"]?>
+                      </h4>
+                    </a>
+                    <br />
+                    <br />
+                  </div>
+                </div>
+                <?php
+            } else {
+                 echo ("<p style='font-style: italic'>No matches.</p>");
+            }
+        } else {
+            print wow;
+        }
     }
 }
 mysqli_free_result($result);
 }
 ?>
-
-
 
 <hr />
 
@@ -133,7 +188,19 @@ mysqli_free_result($result);
                                        WHERE d.UserID = '{$_SESSION["UserID"]}' AND d.UnknownUserID = '{$fof}'";
             $do_not_recommend = mysqli_query($conn, $do_not_recommend_query);
 			      $no_recommend = mysqli_fetch_assoc($do_not_recommend);
-            $should_recommend = ($no_recommend["UserID"] == "") ? 1 : 0;
+            $pending_query = "SELECT * FROM friendship f
+                                       WHERE ((f.User1ID = '{$_SESSION["UserID"]}' AND f.User2ID = '{$fof}')
+                                       OR (f.User2ID = '{$_SESSION["UserID"]}' AND f.User1ID = '{$fof}'))
+                                       AND f.Status = '0'";
+            $pending = mysqli_query($conn, $pending_query);
+			      $ispending = mysqli_fetch_assoc($pending);
+            if ($no_recommend["UserID"] == "") {
+                if ($ispending["User1ID"] == "") {
+                    $should_recommend = 1;
+                } else {
+                    $should_recommend = 0;
+                }
+            }
             if ($should_recommend) {
                 if ($count >= count($friends)/5) {
                     $recommended = "SELECT * FROM user u
@@ -155,8 +222,11 @@ mysqli_free_result($result);
                                             <?php echo $recommend["FirstName"] . " " . $recommend["LastName"]?>
                                         </h4>
                                         </a><br /><br />
-                                        <form action="search.php?id=<?php echo $fof ?>" method="post">
-                                            <input type="submit" name="do_not_recommend" value="Don't know this person" />
+                                        <form method="post" style="display: inline">
+                                          <button type="submit" name="do_not_recommend" value="<?php echo $recommend['UserID']?>" class="btn btn-primary">Don't know this person</button>
+                                        </form>
+                                        <form method="post" style="display: inline">
+                                          <button type="submit" name="add_request" value="<?php echo $recommend['UserID']?>" class="btn btn-primary">Add friend</button>
                                         </form>
                                     </div>
                                 </div>
