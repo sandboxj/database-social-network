@@ -53,7 +53,6 @@ if (mysqli_num_rows($result)<1) {
                   </h4>
                 </a>
                 <br />
-                <br />
               </div>
             </div>
         <?php
@@ -93,7 +92,6 @@ if (mysqli_num_rows($result)<1) {
                         <?php echo $search_friend["FirstName"] . " " . $search_friend["LastName"]?>
                       </h4>
                     </a>
-                    <br />
                     <br />
                   </div>
                 </div>
