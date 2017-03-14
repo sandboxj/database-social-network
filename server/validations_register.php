@@ -13,6 +13,10 @@ if (isset($_POST["register"])) {
     if($password === $password_confirm){
         $fields_required = array("password",  "email", "first_name", "last_name", "date_of_birth", "gender");
         validate_presences($fields_required);
+        // Check if date is correct
+        if(!validateDate($date_of_birth)) {
+            $errors["Dob"] = "Invalid date";
+        }
         // Check for minimum length
         $min_length = 5;
         $fields_with_min_length = array("password");

@@ -62,11 +62,10 @@
                         <label for="email_address">E-mail</label>
                         <input type="email" class="form-control" id="email_address" name="email" value="<?php echo $user_email?>" placeholder="Username@mail.com">
                     </div>
-                  <div class="form-group">
+                    <div class="form-group">
                         <label for="password">Password</label>
                         <input type="password" class="form-control" id="password" name="password" value="" placeholder="Password" aria-describedby="password_helper" required>
-
-        <br>
+                    </div>
                     <div class="form-group">
                         <label for="password-confirm">Confirm Password</label>
                         <input type="password" class="form-control" id="password-confirm" name="password_confirm" value="" placeholder="Confirm Password" aria-describedby="password_confirm_helper" required>
