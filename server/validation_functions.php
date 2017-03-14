@@ -68,3 +68,8 @@ function regex_clean($string) {
     $clean_string = preg_replace('/-+/', '-', $clean_string); // Replaces multiple hyphens with single one.
     return $clean_string;
 }
+
+function validateDate($date) {
+    $d = DateTime::createFromFormat('Y-m-d', $date);
+    return $d && $d->format('Y-m-d') === $date;
+}
