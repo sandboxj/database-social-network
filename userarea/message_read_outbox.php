@@ -89,7 +89,7 @@ if ($Ireceivertype == 0) {
                     <tr class="noBorder">
                         <td width="200">Message:</td>
                         <td width="500"><?php
-                            echo nl2br(htmlentities($Icontent));?>
+                            echo nl2br(htmlentities(strip_tags($Icontent)));?>
                             </td>
                     </tr>
                 </table>
