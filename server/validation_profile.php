@@ -40,6 +40,8 @@ if (isset($_POST["edit_profile"])) {
             $_SESSION['message'] = "Please enter a valid Date of Birth.";
         }
 
+    } else {
+        $_SESSION['message'] = "Please do not leave Email or Date of Birth blank!";
     }
 
 } else {
