@@ -56,11 +56,7 @@
                                 <td width="450"><a href="message_read_outbox.php?out=<?php echo $rows['MessageID']; ?>">
                                         <?php echo $rows['Title']; ?> </a>
                                 </td>
-                                <td width="250"><?php if ($rows['FirstName'] == $rows['LastName']) {
-                                        echo $rows['FirstName'];
-                                    } else {
-                                        echo $rows['FirstName'] . " " . $rows['FirstName'];
-                                    }; ?></td>
+                                <td width="250"><?php echo $rows['FirstName'] . " " . $rows['FirstName']; ?></td>
                                 <?php
                                 $date_format = strtotime($rows['TimeSent']);
                                 $date_final = date("D, jS F Y, H:i", $date_format);
