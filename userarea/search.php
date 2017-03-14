@@ -102,7 +102,6 @@ if (mysqli_num_rows($result)<1) {
                  echo ("<p style='font-style: italic'>No matches.</p>");
             }
         } else {
-            print wow;
         }
     }
 }
