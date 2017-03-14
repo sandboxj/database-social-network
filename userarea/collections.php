@@ -37,14 +37,24 @@
             </div>
         </div>
         <hr />
-        <div class="row">
+        <div class="container">
         <?php
             $user_collections = find_collections($_SESSION["UserID"]);
+            $count = 0;
         	while ($collection = mysqli_fetch_assoc($user_collections)) {
+                if(($count == 0)) {
+                        echo "<div class='row'>"; 
+                    } else {}
         ?>
             <div class='polaroid col-md-3'>
                 <figure>
-                    <img src='' alt='thumbnail'><br />
+                    <?php 
+                        $newest_photo = newest_photo_src($collection["CollectionID"]);
+                        $newest_src = (isset($newest_photo)) ? "img/" . $collection["CollectionID"] . "/" . $newest_photo["FileSource"] : "img/empty.png";
+                    ?>
+                    <a href='photos.php?collection=<?php echo $collection["CollectionID"] ?>'>
+                    <img src="<?php echo $newest_src; ?>" alt='thumbnail' class="center-block img-responsive">
+                    </a><br />
                     <figcaption>
                     <a href='photos.php?collection=<?php echo $collection["CollectionID"] ?>'>
                         <?php echo $collection["CollectionTitle"] ?> 
@@ -60,13 +70,21 @@
                     </figcaption>
                 </figure>
             </div>
+            <?php 
+                if(($count == 3)) {
+                    echo "</div>"; 
+                    $count = 0;
+                } else {
+                     $count += 1;
+                }
+            ?>
         <?php
             }
         ?>
         <?php
             mysqli_free_result($user_collections);
         ?>
-        </div>
+        </div></div>
         
         <hr />
         <a href="logout.php">Logout</a>

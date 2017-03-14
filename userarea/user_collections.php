@@ -39,9 +39,15 @@
         ?>
         <div class='polaroid col-md-3'>
             <figure>
-                <img src='' alt='thumbnail'><br />
+                <?php 
+                    $newest_photo = newest_photo_src($collection["CollectionID"]);
+                    $newest_src = (isset($newest_photo)) ? "img/" . $collection["CollectionID"] . "/" . $newest_photo["FileSource"] : "img/empty.png";
+                ?>
+                <a href='user_photos.php?id=<?php echo $visited_user["UserID"] ?>&collection=<?php echo $collection["CollectionID"] ?>'>
+                <img src="<?php echo $newest_src; ?>" alt='thumbnail' class="center-block img-responsive"><br />
+                </a>
                 <figcaption>
-            <a href='user_photos.php?id=<?php echo $visited_user["UserID"] ?>&collection=<?php echo $collection["CollectionID"] ?>'>
+                <a href='user_photos.php?id=<?php echo $visited_user["UserID"] ?>&collection=<?php echo $collection["CollectionID"] ?>'>
                 <?php echo $collection["CollectionTitle"] ?> 
                 </a>
                 </figcaption>

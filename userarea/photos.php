@@ -60,7 +60,7 @@
                         echo "<div class='row'>"; 
                     } else {}
             ?>                        
-                <div class="col-md-3">
+                <div class="polaroid col-md-3">
                 <figure>
                     <a href="single_photo.php?<?php echo ("collection=" . $collection_id . "&" . $photo_details)?>">
                         <img class="img-responsive" src="img/<?php echo ($collection_id . "/" . $photo["FileSource"])?>" alt="Collection photo">
