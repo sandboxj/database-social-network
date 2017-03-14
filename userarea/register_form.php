@@ -10,7 +10,7 @@
             <h1> Register </h1>
             <?php
             echo message();
-            //echo $message;
+            echo $message;
             ?></div>
     </div>
 </section>
@@ -25,11 +25,11 @@
                 <h4>Personal Details:</h4>
                 <div class="form-group">
                     <label for="firstName">First Name</label>
-                    <input type="text" class="form-control" id="firstName" name="first_name" value="" placeholder="">
+                    <input type="text" class="form-control" id="firstName" name="first_name" value="<?php echo $first_name?>" placeholder="">
                 </div>
                 <div class="form-group">
                     <label for="lastName">Last Name</label>
-                    <input type="text" class="form-control" id="lastName" name="last_name" value="" placeholder="">
+                    <input type="text" class="form-control" id="lastName" name="last_name" value="<?php echo $last_name?>" placeholder="">
                 </div>
 
                 <div class="form-group">
@@ -39,15 +39,15 @@
                 </div>
                 <div class="form-group">
                     <label for="dob">Date of Birth</label>
-                    <input type="date" class="form-control" id="dob" name="date_of_birth" value="" placeholder="<?php echo date("d/m/Y");?>">
+                    <input type="date" class="form-control" id="dob" name="date_of_birth" value="<?php echo $date_of_birth?>" placeholder="<?php echo date("Y-m-d");?>">
                 </div>
                 <div class="form-group">
                     <label for="location">Location</label>
-                    <input type="text" class="form-control" id="location" name="location" value="" placeholder="">
+                    <input type="text" class="form-control" id="location" name="location" value="<?php echo $location?>" placeholder="">
                 </div>
                 <div class="form-group">
                     <label for="phonenum">Phone Number</label>
-                    <input type="text" class="form-control" id="phonenum" name="phone_number" value="" placeholder="">
+                    <input type="tel" class="form-control" id="phonenum" name="phone_number" value="<?php echo $phone_number?>" placeholder="">
                 </div>
 
             </div>
@@ -60,13 +60,12 @@
 
                     <div class="form-group">
                         <label for="email_address">E-mail</label>
-                        <input type="email" class="form-control" id="email_address" name="email" value="" placeholder="Username@mail.com">
+                        <input type="email" class="form-control" id="email_address" name="email" value="<?php echo $user_email?>" placeholder="Username@mail.com">
                     </div>
-                  <div class="form-group">
+                    <div class="form-group">
                         <label for="password">Password</label>
                         <input type="password" class="form-control" id="password" name="password" value="" placeholder="Password" aria-describedby="password_helper" required>
-
-        <br>
+                    </div>
                     <div class="form-group">
                         <label for="password-confirm">Confirm Password</label>
                         <input type="password" class="form-control" id="password-confirm" name="password_confirm" value="" placeholder="Confirm Password" aria-describedby="password_confirm_helper" required>

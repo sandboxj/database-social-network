@@ -3,6 +3,8 @@
 <?php require_once("../server/functions.php");?>
 <?php require_once("../server/functions_photos.php");?>
 <?php require_once("../server/functions_friends.php");?>
+<?php require_once("../server/blog_functions.php");?>
+<?php require_once("../server/circle_functions.php");?>
 <?php $visited_user = find_user_by_id($_GET["id"]); ?>
 <?php $page_title= "{$visited_user["FirstName"]} {$visited_user["LastName"]}'s Collections"?>
 <?php confirm_logged_in(); ?>
@@ -18,20 +20,29 @@
             $count = 0;
         while ($collection = mysqli_fetch_assoc($user_collections)) {
             $access_rights = $collection["AccessRights"];
-            if ($access_rights==0) {
+            $in_circle = is_in_another_user_circle($visited_user["UserID"], $viewer_userID);
+            $is_friend = check_friendship($visited_user["UserID"], $viewer_userID);
+            $is_friend_of_friend = ($is_friend) ? true : check_friends_of_friends($visited_user["UserID"], $viewer_userID);
+            $check = confirm_access_rights($access_rights, $is_friend, $in_circle, $is_friend_of_friend);
+            if(!$check) {
                 continue;
-            } else {
-				if($access_rights==1) {
-					$exist_friendship = find_friendship($viewer_userID, $visited_user["UserID"]);
-					if (mysqli_num_rows($exist_friendship)<1) {
-						continue;
-					} else {}
-				} elseif ($access_rights == 3) {
-					if(!is_in_another_user_circle($visited_user["UserID"], $viewer_userID)) {
-                        continue;
-                    }
-				} 
-
+            }
+            // if ($access_rights==0) {
+            //     continue;
+            // } else {
+			// 	if($access_rights==1) {
+			// 		$exist_friendship = find_friendship($viewer_userID, $visited_user["UserID"]);
+			// 		if (mysqli_num_rows($exist_friendship)<1) {
+			// 			continue;
+			// 		} else {}
+			// 	} elseif ($access_rights == 3) {
+			// 		if(!is_in_another_user_circle($visited_user["UserID"], $viewer_userID)) {
+            //             continue;
+            //         }
+			// 	} elseif ($access_rights == 4) {
+			// 		if(!check_friends_of_friends($visited_user["UserID"], $viewer_userID)) {
+            //             continue;
+            //         }
                 if (($count == 0)) {
                     echo "<div class='row'>";
                 } else {
@@ -61,7 +72,7 @@
 					$count += 1;
 				}
             }
-        }
+        
         ?>
         <?php
             mysqli_free_result($user_collections);

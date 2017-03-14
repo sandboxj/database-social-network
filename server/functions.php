@@ -114,6 +114,7 @@ function print_access_selector() {
                 <option selected value='1'>Friends</option>
                 <option value='2'>Everybody</option>
                 <option value='3'>Circles</option>
+                <option value='4'>Friends of Friends</option>
             </select>");
 }
 
