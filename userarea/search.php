@@ -40,19 +40,12 @@ if (mysqli_num_rows($result)<1) {
             ?>
             <div class="row polaroid">
               <div class="col-md-3">
-                <a href="user_profile.php?id=
-                  <?php echo $search_friend['UserID']?>">
-                  <img src="<?php echo $uncached_src ?>" class="img-responsive" alt="Friend's profile picture'">
-                </a>
+                <a href="user_profile.php?id=<?php echo $search_friend['UserID']?>"><img src="<?php echo $uncached_src ?>" class="img-responsive" alt="Friend's profile picture'"></a>
               </div>
             <div class="col-md-9">
-                <a href="user_profile.php?id=
-                  <?php echo $search_friend['UserID']?>">
-                  <h4>
-                    <?php echo $search_friend["FirstName"] . " " . $search_friend["LastName"]?>
-                  </h4>
-                </a>
+                <a href="user_profile.php?id=<?php echo $search_friend['UserID']?>"><h4><?php echo $search_friend["FirstName"] . " " . $search_friend["LastName"]?></h4></a>
                 <br />
+		<br />
               </div>
             </div>
         <?php
@@ -80,19 +73,12 @@ if (mysqli_num_rows($result)<1) {
                 ?>
                 <div class="row polaroid">
                   <div class="col-md-3">
-                    <a href="user_profile.php?id=
-                      <?php echo $search_friend['UserID']?>">
-                      <img src="<?php echo $uncached_src ?>" class="img-responsive" alt="Friend's profile picture'">
-                    </a>
+                    <a href="user_profile.php?id=<?php echo $search_friend['UserID']?>"><img src="<?php echo $uncached_src ?>" class="img-responsive" alt="Friend's profile picture'"></a>
                   </div>
                   <div class="col-md-9">
-                    <a href="user_profile.php?id=
-                      <?php echo $search_friend['UserID']?>">
-                      <h4>
-                        <?php echo $search_friend["FirstName"] . " " . $search_friend["LastName"]?>
-                      </h4>
-                    </a>
+                    <a href="user_profile.php?id=<?php echo $search_friend['UserID']?>"><h4><?php echo $search_friend["FirstName"] . " " . $search_friend["LastName"]?></h4></a>
                     <br />
+		    <br />
                   </div>
                 </div>
                 <?php
@@ -215,11 +201,9 @@ mysqli_free_result($result);
                             <a href="user_profile.php?id=<?php echo $recommend['UserID']?>"><img src="<?php echo $uncached_src ?>" class="img-responsive" alt="Recommended user's profile picture'"></a>
                                 </div>
                                     <div class="col-md-9">
-                                        <a href="user_profile.php?id=
-                                            <?php echo $recommend['UserID']?>"><h4>
-                                            <?php echo $recommend["FirstName"] . " " . $recommend["LastName"]?>
-                                        </h4>
-                                        </a><br />
+                                        <a href="user_profile.php?id=<?php echo $recommend['UserID']?>"><h4><?php echo $recommend["FirstName"] . " " . $recommend["LastName"]?></h4></a>
+					<br />
+					<br />
                                         <form method="post" style="display: inline">
                                           <button type="submit" name="do_not_recommend" value="<?php echo $recommend['UserID']?>" class="btn btn-primary">Don't know this person</button>
                                         </form>
