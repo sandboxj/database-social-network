@@ -53,8 +53,9 @@
     echo message();
     $accepted = find_accepted($_SESSION["UserID"]);
     if (mysqli_num_rows($accepted)<1) {
-        echo ("<p style='font-style: italic'>You have no friends, you poor poor person. </p>");
-    }
+        echo ("<p style='font-style: italic'>You currently have 0 friends. </p>");
+    } else {
+    echo "<p style='font-style: italic'>You currently have " . mysqli_num_rows($accepted) . " friends.</p>";
     while ($a_friend = mysqli_fetch_assoc($accepted)) {
             $pic_result = find_profile_pic($a_friend["UserID"]);
             $profile_picture = mysqli_fetch_assoc($pic_result);
@@ -72,6 +73,7 @@
         </div>
 <?php
         }
+    }
 ?>
 <hr />
 <a href="logout.php">Logout</a>

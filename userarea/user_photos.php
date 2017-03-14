@@ -10,8 +10,9 @@
 <?php confirm_logged_in(); ?>
 <?php include("../includes/header.php"); ?>
 <?php include("navbar.php"); ?>
+<?php $collection_details = find_collection($_GET["collection"]); ?>
 
-        <h2>Photos</h2>
+        <h2><?php echo $collection_details["CollectionTitle"] ?></h2>
         <?php include("user_navbar.php"); ?><br />
         <div>
             <a href="user_collections.php?id=<?php echo $_GET["id"] ?>">Back to Collections</a>

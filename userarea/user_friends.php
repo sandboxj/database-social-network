@@ -16,7 +16,8 @@
     $accepted = find_accepted($visited_user["UserID"]);
     if (mysqli_num_rows($accepted)<1) {
         echo ("<p style='font-style: italic'>No friends to show. </p>");
-    }
+    } else {
+    echo "<p style='font-style: italic'>" . $visited_user["FirstName"] . " currently has " . mysqli_num_rows($accepted) . " friends.</p>";
     while ($a_friend = mysqli_fetch_assoc($accepted)) {
             $pic_result = find_profile_pic($a_friend["UserID"]);
             $profile_picture = mysqli_fetch_assoc($pic_result);
@@ -82,6 +83,7 @@
             </div>
         </div>
 <?php
+            }
         }
     }
 ?>

@@ -40,36 +40,6 @@ function convert_access_rights_to_int($access_rights){
     return $access_rights;
 }
 
-
-/**
- * This function converts access rights in integer form to a string equivalent so that this value
- * may be rendered in the DOM. This is because access rights are stored in integer form inside the database.
- * @param $access_rights
- * @return string
- */
-function convert_access_rights_to_string($access_rights){
-
-    switch($access_rights){
-        case 0:
-            $access_rights = "Only me";
-            break;
-        case 1:
-            $access_rights = "Friends";
-            break;
-        case 2:
-            $access_rights = "Everybody";
-            break;
-        case 3:
-            $access_rights = "Circles";
-            break;
-        case 4:
-            $access_rights = "Friends of friends";
-            break;
-    }
-
-    return $access_rights;
-}
-
 /**This function takes the exploded array of a date and formats it to output
 * as a blog's subtitle. (Change the output directly here).
 */

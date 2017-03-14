@@ -52,6 +52,15 @@ elseif (isset($_POST["delete_all"])) {
         $_SESSION["message"] .= ($result) ? "" : "Photos deleted but setting default profile picture failed.";
     } else {}
     redirect_to("{$actual_link}");
+} elseif (isset($_POST["changePrivacy"])) {
+    $id_toupdate = $_POST["changePrivacy"];
+    $collection_update = $_POST["collectionid"];
+    $new_setting = $_POST["access"];
+    $query = "UPDATE photo_collection ";
+    $query .= "SET AccessRights = {$new_setting} ";
+    $query .= "WHERE CollectionID = '{$collection_update}'";
+    $result = mysqli_query($conn, $query);
+    $_SESSION["message"] = ($result) ? "" : "Settings updated";
 }
 else {
     // Do nothing

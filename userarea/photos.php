@@ -9,8 +9,47 @@
 <?php exist_collection($_GET["collection"]);?>
 <?php include("../includes/header.php"); ?>
 <?php include("navbar.php"); ?>
+<?php $collection_details = find_collection($_GET["collection"]); ?>
 
-        <h2>Photos</h2>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-9">
+                    <h2><?php echo $collection_details["CollectionTitle"] ?></h2>
+                </div>
+                <div class="col-md-3" pull-right>
+                    <br>
+                    <div class="btn-toolbar" role="toolbar" aria-label="blog_options">
+                        <div class="btn-group-horizontal" aria-label="blog_options">
+                            <button class="btn" data-toggle="modal" data-target="#changePrivacy"> <span class="glyphicon glyphicon-cog"></span> Privacy Settings</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal -->
+            <div id="changePrivacy" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Change collection visibility</h4>
+                        </div>
+                        <div class="modal-body">
+                            <h4>Select new visibility setting:</h4>
+                            <p>Current setting: <?php echo convert_access_rights_to_string($collection_details["AccessRights"]) ?></p>
+                            <form action="" method="post">
+                                <input type="text" name="collectionid" value="<?php echo "{$_GET['collection']}"?>" class="hidden" readonly>                                    
+                                Access Rights: <?php print_access_selector(); ?><br /><br />
+                                <input class="btn btn-primary" type="submit" value="Save changes" name="changePrivacy">
+                            </form>
+                        </div>
+                        <!--<div class="modal-footer">
+                            <button id="add_collection" type="submit" class="btn" name="add" value="add" data-dismiss="modal">Add</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>-->
+                    </div>
+                </div>
+            </div> 
         <div>
             <a href="collections.php">Back to Collections</a>
         </div>
