@@ -12,7 +12,7 @@ if (isset($_POST["search_result"])) {
             $query = "SELECT * FROM user ";
             $query .= "WHERE ((FirstName REGEXP '{$safe_search}' AND NOT UserID = '{$_SESSION["UserID"]}') ";
             $query .= "OR (LastName REGEXP '{$safe_search}' AND NOT UserID = '{$_SESSION["UserID"]}'))";
-            $query .= "AND user.PrivacySetting NOT LIKE '3'";
+            $query .= "AND user.PrivacySetting != '3'";
             $result = mysqli_query($conn, $query);
             confirm_query($result);
         } else {
