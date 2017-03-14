@@ -1,30 +1,108 @@
 <?php require_once("../server/sessions.php"); ?>
 <?php require_once("../server/db_connection.php");?>
 <?php require_once("../server/functions.php");?>
+<?php require_once("../server/user_functions.php");?>
 <?php require_once("../server/functions_photos.php");?>
 <?php require_once("../server/validation_upload.php");?>
 <?php require_once("../server/validation_profile.php");?>
 <?php $page_title= "{$_SESSION["FirstName"]} {$_SESSION["LastName"]}'s Profile"?>
 <?php confirm_logged_in(); ?>
+
+<?php
+$userid = $_SESSION['UserID'];
+$privacy_setting = find_user_privacy_setting($userid);
+
+if(isset($_POST['update_privacy'])){
+    $updated_privacy = $_POST['privacy_setting'];
+    echo $updated_privacy;
+
+    update_privacy_setting($userid, $updated_privacy);
+    redirect_to("profile.php");
+
+}
+?>
+
+
+
 <?php include("../includes/header.php"); ?>
 <?php include("navbar.php"); ?>
+
+
 
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-4">
             <h2><?php echo $_SESSION["FirstName"] . " " . $_SESSION["LastName"]?></h2>
         </div>
-        <div class="col-md-4" pull-right>
+        <div class="col-md-4 pull-right">
             <br>
             <div class="btn-toolbar" role="toolbar" aria-label="blog_options">
                 <div class="btn-group-horizontal" aria-label="blog_options">
             <button class="btn btn-primary" onclick="$('.edit_profile').toggleClass('hidden');">Edit profile</button>
-                    <button class="btn"> <span class="glyphicon glyphicon-cog"></span> Privacy Settings</button>
+                    <button class="btn" data-toggle="modal" data-target="#myModal"> <span class="glyphicon glyphicon-cog"></span> Privacy Settings</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Change your privacy settings:</h4>
+            </div>
+            <div class="modal-body">
+
+                <div class="row ">
+                    <div class="col-md-12" >
+
+                        <h3>Current privacy setting: <?php echo $privacy_setting;?> </h3>
+                        <form action="profile.php" method="post">
+
+
+                            <br>
+                            <br>
+
+                            <label for="privacy">SearchVisibility:</label>
+                            <select id="privacy" name ="privacy_setting">
+                                <option value="0" selected="0">Friends</option>
+                                <option value="1">Friends of friends</option>
+                                <option value="2">Everyone</option>
+                                <option value="3">Unsearchable</option>
+
+                            </select>
+
+                            <button type="submit" class="btn btn-primary pull-right"  name="update_privacy" >Update privacy</button>
+
+
+                        </form>
+                    </div>
+
+                </div>
+
+
+
+            </div>
+
+            <!--<div class="modal-footer">
+
+
+
+
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+            </div>-->
+
+        </div>
+
+    </div>
+</div>
+
 
 <br>
 <br>

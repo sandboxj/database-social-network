@@ -16,8 +16,27 @@ if (isset($_POST['create-circle'])){
     $circle_photoID = 1;
 
     //circle photoID was left to 1 for now
-    //method automatically adds admin as a circle member
-    insert_new_circle($userid, $circle_title, $circle_photoID);
+    $title_empty = validate_circle_name($userid, $circle_title);
+
+    if($title_empty == false) {
+        $title_exists = check_circle_title($userid, $circle_title);
+
+        if($title_exists == true ){
+            //already exists
+            echo "<script>alert('You already have a circle with this name, please change the name')</script>";
+        }else{
+            //method automatically adds admin as a circle member
+            insert_new_circle($userid, $circle_title, $circle_photoID);
+            //redirect_to("circles.php");
+        }
+
+
+
+    }else{
+        echo "<script>alert('Circle name cannot be empty')</script>";
+    }
+
+
 }
 ?>
 

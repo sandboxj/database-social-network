@@ -13,23 +13,30 @@
 $viewer_userID = $_SESSION['UserID'];
 
 //blog author
-$friend_userid = $_GET['id'];
+$author_userid = $_GET['id'];
 
-$friend_full_name = find_full_name($friend_userid);
-$first_name= $friend_full_name['FirstName'];
-$last_name = $friend_full_name['LastName'];
+$author_full_name = find_full_name($author_userid);
+$first_name= $author_full_name['FirstName'];
+$last_name = $author_full_name['LastName'];
 
 $page_title="{$first_name} {$last_name}'s Blogs";
 
 
 $name = "{$first_name} {$last_name}'s Blogs";
-$is_in_user_circle = is_in_another_user_circle($friend_userid, $viewer_userID);
+$is_in_user_circle = is_in_another_user_circle($author_userid, $viewer_userID);
+$is_friend = check_friendship($author_userid, $viewer_userID);
+if($is_friend == true){
+    $is_friend_of_friend = true;
+}else{
+$is_friend_of_friend = check_friends_of_friends($author_userid, $viewer_userID);
+
+}
 ?>
 
 <h2><?php echo $name ?></h2>
 <!--Blogs-->
 <?php
-    $blog_results = find_blogs($friend_userid);
+    $blog_results = find_blogs($author_userid);
 		while($blog_posts = mysqli_fetch_assoc($blog_results)) {
 
             $title = $blog_posts["Title"];
@@ -38,26 +45,10 @@ $is_in_user_circle = is_in_another_user_circle($friend_userid, $viewer_userID);
             $formatted_date  = display_formatted_date($date_posted);
 
 
-            $output = "Title: <td><a href='user_blog.php?title={$title}&user={$friend_userid}'> {$title} </a></td><br />";
+            $output = "Title: <td><a href='user_blog.php?title={$title}&user={$author_userid}'> {$title} </a></td><br />";
             $access_rights  = $blog_posts['AccessRights'];
-            
-            //checking if the viewer is friend with the user
-            $friend_results_db = find_accepted($viewer_userID);
-            
-            $is_friend = false;
 
-            while($friend_results = mysqli_fetch_assoc($friend_results_db)){
-                $friendID = $friend_results['UserID'];
-                $friend_first_name = $friend_results['FirstName'];
-                $friend_last_name = $friend_results['LastName'];
-                
-                if($friendID == $friend_userid){
-                    //if the user whose page we are visiting is a friend
-                    $is_friend = true;
-                }
-            }
-            //hardcoded the two booleans for now; preliminary confirm access rights method
-            $check = confirm_access_rights($access_rights, $is_friend, $is_in_user_circle);
+            $check = confirm_access_rights($access_rights, $is_friend, $is_in_user_circle, $is_friend_of_friend);
 
             /*
              * Check will return true if the blog should be visible to the currently connected user.

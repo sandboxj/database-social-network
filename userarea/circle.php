@@ -41,9 +41,9 @@ if(isset($_POST['invitation'])){
 
 }
 ?>
-
 <?php include("../includes/header.php"); ?>
 <?php include("navbar.php"); ?>
+
 
 <?php
 

@@ -29,18 +29,47 @@ function validate_circle_name($userid, $circle_title){
 
     if(strlen(trim($circle_title))){
 
-        return true;
+      $title_empty= false;
 
 
     }else{
         //circle name is empty
-        $errors['CircleName']="Circle Name cannot be empty";
-        return false;
+        $title_empty = true;
+        return $title_empty;
 
     }
 
 
 }
+
+//title of circles should be unique
+function check_circle_title($userid, $circle_title){
+    global $conn;
+
+
+
+        $circle_title = mysqli_real_escape_string($conn, $circle_title);
+
+        $title_check= "SELECT  CircleTitle
+        FROM circle WHERE CircleAdminUserID= '{$userid}'
+        AND CircleTitle = '{$circle_title}'";
+
+        $title_results_db = mysqli_query($conn, $title_check);
+
+
+        if(mysqli_num_rows($title_results_db) > 0){
+            //circle name already exists
+            $title_exists = true;
+            return $title_exists;
+        }
+
+        //nothing to output if the checks are successful
+        $title_exists = false;
+        return $title_exists;
+
+
+}
+
 
 //assume that the person creating the circle is the admin.
 function insert_new_circle($userid, $circle_title, $circle_photoID){
@@ -58,16 +87,15 @@ function insert_new_circle($userid, $circle_title, $circle_photoID){
 
     $circleID = mysqli_insert_id($conn);
 
-        echo "circleID: " .$circleID;
 
     if($result){
         //also need to insert the user in the circle_members table
-        echo "circle was created";
+
         insert_new_circle_member($circleID, $userid);
 
 
     }else{
-        $errors["Circle"] = "Failed to create circles";
+        echo "<script>alert('Failed to create circle')</script>";
     }
 
 
@@ -88,10 +116,10 @@ function insert_new_circle_member($circleID, $userid ){
     $result = mysqli_query($conn, $query);
 
     if($result){
-        echo "member was inserted";
+        echo "<script>alert('Member was successfully added')</script>";
 
     }else{
-        $error['CircleMember'] = "Failed to insert new member";
+        echo "<script>alert('Failed to add new member')</script>";
     }
 
 }
@@ -115,40 +143,7 @@ function count_circle_members($circleID){
 
 }
 
-//title of circles should be unique
-//function check_circle_title($userid, $circle_title){
-//    global $conn;
-//
-//    if(strlen(trim($circle_title))){
-//
-//        $circle_title = mysqli_real_escape_string($circle_title);
-//
-//        $title_check= "SELECT  CircleTitle
-//    FROM circle WHERE CircleID = (
-//        SELECT circleID FROM circle_member
-//        WHERE MemberUserID = '{$userid}')
-//        AND CircleTitle = '{$circle_title}'";
-//
-//        $title_results_db = mysqli_query($conn, $title_check);
-//        $circle_title_array = mysqli_fetch_assoc($title_results_db);
-//        $circle_title_db = $circle_title_array['CircleTitle'];
-//
-//        if($circle_title === $circle_title_db){
-//            //circle name already exists
-//            $output = "You already have a blog with this name, please change the name";
-//            return $output;
-//        }
-//
-//        //nothing to output if the checks are successful
-//        $output ="";
-//        return $output;
-//
-//
-//    }else{
-//        //if no circle name is provided
-//
-//    }
-//}
+
 
 function find_circle_members($circleID){
     global $conn;
@@ -330,7 +325,7 @@ function add_circle_member($circleID, $userid_to_add){
 //here compare this to check whether a user is in any of the circles
 function is_in_another_user_circle($userid, $user_viewer){
 
-
+    $circle_check = false;
     $circle_results_db = find_user_circles($userid);
     $circleID_array = array();
     while($circle_results = mysqli_fetch_assoc($circle_results_db)){
@@ -347,16 +342,16 @@ function is_in_another_user_circle($userid, $user_viewer){
     $is_in_another_user_circle = false;
 
     foreach($circleID_array as $user_circle){
-        $check = is_in_specific_circle($user_viewer, $user_circle);
+        $circle_check = is_in_specific_circle($user_viewer, $user_circle);
         
-        if($check == true){
+        if($circle_check == true){
             //the user has circle visibility
-            return $check;
+            return $circle_check;
         }
     }
 
 //this means that the user viewing another user's profile is not in any 
-    return $check;
+    return $circle_check;
     
 }
 

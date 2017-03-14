@@ -32,4 +32,64 @@ function find_full_name($userid){
     //returning the array with the full name;
     return $user_array;
 }
+
+
+//want to return the privacy setting as a string
+function find_user_privacy_setting($userid){
+
+    global $conn;
+    $query  = "SELECT SearchVisibility FROM user JOIN privacy_setting
+    WHERE PrivacySettingID = PrivacySetting AND UserID = '{$userid}'";
+
+    $privacy_results_db = mysqli_query($conn, $query);
+    confirm_query($privacy_results_db);
+
+    $privacy_setting_array = mysqli_fetch_assoc($privacy_results_db);
+    $privacy_setting = $privacy_setting_array['SearchVisibility'];
+
+    mysqli_free_result($privacy_results_db);
+    return $privacy_setting;
+
+
+
+}
+
+
+function update_privacy_setting($userid, $privacy_setting){
+    global $conn;
+
+
+
+    $query = "UPDATE user SET PrivacySetting ='{$privacy_setting}'
+    WHERE UserID = '{$userid}'";
+
+    $result = mysqli_query($conn, $query);
+
+    if($result){
+        echo "<script>alert('Privacy settings were successfully updated')</script>";
+
+    }else{
+        echo "<script>alert('Failed to update privacy settings')</script>";
+    }
+
+
+}
+
+
+// THIS FUNCTION IS NOT BEING USED ATM
+function convert_privacy_setting_to_enum($privacy_setting){
+    global $conn;
+
+    $query = "SELECT PrivacySettingID FROM privacy_setting 
+  WHERE SearchVisibility = '{$privacy_setting}' ";
+
+    $privacy_results_db = mysqli_query($conn, $query);
+    confirm_query($privacy_results_db);
+
+    $privacy_setting_array = mysqli_fetch_assoc($privacy_results_db);
+    $privacy_setting = $privacy_setting_array['PrivacySettingID'];
+
+    mysqli_free_result($privacy_results_db);
+    return $privacy_setting;
+}
 ?>

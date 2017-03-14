@@ -187,10 +187,11 @@ function display_formatted_date($date_posted){
  * @param $isCircle
  * @return bool
  */
-function confirm_access_rights($access_rights, $is_friend, $is_circle){
+function confirm_access_rights($access_rights, $is_friend, $is_circle, $is_friend_of_friend){
 
     $check = false;
 
+    //no break statement as I want it to go through the whole thing
     switch ($access_rights){
         //only me
         case 0:
@@ -214,6 +215,13 @@ function confirm_access_rights($access_rights, $is_friend, $is_circle){
             if($is_circle == true){
                 $check = true;
                 return $check;
+            }else{
+                return $check;
+            }
+        case 4:
+            if($is_friend_of_friend == true){
+            $check = true;
+            return $check;
             }else{
                 return $check;
             }
@@ -420,7 +428,6 @@ function find_blog_access_rights($blogID){
 function check_blog_title($userid, $blog_title){
     global $conn;
 
-    if(strlen(trim($blog_title))) {
 
         //make sure that this did not mess up anything
         $blog_title = mysqli_real_escape_string($conn, $blog_title);
@@ -428,25 +435,20 @@ function check_blog_title($userid, $blog_title){
         $title_check = "SELECT Title FROM blog
                     WHERE blog.userID = '{$userid}' 
                     AND blog.Title = '{$blog_title}'";
-        $title_results_db = mysqli_query($conn, $title_check);
-        $title_array = mysqli_fetch_assoc($title_results_db);
-        $title = $title_array['Title'];
 
 
-        if ($title === $blog_title) {
+        if (mysqli_num_rows($title_check) > 0) {
             //if the blog post already exists
-            $output = "You already have a blog with this title, please change the title";
-            return $output;
+            $title_exists = true;
+            return $title_exists;
+        }else{
+            //if check is successful are successful
+            $title_exists = false;
+            return $title_exists;
+
         }
 
-        //nothing to output if checks are successful
-        $output="";
-        return $output;
-    }else{
-        //in case there is no blog title.
-        $output= "Please provide a title for the blog.";
-        return $output;
-    }
+
 
 
 }
@@ -460,22 +462,39 @@ function check_blog_title($userid, $blog_title){
  * @param $blog_content
  * @return string
  */
-function validate_blog_post($userid, $blog_title, $blog_content){
+function validate_blog_content($userid, $blog_content){
 
 
     if(strlen(trim($blog_content))){
 
-        $output = check_blog_title($userid, $blog_title);
+        $content_empty = false;
 
-        return $output;
+        return $content_empty;
 
     }else{
         //if empty
-        $output = "Blog post failed. Post content cannot be empty.";
-        return $output;
+        $content_empty = true;
+
+        return $content_empty;
     }
 }
 
+function validate_blog_title($userid, $blog_title){
+
+
+    if(strlen(trim($blog_title))){
+
+        $title_empty = false;
+
+        return $title_empty;
+
+    }else{
+        //if empty
+        $title_empty = true;
+
+        return $title_empty;
+    }
+}
 
 /**
  * This function takes the current userid, the blog title and content as well as access rights and inserts
@@ -531,10 +550,10 @@ function update_blog_content($blogID, $updated_blog_content){
     $result = mysqli_query($conn, $query);
 
     if($result){
-        echo "blog content was successfully updated";
+        echo "<script>alert('Blog content was successfully updated')</script>";
 
     }else{
-        echo "failed to update the record";
+        echo "<script>alert('Blog content failed to update')</script>";
     }
 
 }
@@ -561,10 +580,10 @@ function update_blog_access_rights($blogID, $updated_access_rights){
     $result = mysqli_query($conn, $query);
 
     if($result){
-        echo "access rights were successfully updated";
+        echo "<script>alert('Access rights were successfully updated');</script>";
 
     }else{
-        echo "failed to update the record";
+        echo "<script>alert('Failed to update access rights');</script>";
     }
 }
 
@@ -623,20 +642,21 @@ function find_blog_comments($blogID){
  */
 function validate_comment_input($comment_content)
 {
-    $check = false;
+    $is_empty = true;
+
 
     // Check if post is blank
     if (strlen(trim($comment_content))) {
 
-        $check = true;
-        return $check;
+        $is_empty = false;
+        return $is_empty;
 
 
 
     } else {
-        $check=false;
-        echo "Blog post cannot be empty";
-        return $check;
+        $is_empty=true;
+
+        return $is_empty;
     }
 
 }
@@ -662,11 +682,11 @@ function insert_comment($blogID, $commenter_userid, $comment_content){
     $result = mysqli_query($conn, $query);
 
     if ($result) {
-        echo "Comment Posted";
+        echo "<script>alert('Comment Posted);</script>";
 
 
     } else {
-        echo "The comment could not be posted.";
+        echo "<script>alert('Failed to post commment');</script>";
     }
 }
 
@@ -683,10 +703,10 @@ function delete_blog_comment($commentID){
     $result = mysqli_query($conn, $query);
 
     if($result){
-        echo "comment was successfully deleted";
+        echo "<script>alert('Comment was successfully deleted');</script>";
 
     }else{
-        echo "failed to delete the record";
+        echo "<script>alert('Failed to delete comment');</script>";
     }
 }
 

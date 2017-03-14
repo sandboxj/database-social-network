@@ -21,20 +21,33 @@ if(isset($_POST["blog_post"])){
     $blog_content = $_POST['blog_content'];
     $access_rights=$_POST['access'];
 
-    echo "access: ".$access_rights;
+    $title_empty = validate_blog_title($userid, $blog_title);
+    $content_empty = validate_blog_content($userid, $blog_title);
 
-    $output = validate_blog_post($userid, $blog_title, $blog_content);
+    if($title_empty == false and $content_empty == false){
+        //input is valid, check the title
+        $title_exists = check_blog_title($userid, $blog_title);
 
-    if($output === ""){
-        //post was successful
-        insert_blog_post($userid, $blog_title, $blog_content, $access_rights);
-        redirect_to("blogs.php");
+        if($title_exists == true){
+            echo "<script>alert('Blog title cannot be empty')</script>";
+        }else{
+            //post was successful
+            insert_blog_post($userid, $blog_title, $blog_content, $access_rights);
+            redirect_to("blogs.php");
+        }
 
 
-    }else{
-        $_SESSION['message']= $output;
+    }elseif ($title_empty == true){
+        echo "<script>alert('Blog title cannot be empty')</script>";
+
+    }elseif ($content_empty == true){
+        echo "<script>alert('Blog content cannot be empty')</script>";
 
     }
+
+
+
+
 
 }
 
@@ -75,13 +88,13 @@ if(isset($_POST["blog_post"])){
 
 
                         <form action="blogs.php" method="post">
-                            <h4>Title</h4><textarea rows="1" style="width: 20%" name="blog_title" required></textarea><br />
+                            <h4>Title</h4><textarea rows="1" style="width: 80%" name="blog_title" required></textarea><br />
                             <h4>Content</h4><textarea class="col-md-12" rows="20" name="blog_content" contenteditable="true" required></textarea><br />
 
                             <br>
                             <br>
 
-                            <select name ="access">
+                            <select  name ="access">
                                 <option value="0">Only me</option>
                                 <option value="1" selected="1">Friends</option>
                                 <option value="2">Everybody</option>
@@ -138,13 +151,9 @@ global $conn;
 
     $blog_results = find_blogs($_SESSION["UserID"]);
 
-
-
-
     if(mysqli_num_rows($blog_results)>0) {
 
 
-     
 
 
         while ($blog_posts = mysqli_fetch_assoc($blog_results)) {
@@ -191,26 +200,7 @@ global $conn;
     </div>
 </div>
 
-<!--           Post area below     -->
-<!--        <div class="col-md-7 blog-post-area" style="background-color: #7EC0EE" >-->
-<!---->
-<!--                <form action="blogs.php" method="post">-->
-<!--                    <h4>Title</h4><textarea rows="1" style="width: 20%" name="blog_title"></textarea><br />-->
-<!--                    <h4>Content</h4><textarea rows="20" style="width: 100%" name="blog_content" contenteditable="true"></textarea><br />-->
-<!---->
-<!--                    <br>-->
-<!--                    <select name ="access">-->
-<!--                        <option value="0">Only me</option>-->
-<!--                        <option value="1" selected="1">Friends</option>-->
-<!--                        <option value="2">Everybody</option>-->
-<!--                        <option value="3">Circles</option>-->
-<!---->
-<!--                    </select>-->
-<!--                    <input type="submit" name="blog_post" value="Post" />-->
-<!---->
-<!--                </form>-->
-<!--            <br>-->
-<!--        </div>-->
+
 
 
 

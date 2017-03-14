@@ -88,8 +88,11 @@ if(isset($_GET['access'])){
 if (isset($_POST["blog_comment"])){
     $comment_content = $_POST["blog_comment"];
 
-    $check = validate_comment_input($comment_content);
-    if($check == true){
+    $empty_check = validate_comment_input($comment_content);
+    if($empty_check == false){
+
+        $comment_content = strip_tags($comment_content);
+        $comment_content = htmlentities($comment_content);
         insert_comment($current_blogID,$userid,$comment_content);
     }
 
