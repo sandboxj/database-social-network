@@ -20,7 +20,7 @@
                     <br>
                     <div class="btn-toolbar" role="toolbar" aria-label="blog_options">
                         <div class="btn-group-horizontal" aria-label="blog_options">
-                            <button class="btn" data-toggle="modal" data-target="#changePrivacy"> <span class="glyphicon glyphicon-cog"></span> Privacy Settings</button>
+                            <button class="btn" data-toggle="modal" data-target="#changePrivacy"> <span class="glyphicon glyphicon-cog"></span> Access Rights</button>
                         </div>
                     </div>
                 </div>

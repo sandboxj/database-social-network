@@ -7,6 +7,8 @@ if (isset($_POST["register"])) {
     $first_name = isset($_POST["first_name"]) ? trim($_POST["first_name"]) : "";
     $last_name = isset($_POST["last_name"]) ? trim($_POST["last_name"]) : "";
     $date_of_birth = isset($_POST["date_of_birth"]) ? $_POST["date_of_birth"] : date("Y-m-d"); // date format in MySQL
+    $location = isset($_POST["location"]) ? trim($_POST["location"]) : "";
+    $phone_number = isset($_POST["phone_number"]) ? trim($_POST["phone_number"]) : "";
     // Check if any fields are blank
     if($password === $password_confirm){
         $fields_required = array("password",  "email", "first_name", "last_name", "date_of_birth", "gender");
@@ -72,5 +74,7 @@ if (isset($_POST["register"])) {
     $first_name = "";
     $last_name = "";
     $date_of_birth = date("Y-m-d");
+    $location = "";
+    $phone_number = "";
     $message = "Please register.";
 }
