@@ -84,7 +84,7 @@ update_status($pageid2);
                 <div class="col-sm-6">
                     <p id="message_from"><?php print $Ifirstname . " " . $Ilastname ?></p>
                     <p id="message_title"><?php print $Ititle ?></p>
-                    <p id="message_content"><?php print $Icontent ?></p>
+                    <p id="message_content"><?php print nl2br(htmlentities($Icontent)) ?></p>
                 </div>
                 <div class="col-sm-4">
                     <p class="message_date"><?php print $date_final ?></p><br>
