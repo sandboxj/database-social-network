@@ -42,7 +42,8 @@ if (isset($_POST["populate_users"])) {
 
 if (isset($_POST["populate_friendships"])) {
 	$no_friends = $_POST["num_of_friends"];
-	$users_query = "SELECT * from user";
+	$users_query = "SELECT * from user
+                  WHERE user.UserID NOT LIKE '1'";
 	$user_list = mysqli_query($conn, $users_query);
 	while ($user = mysqli_fetch_assoc($user_list)) {
 		$users[] = $user["UserID"];
@@ -108,7 +109,8 @@ if (isset($_POST["populate_friendships"])) {
 
 if (isset($_POST["populate_circles"])) {
 	$no_circles = $_POST["num_of_circles"];
-	$users_query = "SELECT * from user";
+	$users_query = "SELECT * from user
+                  WHERE user.UserID NOT LIKE '1'";
 	$users = mysqli_query($conn, $users_query);
 	while ($user = mysqli_fetch_assoc($users)) {
 		$users_list[] = $user["UserID"];
@@ -160,7 +162,8 @@ if (isset($_POST["populate_photo_comments"])) {
 
 if (isset($_POST["populate_blogs"])) {
 	$no_blogs = $_POST["num_of_blogs"];
-	$users_query = "SELECT * from user";
+	$users_query = "SELECT * from user
+                  WHERE user.UserID NOT LIKE '1'";
 	$users_result = mysqli_query($conn, $users_query);
 	while ($user = mysqli_fetch_assoc($users_result)) {
 		$users[] = $user["UserID"];
@@ -225,7 +228,8 @@ if (isset($_POST["populate_blogs"])) {
 
 if (isset($_POST["populate_blog_comments"])) {
   $no_comments = $_POST["num_of_blog_comments"];
-	$users_query = "SELECT * from user";
+	$users_query = "SELECT * from user
+                  WHERE user.UserID NOT LIKE '1'";
 	$users = mysqli_query($conn, $users_query);
 	while ($user = mysqli_fetch_assoc($users)) {
 		$users_list[] = $user["UserID"];
@@ -347,5 +351,69 @@ if (isset($_POST["populate_blog_comments"])) {
 
 if (isset($_POST["populate_messages"])) {
 
+}
+
+if (isset($_POST["purge"])) {
+  $delete_user_query = "DELETE FROM user
+                        WHERE user.UserID NOT LIKE '1'";
+  $delete_blog_query = "DELETE FROM blog";
+  $delete_blog_comment_query = "DELETE FROM blog_comment";
+  $delete_circle_query = "DELETE FROM circle";
+  $delete_circle_member_query = "DELETE FROM circle_member";
+  $delete_do_not_recommend_query = "DELETE FROM do_not_recommend";
+  $delete_friendship_query = "DELETE FROM friendship";
+  $delete_message_query = "DELETE FROM message";
+  $delete_photo_query = "DELETE FROM photo
+                         WHERE photo.PhotoID NOT LIKE '1'";
+  $delete_photo_collection_query = "DELETE FROM photo_collection
+                                    WHERE photo_collection.CollectionID NOT LIKE '1'";
+  $delete_photo_comment_query = "DELETE FROM photo_comment";
+  
+  $reset_user_query = "ALTER TABLE user 
+                       AUTO_INCREMENT = 1";
+  $reset_blog_query = "ALTER TABLE blog 
+                       AUTO_INCREMENT = 1";
+  $reset_blog_comment_query = "ALTER TABLE blog_comment 
+                               AUTO_INCREMENT = 1";
+  $reset_circle_query = "ALTER TABLE circle
+                         AUTO_INCREMENT = 1";
+  $reset_circle_member_query = "ALTER TABLE circle_member
+                                AUTO_INCREMENT = 1";
+  $reset_do_not_recommend_query = "ALTER TABLE do_not_recommend
+                                   AUTO_INCREMENT = 1";
+  $reset_friendship_query = "ALTER TABLE friendship
+                             AUTO_INCREMENT = 1";
+  $reset_message_query = "ALTER TABLE message
+                          AUTO_INCREMENT = 1";
+  $reset_photo_query = "ALTER TABLE photo 
+                        AUTO_INCREMENT = 1";
+  $reset_photo_collection_query = "ALTER TABLE photo_collection
+                                   AUTO_INCREMENT = 1";
+  $reset_photo_comment_query = "ALTER TABLE photo_comment 
+                                AUTO_INCREMENT = 1";
+  
+  $delete_user_result = mysqli_query($conn, $delete_user_query);
+  $delete_blog_result = mysqli_query($conn, $delete_blog_query);
+  $delete_blog_comment_result = mysqli_query($conn, $delete_blog_comment_query);  
+  $delete_circle_result = mysqli_query($conn, $delete_circle_query);  
+  $delete_circle_member_result = mysqli_query($conn, $delete_circle_member_query);  
+  $delete_do_not_recommend_result = mysqli_query($conn, $delete_do_not_recommend_query);  
+  $delete_friendship_result = mysqli_query($conn, $delete_friendship_query);  
+  $delete_message_result = mysqli_query($conn, $delete_message_query);  
+  $delete_photo_result = mysqli_query($conn, $delete_photo_query);  
+  $delete_photo_collection_result = mysqli_query($conn, $delete_photo_collection_query);  
+  $delete_photo_comment_result = mysqli_query($conn, $delete_photo_comment_query);
+  
+  $reset_user_result = mysqli_query($conn, $reset_user_query);
+  $reset_blog_result = mysqli_query($conn, $reset_blog_query);
+  $reset_blog_comment_result = mysqli_query($conn, $reset_blog_comment_query);  
+  $reset_circle_result = mysqli_query($conn, $reset_circle_query);  
+  $reset_circle_member_result = mysqli_query($conn, $reset_circle_member_query);  
+  $reset_do_not_recommend_result = mysqli_query($conn, $reset_do_not_recommend_query);  
+  $reset_friendship_result = mysqli_query($conn, $reset_friendship_query);  
+  $reset_message_result = mysqli_query($conn, $reset_message_query);  
+  $reset_photo_result = mysqli_query($conn, $reset_photo_query);  
+  $reset_photo_collection_result = mysqli_query($conn, $reset_photo_collection_query);  
+  $reset_photo_comment_result = mysqli_query($conn, $reset_photo_comment_query);
 }
 ?>

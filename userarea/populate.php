@@ -57,6 +57,10 @@
   <input type="number" name="num_of_messages" value="" />
 </form>
 <br/>
+<form action="populate.php" method="post">
+  <input type="submit" name="purge" value="Purge Database!" />
+</form>
+<br/>
 
 
 <a href="logout.php">Logout</a>
