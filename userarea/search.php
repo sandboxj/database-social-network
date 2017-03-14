@@ -193,6 +193,7 @@ mysqli_free_result($result);
                                        AND f.Status = '0'";
             $pending = mysqli_query($conn, $pending_query);
 			      $ispending = mysqli_fetch_assoc($pending);
+		$should_recommend = 0;
             if ($no_recommend["UserID"] == "") {
                 if ($ispending["User1ID"] == "") {
                     $should_recommend = 1;
@@ -220,7 +221,7 @@ mysqli_free_result($result);
                                             <?php echo $recommend['UserID']?>"><h4>
                                             <?php echo $recommend["FirstName"] . " " . $recommend["LastName"]?>
                                         </h4>
-                                        </a><br /><br />
+                                        </a><br />
                                         <form method="post" style="display: inline">
                                           <button type="submit" name="do_not_recommend" value="<?php echo $recommend['UserID']?>" class="btn btn-primary">Don't know this person</button>
                                         </form>
