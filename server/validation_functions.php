@@ -42,7 +42,7 @@ function validate_special_chars($fields_checked) {
     global $errors;
     foreach ($fields_checked as $field) {
         $value = $_POST[$field];
-        if(preg_match('/[^A-Za-z0-9\-]/', $value)) {
+        if(preg_match('/[^A-Za-z0-9\-\s]/', $value)) {
             $errors[$field] = fieldname_as_text($field) . " contains special characters. Special characters not allowed.";
         }
     }

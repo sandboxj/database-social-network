@@ -1,5 +1,8 @@
 <?php require_once("../server/validation_functions.php"); ?>
 <?php
+
+$check = false;
+
 if (isset($_POST["register"])) {
     $user_email = isset($_POST["email"]) ? trim($_POST["email"]) : "";
     $password = isset($_POST["password"]) ? trim($_POST["password"]) : "";
@@ -61,19 +64,25 @@ if (isset($_POST["register"])) {
             if ($result) {
                 // Success registration
                 $_SESSION["message"] = "User successfully created.";
+
                 redirect_to("login.php");
             } else {
                 // Failure
                 $_SESSION["message"] = "User creation failed. Some information was not valid.";
                 //redirect_to("register_form.php");
+                $check = true;
+
             }
         } else {
             $message = "Registration failed.";
+            $check = true;
+
             $message .= form_errors($errors);
         }
     }else{
         //passwords do not match
         $_SESSION["message"] = "Passwords do not match!";
+        $check = true;
     }
 
 } else {

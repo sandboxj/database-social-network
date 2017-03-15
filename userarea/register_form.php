@@ -4,16 +4,23 @@
 <?php require_once("../server/validations_register.php");?>
 <?php $page_title="Registration"?>
 <?php include("../includes/header.php"); ?>
-        <section class="jumbotron">
+
+        <section class="jumbotron register-jumbo">
     <div class="container">
         <div class="row text-center">
             <h1> Register </h1>
-            <?php
-            echo message();
-            echo $message;
-            ?></div>
+           </div>
     </div>
 </section>
+
+<?php
+if ($check == true) { ?>
+    <div class="alert alert-danger">  <?php
+        echo message();
+        echo $message;
+        ?></div>
+<?php } ?>
+
 <div class="container">
     <form action="register_form.php" method="post">
     <div class="row center-block">
@@ -23,12 +30,12 @@
         <div class="panel panel-default">
             <div class="panel-body">
                 <h4>Personal Details:</h4>
-                <div class="form-group">
-                    <label for="firstName">First Name</label>
+                <div class="form-group required">
+                    <label class="control-label" for="firstName">First Name </label>
                     <input type="text" class="form-control" id="firstName" name="first_name" value="<?php echo $first_name?>" placeholder="">
                 </div>
-                <div class="form-group">
-                    <label for="lastName">Last Name</label>
+                <div class="form-group required">
+                    <label class="control-label" for="lastName">Last Name </label>
                     <input type="text" class="form-control" id="lastName" name="last_name" value="<?php echo $last_name?>" placeholder="">
                 </div>
 
@@ -37,8 +44,8 @@
                     <input type="radio" id="gender" name="gender" value="male" checked/> Male
                     <input type="radio" id="gender" name="gender" value="female"/> Female<br/>
                 </div>
-                <div class="form-group">
-                    <label for="dob">Date of Birth</label>
+                <div class="form-group required">
+                    <label class="control-label" for="dob">Date of Birth </label>
                     <input type="date" class="form-control" id="dob" name="date_of_birth" value="<?php echo $date_of_birth?>" placeholder="<?php echo date("Y-m-d");?>">
                 </div>
                 <div class="form-group">
@@ -58,18 +65,22 @@
                 <div class="panel-body">
                     <h4>Login Credentials:</h4>
 
-                    <div class="form-group">
-                        <label for="email_address">E-mail</label>
+                    <div class="form-group required">
+                        <label class="control-label" for="email_address">E-mail </label>
                         <input type="email" class="form-control" id="email_address" name="email" value="<?php echo $user_email?>" placeholder="Username@mail.com">
                     </div>
-                    <div class="form-group">
-                        <label for="password">Password</label>
+                    <div class="form-group required">
+                        <label class="control-label" for="password">Password </label>
                         <input type="password" class="form-control" id="password" name="password" value="" placeholder="Password" aria-describedby="password_helper" required>
                     </div>
-                    <div class="form-group">
-                        <label for="password-confirm">Confirm Password</label>
+                    <div class="form-group required">
+                        <label class="control-label" for="password-confirm">Confirm Password </label>
                         <input type="password" class="form-control" id="password-confirm" name="password_confirm" value="" placeholder="Confirm Password" aria-describedby="password_confirm_helper" required>
                         <small id="password_confirm_helper" class="form-text text-muted">Please re-enter your password.</small>
+                    </div>
+
+                    <div>
+                        <label style="color: red"> * Required Fields</label>
                     </div>
 
                     <br/>
