@@ -6,7 +6,7 @@
     <div class="row text-center">
         <div class="col-md-12">
             <ul class="nav nav-pills">
-                <li role="presentation"><a class="so-shall-logo"><i class="glyphicon glyphicon-globe"></i> SoShallNetwork</a></li>
+                <li role="presentation" class="so-shall-logo"><i class="glyphicon glyphicon-globe"></i> SoShallNetwork</li>
                 <li role="presentation" class="pull-right"><a href="logout.php">Logout <i class="glyphicon glyphicon-log-out" aria-hidden="true"></i></a></li>
             </ul>
 
@@ -43,7 +43,7 @@
 
         <li role="presentation" style="width: 300px"><a><form action="search.php" method="post"><input type="text" name="search_result"  class="search_form"></form></a></li>
 
-
+            </ul>
 </div>
     </div>
 </nav>
