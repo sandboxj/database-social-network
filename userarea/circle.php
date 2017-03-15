@@ -177,7 +177,9 @@ while($circle_members=mysqli_fetch_assoc($circle_members_results)){
 
 
 <!-- Trigger the modal with a button -->
+<?php if($viewer_userID == $circle_adminID){?>
 <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Add a Friend</button>
+<?php } ?>
 <br>
 
 <!-- Modal -->
