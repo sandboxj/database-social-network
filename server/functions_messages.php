@@ -83,6 +83,20 @@ function check_all_inbox($userid) {
     return $query;
 }
 
+function check_circle_messages($circleID){
+    global $conn;
+
+    //enum for circles i =0
+
+    $sql = "SELECT Title, Content, SenderUserID, TimeSent FROM message 
+    WHERE ReceiverType='0' AND ReceiverID = '{$circleID}'";
+
+    $circle_messages_results_db = mysqli_query($conn, $sql);
+    confirm_query($circle_messages_results_db);
+
+    return $circle_messages_results_db;
+}
+
 
 // Check for all outbox messages
 function check_all_outbox($userid)

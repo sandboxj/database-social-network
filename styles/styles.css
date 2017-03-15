@@ -71,3 +71,8 @@ tr.noBorder{
 td.noBorder{
     border: hidden;
 }
+
+.navbar-color{
+    background-color: lightcyan;
+}
+

@@ -28,7 +28,8 @@ header p {
     margin: 0;
 }*/
 
-.jumbotron {
+.login-jumbotron {
+
     display: flex;
     align-items: center;
     background-image: url("../userarea/img/blue.jpg");
@@ -36,4 +37,6 @@ header p {
     color: #eeeaec;
     height: 300px;
     text-shadow: 1px 1px 1px #000000;
+
 }
+

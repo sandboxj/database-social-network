@@ -1,9 +1,10 @@
 <?php require_once("../server/sessions.php"); ?>
 <?php require_once("../server/functions.php");?>
 <?php require_once("../server/db_connection.php");?>
-<?php require("../server/circle_functions.php");?>
+<?php require("../server/functions_circle.php");?>
 <?php require("../server/user_functions.php");?>
 <?php require("../server/functions_friends.php");?>
+<?php require("../server/functions_messages.php");?>
 <?php $page_title="Circles"?>
 <?php confirm_logged_in(); ?>
 
@@ -62,12 +63,6 @@ $circle_title = $circle_details['circle_title'];
 $circle_adminID = $circle_details['circle_admin'];
 
 
-
-
-
-
-
-
 ?>
 
 
@@ -87,7 +82,12 @@ $circle_adminID = $circle_details['circle_admin'];
                 <h4>Number of members: <?php echo $circle_member_count; ?> </h4>
                 </div>
 
+            <div class="col-md-3">
+                <div class="container" style="border-style: solid;">
 
+                </div>
+
+            </div>
             <div class="col-md-2 pull-right">
                  <form action="circle.php?circleID=<?php echo $circleID; ?>" method="post">
 
@@ -107,15 +107,17 @@ $circle_adminID = $circle_details['circle_admin'];
 </div>
 
 
-<div class="container circle-members">
+<div class="container">
 
     <div class="row">
+        <div class="col-md-5">
 
-        <h1 id="circle-members-title">Circle Members:</h1>
+
+        <h2>Circle Members:</h2>
         <?php
 while($circle_members=mysqli_fetch_assoc($circle_members_results)){
     $member_userID = $circle_members['MemberUserID'];
-    
+
 
     $full_name_array = find_full_name($member_userID);
 
@@ -127,27 +129,55 @@ while($circle_members=mysqli_fetch_assoc($circle_members_results)){
 ?>
 
 
-
-        <div class="col-md-7">
+<div class="row">
+        <div class="col-md-4">
 <!--            COULD include the profile picture here-->
-            <ul>
-                <li class="member-name"><a href="user_profile.php?id=<?php echo $member_userID ?>"><?php echo "{$first_name} {$last_name}";?></a></li>
+            <ul class="list-group">
+                <li class="list-group-item" role="presentation" class="member-name"><a href="user_profile.php?id=<?php echo $member_userID ?>"><?php echo "{$first_name} {$last_name}";?></a></li>
             </ul>
 
         </div>
 
+</div>
+
 <?php } ?>
+        </div>
+        <div class="col-md-7">
 
-        <br>
-        <br>
-        <br>
-        <br>
+        <h2>Circle Messages</h2>
+            <?php
+            $circle_messages_results_db = check_circle_messages($circleID);
+            while($circle_messages = mysqli_fetch_assoc($circle_messages_results_db)){
+                $message_title = $circle_messages['Title'];
+                $message_content = $circle_messages['Content'];
+                $message_senderID = $circle_messages['SenderUserID'];
+                $message_sender_full_name = find_full_name($message_senderID);
+                $message_sender_first_name = $message_sender_full_name['FirstName'];
+                $message_sender_last_name = $message_sender_full_name['LastName'];
 
+                $date_format = strtotime($circle_messages['TimeSent']);
+                $date_final = date("D, jS F Y, H:i", $date_format);
+
+            ?>
+
+        <div class="row">
+            <div class="col-md-7">
+                <p><? echo "{$message_sender_first_name} {$message_sender_last_name} said:" ?></p>
+                <h3>Title: <?php echo $message_title; ?></h3>
+
+                <p><?php echo $message_content; ?></p>
+                <p>Date: <?php echo $date_final; ?></p>
+            </div>
+        </div>
+        <?php } //closing while loop?>
+        </div>
+
+        </div>
     </div>
 
 
 <!-- Trigger the modal with a button -->
-<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Invite a Friend</button>
+<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Add a Friend</button>
 <br>
 
 <!-- Modal -->
@@ -158,7 +188,7 @@ while($circle_members=mysqli_fetch_assoc($circle_members_results)){
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Choose a friend to invite to the circle:</h4>
+        <h4 class="modal-title">Choose a friend to add to the circle:</h4>
       </div>
       <div class="modal-body">
         <p>Select friends from the list below:</p>
@@ -174,14 +204,14 @@ while ($friend_results  = mysqli_fetch_assoc($friend_results_db)){
  
     
     $friend_output = "<li class='list-group-item'><input type='checkbox' name='invited_friends[]' value='{$friendID}'/> {$friend_first_name} {$friend_last_name}</li>";
-    $check = is_in_specific_circle($friendID, $circleID);
+    $is_in_circle_check = is_in_specific_circle($friendID, $circleID);
 
    
     
 //PUT THE ID IN THE VALUE AND THE NAME
 
 //do not display the user if it is already in the circle.
-    if(!$check){
+    if(!$is_in_circle_check){
         echo $friend_output;
        
     }
@@ -189,14 +219,12 @@ while ($friend_results  = mysqli_fetch_assoc($friend_results_db)){
          } ?>
         </ul>
 
-        <button type="submit" class="btn btn-primary" name="invitation" >Invite Friends</button>
+        <button type="submit" class="btn btn-primary" name="invitation" >Add Friends</button>
 
         </form>
       </div>
       <!--<div class="modal-footer">
-        
-  
-  
+
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       </div>-->
     </div>
@@ -205,6 +233,6 @@ while ($friend_results  = mysqli_fetch_assoc($friend_results_db)){
 </div>
 
 <?php mysqli_free_result($friend_results_db); ?>
-<a href="logout.php">Logout</a>
+
 <!--end of body-->
 <?php include("../includes/footer.php"); ?>

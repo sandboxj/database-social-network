@@ -5,7 +5,7 @@
 <?php $page_title = "Login" ?>
 <?php include("../includes/header.php"); ?>
 
-<section class="jumbotron">
+<section class="jumbotron login-jumbotron">
     <div class="container">
         <div class="row text-center">
             <h1> Login </h1>
@@ -16,8 +16,10 @@
         </div>
 </section>
     <div class="container">
-        <div class="col-md-4"></div>
         <div class="col-md-4">
+            <img class="img-responsive img-circle" src="img/SoShallNetwork_Logo.png"/>
+        </div>
+        <div class="col-md-4 col-md-offset-3">
             <div class="panel panel-default">
                 <div class="panel-body">
                     <form action="login.php" method="post">

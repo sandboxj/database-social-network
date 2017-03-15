@@ -1,5 +1,5 @@
 <?php require_once("../server/sessions.php"); ?>
-<?php require("../server/blog_functions.php"); ?>
+<?php require("../server/functions_blog.php"); ?>
 <?php require_once("../server/functions.php"); ?>
 <?php require_once("../server/db_connection.php"); ?>
 <?php require_once("../server/user_functions.php"); ?>
@@ -165,7 +165,7 @@ if (isset($_POST["blog_comment"])){
 
             <div class="card-content" >
                 <article style="white-space:pre;"  class="blog-content"  contenteditable="true">
-                     <?php echo $blog_content ?>
+                     <?php echo htmlentities(strip_tags($blog_content)) ?>
                 </article>
             </div>
 

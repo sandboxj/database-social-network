@@ -1,4 +1,4 @@
-<?php require("../server/blog_functions.php");?>
+<?php require("../server/functions_blog.php");?>
 <?php require_once("../server/sessions.php"); ?>
 <?php require_once("../server/functions.php");?>
 <?php require_once("../server/db_connection.php");?>
@@ -55,19 +55,27 @@ if(isset($_POST["blog_post"])){
 <?php include("../includes/header.php"); ?>
 <?php include("navbar.php"); ?>
 
-<div class="container-fluid>">
+
+<section class="jumbotron blog-jumbotron">
+<div class="container">
+    <div class="row text-center">
+
+        <h1>Your Blogs</h1>
+
+    </div>
+
+</div>
+</section>
+
+<div class="container">
     <div class="row">
-    <div class="col-md-4">
-        <h2>Your Blogs</h2>
+        <div class="col-md-12">
+            <button type="button" class="btn btn-info btn-block" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-pencil"></span> New blog post</button>
+        </div>
+    </div>
+</div>
 
-
-    </div>
-    <div class="col-md-4 pull-right">
-        <br>
-        <button type="button" class="btn btn-info btn-md" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-pencil"></span> Make a new blog post</button>
-    </div>
-    </div>
-</div><!-- Trigger the modal with a button -->
+<!-- Trigger the modal with a button -->
 
 <br>
 
@@ -139,12 +147,11 @@ if(isset($_POST["blog_post"])){
 
 
 <!--Blogs below-->
-<div class="container-fluid" style="border-style: solid;" >
-    <div class="row content">
+<div class="container-fluid"  >
 
 
-        <div class="col-md-5">
-            <br>
+
+
 
 <?php
 global $conn;
@@ -168,21 +175,23 @@ global $conn;
             $date_posted = $blog_posts["DatePosted"];
             $formatted_date = display_formatted_date($date_posted);
 
-            $output = "Title: <td><a href='blog.php?title={$escaped_title}'> {$title} </a></td><br />";
+            $title_output = "Title: <td> {$title} </td><br />";
 
 
             ?>
+            <a href='blog.php?title=<?php echo $escaped_title;?>'>
+        <div class="polaroid col-md-4 individual-blog">
 
-            <br>
             <!--Inside WHILE, display every individual blog-->
-            <div class="individual-blog">
 
-                <?php echo $output; ?>
+
+                <?php echo $title_output; ?>
                 <h6><?php echo $formatted_date ?></h6>
 
-            </div>
 
 
+        </div>
+            </a>
             <?php
 
         }//closing while
@@ -196,15 +205,9 @@ global $conn;
     mysqli_free_result($blog_results);
 ?>
 
-        </div>
-    </div>
+
+
 </div>
 
 
-
-
-
-
-
-<a href="logout.php">Logout</a>
 <?php include("../includes/footer.php"); ?>

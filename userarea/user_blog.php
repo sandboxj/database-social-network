@@ -1,7 +1,7 @@
 <?php require_once("../server/sessions.php"); ?>
 <?php require_once("../server/functions.php");?>
 <?php require("../server/user_functions.php");?>
-<?php require("../server/blog_functions.php");?>
+<?php require("../server/functions_blog.php");?>
 <?php require_once("../server/db_connection.php");?>
 <?php $page_title="{$_GET['title']}"?>
 <?php confirm_logged_in(); ?>

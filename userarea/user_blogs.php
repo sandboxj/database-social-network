@@ -1,7 +1,7 @@
 <?php require_once("../server/sessions.php"); ?>
-<?php require("../server/blog_functions.php");?>
+<?php require("../server/functions_blog.php");?>
 <?php require("../server/user_functions.php");?>
-<?php require_once("../server/circle_functions.php");?>
+<?php require_once("../server/functions_circle.php");?>
 <?php require_once("../server/functions_friends.php");?>
 <?php require_once("../server/functions.php");?>
 <?php require_once("../server/db_connection.php");?>
@@ -23,6 +23,7 @@ $page_title="{$first_name} {$last_name}'s Blogs";
 
 
 $name = "{$first_name} {$last_name}'s Blogs";
+
 $is_in_user_circle = is_in_another_user_circle($author_userid, $viewer_userID);
 $is_friend = check_friendship($author_userid, $viewer_userID);
 if($is_friend == true){
@@ -33,8 +34,18 @@ $is_friend_of_friend = check_friends_of_friends($author_userid, $viewer_userID);
 }
 ?>
 
-<h2><?php echo $name ?></h2>
+<section class="jumbotron blog-jumbotron">
+    <div class="container">
+        <div class="row text-center">
+            <h1><?php echo $name ?></h1>
+        </div>
+    </div>
+</section>
+
 <!--Blogs-->
+<div class="container-fluid">
+
+
 <?php
     $blog_results = find_blogs($author_userid);
 		while($blog_posts = mysqli_fetch_assoc($blog_results)) {
@@ -45,7 +56,7 @@ $is_friend_of_friend = check_friends_of_friends($author_userid, $viewer_userID);
             $formatted_date  = display_formatted_date($date_posted);
 
 
-            $output = "Title: <td><a href='user_blog.php?title={$title}&user={$author_userid}'> {$title} </a></td><br />";
+            $output = "Title: <td> {$title} </td><br />";
             $access_rights  = $blog_posts['AccessRights'];
 
             $check = confirm_access_rights($access_rights, $is_friend, $is_in_user_circle, $is_friend_of_friend);
@@ -59,20 +70,22 @@ $is_friend_of_friend = check_friends_of_friends($author_userid, $viewer_userID);
 
                 ?>
 
-                <br>
 
-                <div class="individual-blog">
+    <a href='user_blog.php?title=<?php echo $title; ?>&user=<?php echo $author_userid ?>>
+                <div class="polaroid col-md-4 individual-blog">
 
                     <?php echo $output; ?>
                     <h6><?php echo $formatted_date ?></h6>
 
                 </div>
-
+    </a>
                 <?php } //closing if statement
 
 }// closing while loop
     mysqli_free_result($blog_results);
-?>	
+?>
+
+</div>
 <hr />
-<a href="logout.php">Logout</a>
+
 <?php include("../includes/footer.php"); ?>

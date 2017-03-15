@@ -5,18 +5,12 @@
 
 }
 
-.circle-members{
-    
-}
+
 
 .member-name a{
     color: #FF6707;
 }
 
-
-#circle-members-title{
-    color: #FF6707;
-}
 
 /*html { */
   /*background: url("../userarea/img/buildings.jpg") no-repeat center center fixed;*/
@@ -34,4 +28,24 @@
   /* Preserve aspect ratio */
   min-width: 100%;
   min-height: 100%;
+}
+
+.circle-jumbotron{
+    background: url("../userarea/img/buildings.jpg") no-repeat center;
+    background-size: cover;
+    min-height: 350px;
+
+}
+
+
+.individual-circle {
+    background-color: antiquewhite;
+    border-color: blue;
+    border-style: solid;
+
+}
+
+.individual-circle:hover {
+    background-color: lightcyan;
+
 }

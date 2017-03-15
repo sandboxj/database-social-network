@@ -63,11 +63,26 @@ div #comment{
 
 
 
-.individual-blog{
+.individual-blog {
     background-color: antiquewhite;
-    border-left-color: blue;
-    border-left-style: solid;
+    border-color: blue;
+    border-style: solid;
+
+}
+
+.individual-blog:hover {
+    background-color: lightcyan;
+
+}
 
 
+.blog-jumbotron{
+    background: url("../userarea/img/blog.jpg") no-repeat center;
+    background-size: cover;
+    min-height: 350px;
 
+}
+
+.jumbotron h1{
+    color: burlywood;
 }

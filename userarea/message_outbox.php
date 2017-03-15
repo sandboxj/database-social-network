@@ -1,6 +1,6 @@
 <?php require_once("../server/sessions.php"); ?>
 <?php require_once("../server/functions.php"); ?>
-<?php require_once("../server/messages_functions.php"); ?>
+<?php require_once("../server/functions_messages.php"); ?>
 <?php require_once("../server/db_connection.php"); ?>
 <?php $page_title = "Message Outbox" ?>
 <?php include("../includes/header.php"); ?>

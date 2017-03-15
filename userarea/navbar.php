@@ -1,7 +1,19 @@
 <link rel="stylesheet" href="../styles/fonts">
 
-<nav class="navbar-container">
+<nav class="navbar-container navbar-color">
+
+    <div class="row text-center">
+        <div class="col-md-3">
+            <ul class="nav nav-pills">
+                <li role="presentation">
+                    <a>Logged in as <?php echo "{$_SESSION['FirstName']} {$_SESSION['LastName']}"?></a></li>
+            </ul>
+
+        </div>
+        <div class='col-md-9'>
+    
     <ul class="nav nav-pills">
+        
         <li role="presentation" <?php if ($page_title == "{$_SESSION["FirstName"]} {$_SESSION["LastName"]}'s Profile") { ?> class="active" <?php }; ?> >
             <a href="profile.php">Profile</a></li>
         <li role="presentation" <?php if ($page_title == "{$_SESSION["FirstName"]} {$_SESSION["LastName"]}'s Blogs") { ?> class="active" <?php }; ?> >
@@ -19,5 +31,8 @@
             <a href="friends.php">Friends</a></li>
         <li role="presentation" <?php if ($page_title == "Search") { ?> class="active" <?php }; ?> ><a
                     href="search.php"><i class="glyphicon glyphicon-search" aria-hidden="true"></i></a></li>
-    </ul>
+        <li role="presentation" class="pull-right"><a href="logout.php">Logout <i class="glyphicon glyphicon-log-out" aria-hidden="true"></i></a></li>
+
+</div>
+    </div>
 </nav>
