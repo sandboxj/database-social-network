@@ -42,7 +42,7 @@ while ($row = mysqli_fetch_array($result2)) {
 
 
 <!-- The Jumbotron of the website -->
-<section class="jumbotron">
+<section class="jumbotron message-jumbo">
     <div class="container">
         <div class="row text-center">
             <h1> Messages </h1>
