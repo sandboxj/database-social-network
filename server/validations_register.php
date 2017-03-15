@@ -13,11 +13,11 @@ if (isset($_POST["register"])) {
     $location = isset($_POST["location"]) ? trim($_POST["location"]) : "";
     $phone_number = isset($_POST["phone_number"]) ? trim($_POST["phone_number"]) : "";
     // Check if any fields are blank
-    if($password === $password_confirm){
-        $fields_required = array("password",  "email", "first_name", "last_name", "date_of_birth", "gender");
+    if ($password === $password_confirm) {
+        $fields_required = array("password", "email", "first_name", "last_name", "date_of_birth", "gender");
         validate_presences($fields_required);
         // Check if date is correct
-        if(!validateDate($date_of_birth)) {
+        if (!validateDate($date_of_birth)) {
             $errors["Dob"] = "Invalid date";
         }
         // Check for minimum length
@@ -32,7 +32,7 @@ if (isset($_POST["register"])) {
         $query .= "WHERE Email = '{$user_email}' ";
         $result = mysqli_query($conn, $query);
         confirm_query($result);
-        if (mysqli_num_rows($result)>0) {
+        if (mysqli_num_rows($result) > 0) {
             $errors["Email"] = "Email already exists.";
         }
         mysqli_free_result($result);
@@ -51,35 +51,42 @@ if (isset($_POST["register"])) {
             // Generate datetime
             $date_joined = date('Y-m-d H:i:s');
             // Enumerate gender
-            $ismale = ($_POST["gender"]==="male") ? 1 : 0;
-            $location = ($_POST["location"]==="") ? null : $_POST["location"];
-            $phone_number = ($_POST["phone_number"]==="") ? null : $_POST["phone_number"];
+            $ismale = ($_POST["gender"] === "male") ? 1 : 0;
+            $location = ($_POST["location"] === "") ? null : $_POST["location"];
+            $phone_number = ($_POST["phone_number"] === "") ? null : $_POST["phone_number"];
 
-            // Insert
-            $query = "INSERT INTO User (Password, Email, FirstName, LastName, DateJoined, DateOfBirth, Gender, CurrentLocation, PhoneNumber) ";
-            $query .= "VALUES (";
-            $query .= "'{$hashed_password}', '{$user_email}', '{$first_name}', '{$last_name}', '{$date_joined}', '{$date_of_birth}', '{$ismale}', '{$location}', '{$phone_number}'";
-            $query .= ")";
-            $result = mysqli_query($conn, $query);
-            if ($result) {
-                // Success registration
-                $_SESSION["message"] = "User successfully created.";
+            if (validatePhone($phone_number) == true) {
 
-                redirect_to("login.php");
+                // Insert
+                $query = "INSERT INTO User (Password, Email, FirstName, LastName, DateJoined, DateOfBirth, Gender, CurrentLocation, PhoneNumber) ";
+                $query .= "VALUES (";
+                $query .= "'{$hashed_password}', '{$user_email}', '{$first_name}', '{$last_name}', '{$date_joined}', '{$date_of_birth}', '{$ismale}', '{$location}', '{$phone_number}'";
+                $query .= ")";
+                $result = mysqli_query($conn, $query);
+                if ($result) {
+                    // Success registration
+                    $_SESSION["message"] = "User successfully created.";
+
+                    redirect_to("login.php");
+                } else {
+                    // Failure
+                    $_SESSION["message"] = "User creation failed. Some information was not valid.";
+                    //redirect_to("register_form.php");
+                    $check = true;
+                }
+
             } else {
-                // Failure
-                $_SESSION["message"] = "User creation failed. Some information was not valid.";
-                //redirect_to("register_form.php");
+                $message = "Please input a valid phone number.";
                 $check = true;
-
             }
+
         } else {
             $message = "Registration failed.";
             $check = true;
 
             $message .= form_errors($errors);
         }
-    }else{
+    } else {
         //passwords do not match
         $_SESSION["message"] = "Passwords do not match!";
         $check = true;

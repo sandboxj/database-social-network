@@ -75,21 +75,19 @@ while ($row = mysqli_fetch_array($result2)) {
         <div class="panel panel-primary">
             <div class="panel-heading"></div>
             <div class="panel-body">
-               
                     <form name="form_message" method="post" action="messages.php">
                        <table class="col-md-10">
                         <tr>
                             <td>
-                                <label class="message_label" for="search">Recipient:</label>
+                                <label class="message_label" for="to_user">Recipient:</label>
                             </td>
                             <td>
                                 <select class="form-control" name="to_user" id="to_user">
-                                    <option value=0>
-                                    <option disabled><b>-------Circles-------</b></option>
+                                    <option value=0></option>
+                                    <option disabled>-------Circles-------</option>
                                     <?php echo $options1; ?>
-                                    <option disabled><b>-------Friends-------</b></option>
+                                    <option disabled>-------Friends-------</option>
                                     <?php echo $options2; ?>
-                                  </option>
                                 </select>
                             </td>
                         </tr>
@@ -106,15 +104,15 @@ while ($row = mysqli_fetch_array($result2)) {
                             <td height="10"></td>
                         </tr>
                         <tr>
-                            <td align="top"><label class="message_label" for="search">Message:</label></td>
-                            <td><textarea class="form-control" contenteditable="true" id="message_content_field"
-                                          rows="5" style="width: 100%" aria-describedby="message_helper"
-                                          name="message_content" required<?php echo htmlentities(strip_tags($message_content))?>></textarea>
-                                <small id="message_helper" class="form-text text-muted">Max. 2500 Characters</small>
-                            </td>
 
+                            <td align="top"><label class="message_label" for="message_content_field">Message:</label></td>
+                            <textarea class="form-control" contenteditable="true" id="message_content_field"
+                                             rows="5" style="width: 100%" aria-describedby="message_helper"
+                                             name="message_content"
+                                             required></textarea>
+                            <small id="message_helper" class="form-text text-muted">Max. 2500 Characters</small>
                         </tr>
-                        <tr><br>
+                        <tr>
                             <td height="10"></td>
                             <td>
                                 <input type="submit" name="send" value="Send Message" class="btn btn-primary"/><br>
@@ -123,9 +121,9 @@ while ($row = mysqli_fetch_array($result2)) {
                                 ?>
                             </td>
                         </tr>
-                 </table>
-                   </form>
-             
+                    </table>
+                </form>
+
             </div>
             <?php
             if ($check == false) { ?>

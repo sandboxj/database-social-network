@@ -83,3 +83,18 @@ function validateDate($date) {
     $d = DateTime::createFromFormat('Y-m-d', $date);
     return $d && $d->format('Y-m-d') === $date;
 }
+
+function validatePhone($phoneNumber) {
+
+    if (empty($phoneNumber)) {
+        return true;
+    } else {
+        $pattern = "/^(\+44\s?7\d{3}|\(?07\d{3}\)?)\s?\d{3}\s?\d{3}$/";
+        $match = preg_match($pattern, $phoneNumber);
+        if (!$match == false) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+}
