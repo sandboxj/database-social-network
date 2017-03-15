@@ -27,6 +27,23 @@ function find_accepted($userid) {
     return $result;
 }
 
+function find_non_friends($userid) {
+    global $conn;
+    $query = "SELECT * FROM User WHERE UserID != '{$userid}' AND UserID NOT IN (";
+    $query .= "SELECT * FROM user u ";
+    $query .= "JOIN (";
+    $query .= "SELECT FriendshipID, User1ID as friend, User2ID as other, Date FROM friendship ";
+    $query .= "WHERE User2ID = '{$userid}' AND Status = 1 ";
+    $query .= "UNION ALL ";
+    $query .= "SELECT FriendshipID, User2ID as friend, User1ID as other, Date FROM friendship ";
+    $query .= "WHERE User1ID = '{$userid}' AND Status = 1";
+    $query .= ") f ";
+    $query .= "ON u.UserID = f.friend ";
+    $query .= ")";
+    $result = mysqli_query($conn, $query);
+    confirm_query($result);
+    return $result;
+}
 
 function find_friendship($user1ID, $user2ID) {
     global $conn;

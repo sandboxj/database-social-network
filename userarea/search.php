@@ -94,32 +94,13 @@ mysqli_free_result($result);
 <h4>People you may know</h4>
 
 <?php
-    $friends1 = "SELECT * FROM friendship f
-                 WHERE f.User1ID = '{$_SESSION["UserID"]}'
-                 AND f.Status = '1'";
-    $friendship1 = mysqli_query($conn, $friends1);
-    confirm_query($friendship1);
-    $friends2 = "SELECT * FROM friendship f
-                 WHERE f.User2ID = '{$_SESSION["UserID"]}'
-                 AND f.Status = '1'";
-    $friendship2 = mysqli_query($conn, $friends2);
-    confirm_query($friendship2);
-    while ($f1 = mysqli_fetch_assoc($friendship1)) {
-        $query1 = "select * from user u
-                  where u.UserID = '{$f1["User2ID"]}'";
-        $u1 = mysqli_query($conn, $query1);
-        confirm_query($u1);
-        $user1 = mysqli_fetch_assoc($u1);
-        $friends[] = $user1["UserID"];
+    $my_friends = find_accepted($_SESSION["UserID"]);
+
+    $friends = [];
+    while ($my_friend = mysqli_fetch_assoc($my_friends)) {
+        array_push($friends, $my_friend["UserID"]);       
     }
-     while ($f2 = mysqli_fetch_assoc($friendship2)) {
-        $query2 = "select * from user u
-                  where u.UserID = '{$f2["User1ID"]}'";
-        $u2 = mysqli_query($conn, $query2);
-        confirm_query($u2);
-        $user2 = mysqli_fetch_assoc($u2);
-        $friends[] = $user2["UserID"];
-    }
+    mysqli_free_result($my_friends);
     $friends_of_friends = [];
     foreach($friends as $friend) {
         $friends_of_friends1 = "SELECT * FROM friendship f
