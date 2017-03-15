@@ -104,13 +104,12 @@ while ($row = mysqli_fetch_array($result2)) {
                             <td height="10"></td>
                         </tr>
                         <tr>
-
                             <td align="top"><label class="message_label" for="message_content_field">Message:</label></td>
-                            <textarea class="form-control" contenteditable="true" id="message_content_field"
+                            <td><textarea class="form-control" contenteditable="true" id="message_content_field"
                                              rows="5" style="width: 100%" aria-describedby="message_helper"
                                              name="message_content"
                                              required></textarea>
-                            <small id="message_helper" class="form-text text-muted">Max. 2500 Characters</small>
+                            <small id="message_helper" class="form-text text-muted">Max. 2500 Characters</small></td>
                         </tr>
                         <tr>
                             <td height="10"></td>
