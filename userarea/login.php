@@ -22,7 +22,7 @@
 
     <div class="container">
         <div class="col-md-4">
-            <img class="img-responsive img-circle" src="img/SoShallNetwork_Logo.png"/>
+            <img class="img-responsive img-circle"  src="img/SoShallNetwork_Logo.png"/>
         </div>
         <div class="col-md-4 col-md-offset-3">
             <div class="panel panel-default">

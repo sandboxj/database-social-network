@@ -11,18 +11,14 @@
 <?php include("../includes/header.php"); ?>
 <?php include("navbar.php"); ?>
 
-<h2>Find Friends</h2>
+
 <?php echo message()?>
-<form action="search.php" method="post">
-  <input type="text" name="search_query" placeholder="Name..." class="search_form"></input>
-  <br />
-  <button type="submit" name="search_result" value="Search" class="btn btn-primary">Search</button>
-</form>
+
 
 <?php
 if (isset($_POST["search_result"]) && $result) {
 ?>
-<hr />
+
 <h4>Search results</h4>
 <?php
 if (mysqli_num_rows($result)<1) {

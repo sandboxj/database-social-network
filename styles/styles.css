@@ -17,15 +17,7 @@ hr {
     text-shadow: 1px 1px 1px #000000;
 }
 
-.message-jumbo {
-    display: flex;
-    align-items: center;
-    background: url("../userarea/img/blue.jpg") center;
-    background-size: cover;
-    color: #eeeaec;
-    height: 250px;
-    text-shadow: 1px 1px 1px #000000;
-}
+
 
 .message_label {
     margin: 3px;
@@ -38,9 +30,7 @@ hr {
     font-size: 12px;
 }
 
-.p {
-    margin: 3px;
-}
+
 
 .error_message {
     font-style: oblique;
@@ -56,23 +46,26 @@ hr {
 }
 
 .search_form {
-    width: 200px;
-    box-sizing: border-box;
-    border: 2px solid #ccc;
-    border-radius: 4px;
-    font-size: 18px;
-    background-color: white;
-    background-position: 10px 10px;
-    background-repeat: no-repeat;
-    padding: 5px 20px 5px 20px;
-    margin: 5px 0px 5px 0px;
-    -webkit-transition: width 0.4s ease-in-out;
-    transition: width 0.4s ease-in-out;
-}
+     width: 200px;
+     box-sizing: border-box;
+     border: 2px solid #ccc;
+     border-radius: 4px;
+     font-size: 18px;
+     background-color: white;
+     /*background-position: 10px 10px;*/
+     background-repeat: no-repeat;
+     /*padding: 5px 20px 5px 20px;*/
+     /*margin: 5px 0px 5px 0px;*/
+     -webkit-transition: width 0.4s ease-in-out;
+     transition: width 0.4s ease-in-out;
+ }
+
+
 
 .search_form:focus {
     width: 100%;
 }
+
 
 tr.noBorder{
     border: hidden;
@@ -85,6 +78,11 @@ td.noBorder{
 .navbar-color{
     background-color: lightcyan;
 }
+
+.so-shall-logo{
+    font-family: 'Lobster', cursive;
+    color: red;
+    font-size: 25px;
 
 .register-jumbo {
     display: flex;
@@ -99,4 +97,5 @@ td.noBorder{
 .form-group.required .control-label:after{
     content:" *";
     color:red;
+
 }

@@ -1,0 +1,9 @@
+.jumbotron-messages{
+    display: flex;
+    align-items: center;
+    background: url("../userarea/img/message-in-a-bottle.jpg") no-repeat center;
+    background-size: cover;
+    color: #eeeaec;
+    height: 300px;
+    text-shadow: 1px 1px 1px #000000;
+}

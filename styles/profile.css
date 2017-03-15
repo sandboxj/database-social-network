@@ -1,0 +1,14 @@
+.jumbotron-profile{
+    display: flex;
+    align-items: center;
+    background: url("../userarea/img/clouds.jpg") no-repeat center;
+    background-size: cover;
+    color: #eeeaec;
+    height: 700px;
+    text-shadow: 1px 1px 1px #000000;
+}
+
+.user-navbar li a{
+    color: white;
+
+}
