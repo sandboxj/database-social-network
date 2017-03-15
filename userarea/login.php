@@ -9,12 +9,17 @@
     <div class="container">
         <div class="row text-center">
             <h1> Login </h1>
-            <?php
-            echo message();
-            echo $message;
-            ?></div>
         </div>
 </section>
+
+
+    <div class="alert alert-success" style="text-align: center">  <?php
+        echo message();
+        echo $message;
+        ?></div>
+
+
+
     <div class="container">
         <div class="col-md-4">
             <img class="img-responsive img-circle"  src="img/SoShallNetwork_Logo.png"/>

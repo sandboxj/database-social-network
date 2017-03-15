@@ -440,7 +440,7 @@ function check_blog_title($userid, $blog_title){
 function validate_blog_content($userid, $blog_content){
 
 
-    if(strlen(trim($blog_content))){
+    if(strlen(ltrim($blog_content, " \t\r\n")) == null){
 
         $content_empty = false;
 

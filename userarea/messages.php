@@ -42,7 +42,9 @@ while ($row = mysqli_fetch_array($result2)) {
 
 
 <!-- The Jumbotron of the website -->
+
 <section class="jumbotron jumbotron-messages">
+
     <div class="container">
         <div class="row text-center">
             <h1> Messages </h1>
@@ -60,6 +62,7 @@ while ($row = mysqli_fetch_array($result2)) {
             </li>
             <li role="presentation"><a href="message_outbox.php">Outbox</a></li>
             <li role="presentation" class="active"><a href="messages.php">New Message</a></li>
+      </ul>
     </div>
     <div class="col-sm-1">
     </div>
@@ -72,8 +75,9 @@ while ($row = mysqli_fetch_array($result2)) {
         <div class="panel panel-primary">
             <div class="panel-heading"></div>
             <div class="panel-body">
-                <table class="col-md-10">
+               
                     <form name="form_message" method="post" action="messages.php">
+                       <table class="col-md-10">
                         <tr>
                             <td>
                                 <label class="message_label" for="search">Recipient:</label>
@@ -85,7 +89,7 @@ while ($row = mysqli_fetch_array($result2)) {
                                     <?php echo $options1; ?>
                                     <option disabled><b>-------Friends-------</b></option>
                                     <?php echo $options2; ?>
-                                    </option>
+                                  </option>
                                 </select>
                             </td>
                         </tr>
@@ -95,8 +99,7 @@ while ($row = mysqli_fetch_array($result2)) {
                         <tr>
                             <td><label class="message_label" for="search">Title:</label></td>
                             <td><input type="text" class="form-control" id="title" name="title" value=""
-                                       required<?php echo $message_title ?>"
-                                placeholder="Subject">
+                                       required placeholder="Subject">
                             </td>
                         </tr>
                         <tr>
@@ -106,7 +109,7 @@ while ($row = mysqli_fetch_array($result2)) {
                             <td align="top"><label class="message_label" for="search">Message:</label></td>
                             <td><textarea class="form-control" contenteditable="true" id="message_content_field"
                                           rows="5" style="width: 100%" aria-describedby="message_helper"
-                                          name="message_content" required<?php echo htmlentities(strip_tags($message_content))?>"></textarea>
+                                          name="message_content" required<?php echo htmlentities(strip_tags($message_content))?>></textarea>
                                 <small id="message_helper" class="form-text text-muted">Max. 2500 Characters</small>
                             </td>
 
@@ -120,8 +123,9 @@ while ($row = mysqli_fetch_array($result2)) {
                                 ?>
                             </td>
                         </tr>
-                    </form>
-                </table>
+                 </table>
+                   </form>
+             
             </div>
             <?php
             if ($check == false) { ?>

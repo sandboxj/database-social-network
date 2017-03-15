@@ -17,6 +17,8 @@ hr {
     text-shadow: 1px 1px 1px #000000;
 }
 
+
+
 .message_label {
     margin: 3px;
     font-weight: bold;
@@ -81,4 +83,19 @@ td.noBorder{
     font-family: 'Lobster', cursive;
     color: red;
     font-size: 25px;
+
+.register-jumbo {
+    display: flex;
+    align-items: center;
+    background: url("../userarea/img/blue.jpg") center;
+    background-size: cover;
+    color: #eeeaec;
+    height: 250px;
+    text-shadow: 1px 1px 1px #000000;
+}
+
+.form-group.required .control-label:after{
+    content:" *";
+    color:red;
+
 }
