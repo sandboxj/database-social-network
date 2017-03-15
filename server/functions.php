@@ -109,7 +109,7 @@ function confirm_logged_in()
 }
 
 function print_access_selector() {
-    echo ("<select name='access'>
+    echo ("<select name='access' class='form-control'>
                 <option value='0'>Only me</option>
                 <option selected value='1'>Friends</option>
                 <option value='2'>Everybody</option>

@@ -47,7 +47,6 @@ if (isset($_POST["submit"])) {
             $date_posted = date('Y-m-d H:i:s');           
             $new_filename = $collectionid . rawurlencode($date_posted) . "." . end($temp_ext);
             $new_filename = str_replace("%", "-", $new_filename);
-            $access_rights = isset($_POST["access"]) ? $_POST["access"] : "1";
             $caption = isset($_POST["caption"]) ? mysqli_real_escape_string($conn, $_POST["caption"]) : null;
 
             // Check if profile album exists
@@ -72,11 +71,11 @@ if (isset($_POST["submit"])) {
             } else {
                 mysqli_free_result($result);
             }
-          
+
                 // Insert into photos
-                $query = "INSERT INTO Photo (CollectionID, Caption, DatePosted, AccessRights, FileSource) ";
+                $query = "INSERT INTO Photo (CollectionID, Caption, DatePosted, FileSource) ";
                 $query .= "VALUES (";
-                $query .= "'{$collectionid}', '{$caption}', '{$date_posted}', '{$access_rights}', '{$new_filename}');";
+                $query .= "'{$collectionid}', '{$caption}', '{$date_posted}', '{$new_filename}')";
                 $result = mysqli_query($conn, $query);
                 $new_id = mysqli_insert_id($conn);
 
@@ -100,13 +99,6 @@ if (isset($_POST["submit"])) {
                 // Failure
                 $_SESSION["message"] .= "Sorry, there was an error uploading your file.";
             }
-                    
-                // Deleted test if storing work. Reinstate?
-                // if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
-                // }
-                // else {
-                //     $_SESSION["message"] .= "Sorry, there was an error uploading your file.";
-                // }
         }
     } else {
         $_SESSION["message"] .= "Sorry, you have not selected any file to upload.";

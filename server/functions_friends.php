@@ -30,7 +30,7 @@ function find_accepted($userid) {
 function find_non_friends($userid) {
     global $conn;
     $query = "SELECT * FROM User WHERE UserID != '{$userid}' AND UserID NOT IN (";
-    $query .= "SELECT * FROM user u ";
+    $query .= "SELECT UserID FROM user u ";
     $query .= "JOIN (";
     $query .= "SELECT FriendshipID, User1ID as friend, User2ID as other, Date FROM friendship ";
     $query .= "WHERE User2ID = '{$userid}' AND Status = 1 ";

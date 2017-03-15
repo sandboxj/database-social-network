@@ -39,7 +39,6 @@
                             <p>Current setting: <?php echo convert_access_rights_to_string($collection_details["AccessRights"]) ?></p>
                             <form action="" method="post">
                                 <input type="text" name="collectionid" value="<?php echo "{$_GET['collection']}"?>" class="hidden" readonly>                                    
-                                Access Rights: <?php print_access_selector(); ?><br /><br />
                                 <input class="btn btn-primary" type="submit" value="Save changes" name="changePrivacy">
                             </form>
                         </div>

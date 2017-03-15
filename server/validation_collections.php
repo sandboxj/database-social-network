@@ -4,24 +4,29 @@ $actual_link = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP
 if (isset($_POST["add_collection"])) {
     // Check if post is blank
     if (strlen(trim($_POST["title"]))) {
-        // Gather content 
-        $collection_title = mysqli_real_escape_string($conn, $_POST["title"]);
-        $collection_access = $_POST["access"];
-        $create_time = date('Y-m-d H:i:s');
-        $userid = $_SESSION["UserID"];
-        $collection_id = trim($collection_title) . $userid;
+        // Check if a new profile picture album is created
+        if($_POST["title"]==="Profile pictures") {
+            $_SESSION["message"] ="Adding new collection failed. No duplicate album titles allowed.";
+        } else {
+            // Gather content 
+            $collection_title = mysqli_real_escape_string($conn, $_POST["title"]);
+            $collection_access = $_POST["access"];
+            $create_time = date('Y-m-d H:i:s');
+            $userid = $_SESSION["UserID"];
+            $collection_id = trim($collection_title) . $userid;
 
-        // Create collection folder
-        $dir = "img/" . $collection_id;
-        if(!file_exists($dir)) {
-            mkdir($dir, 0755, true);
-        } else {}
+            // Create collection folder
+            $dir = "img/" . $collection_id;
+            if(!file_exists($dir)) {
+                mkdir($dir, 0755, true);
+            } else {}
 
-        // Enter post into DB       
-        $query = "INSERT INTO Photo_collection (CollectionID, UserID, DateCreated, CollectionTitle, AccessRights) ";
-        $query .= "VALUES ('{$collection_id}', '{$userid}','{$create_time}', '{$collection_title}', '{$collection_access}')";
-        $result = mysqli_query($conn, $query);
-        $_SESSION["message"] = ($result) ? "" : "Adding new collection failed. No duplicate album titles allowed.";
+            // Enter post into DB       
+            $query = "INSERT INTO Photo_collection (CollectionID, UserID, DateCreated, CollectionTitle, AccessRights) ";
+            $query .= "VALUES ('{$collection_id}', '{$userid}','{$create_time}', '{$collection_title}', '{$collection_access}')";
+            $result = mysqli_query($conn, $query);
+            $_SESSION["message"] = ($result) ? "" : "Adding new collection failed. No duplicate album titles allowed.";
+        }
     } 
     else {
         $_SESSION["message"] = "Adding new collection failed. Title cannot be empty.";
