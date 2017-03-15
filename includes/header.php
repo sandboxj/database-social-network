@@ -23,7 +23,7 @@ if (!isset($page_title)) {
         <link rel="stylesheet" href="../styles/circles.css">
         <link rel="stylesheet" href="../styles/styles.css">
         <link rel="stylesheet" href="../styles/profile.css">
-
+        <link rel="stylesheet" href="../styles/messages.css">
 
 <!--        FONTS-->
         <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
