@@ -2,10 +2,10 @@
 <?php
 if (isset($_POST["search_result"])) {
     // Check if post is blank
-    if (strlen(trim($_POST["search_query"]))) {
+    if (strlen(trim($_POST["search_result"]))) {
         // Checks for special chars
-        if(!preg_match('/[^A-Za-z0-9\s]/', $_POST["search_query"])) {
-            $search_query = regex_clean($_POST["search_query"]);
+        if(!preg_match('/[^A-Za-z0-9\s]/', $_POST["search_result"])) {
+            $search_query = regex_clean($_POST["search_result"]);
             $safe_search = mysqli_real_escape_string($conn, $search_query);        
 
             // Search DB

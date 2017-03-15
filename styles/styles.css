@@ -28,9 +28,7 @@ hr {
     font-size: 12px;
 }
 
-.p {
-    margin: 3px;
-}
+
 
 .error_message {
     font-style: oblique;
@@ -46,23 +44,26 @@ hr {
 }
 
 .search_form {
-    width: 200px;
-    box-sizing: border-box;
-    border: 2px solid #ccc;
-    border-radius: 4px;
-    font-size: 18px;
-    background-color: white;
-    background-position: 10px 10px;
-    background-repeat: no-repeat;
-    padding: 5px 20px 5px 20px;
-    margin: 5px 0px 5px 0px;
-    -webkit-transition: width 0.4s ease-in-out;
-    transition: width 0.4s ease-in-out;
-}
+     width: 200px;
+     box-sizing: border-box;
+     border: 2px solid #ccc;
+     border-radius: 4px;
+     font-size: 18px;
+     background-color: white;
+     /*background-position: 10px 10px;*/
+     background-repeat: no-repeat;
+     /*padding: 5px 20px 5px 20px;*/
+     /*margin: 5px 0px 5px 0px;*/
+     -webkit-transition: width 0.4s ease-in-out;
+     transition: width 0.4s ease-in-out;
+ }
+
+
 
 .search_form:focus {
     width: 100%;
 }
+
 
 tr.noBorder{
     border: hidden;
@@ -76,3 +77,8 @@ td.noBorder{
     background-color: lightcyan;
 }
 
+.so-shall-logo{
+    font-family: 'Lobster', cursive;
+    color: red;
+    font-size: 25px;
+}
