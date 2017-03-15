@@ -135,7 +135,10 @@ if(isset($_POST['update_privacy'])){
               <?php $found_user = find_user_by_email($_SESSION["Email"]); ?>
               <!--Edits dont do anything yet-->
               <form method="post">
-              Date of Birth: <span class="edit_profile"><?php echo $found_user["DateOfBirth"]?></span>
+                  <p class="hidden edit_profile">Name:
+                  <input type="text" id="first_last_name" name="first_name" value="<?php echo $found_user["FirstName"]?>" class="hidden edit_profile form-control" style="width: 20%; display: inline" required>
+                  <input type="text" name="last_name" value="<?php echo $found_user["LastName"]?>" class="hidden edit_profile form-control" style="width: 20%; display: inline"></p><br />
+                  Date of Birth: <span class="edit_profile"><?php echo $found_user["DateOfBirth"]?></span>
               <input type="date" name="date_of_birth" value="<?php echo $found_user["DateOfBirth"]?>" class="hidden edit_profile form-control" style="width: 20%; display: inline"><br /> <br />
               Location: <span class="edit_profile"><?php echo $found_user["CurrentLocation"]?></span>
               <input type="text" name="location" value="<?php echo $found_user["CurrentLocation"]?>" class="hidden edit_profile form-control" style="width: 20%; display: inline"><br/><br/>
