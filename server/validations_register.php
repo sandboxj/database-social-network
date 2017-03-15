@@ -21,6 +21,9 @@ if (isset($_POST["register"])) {
         $min_length = 5;
         $fields_with_min_length = array("password");
         validate_min_length($fields_with_min_length, $min_length);
+        // Check if input contains special chars 
+        $fields_without_specialchar = array("first_name", "last_name", "location");
+        validate_special_chars($fields_without_specialchar);
         // Check if email already exists
         $query = "SELECT Email FROM User ";
         $query .= "WHERE Email = '{$user_email}' ";

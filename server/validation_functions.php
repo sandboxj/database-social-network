@@ -37,6 +37,16 @@ function validate_min_length($fields_min_length, $min_length)
         }
     }
 }
+
+function validate_special_chars($fields_checked) {
+    global $errors;
+    foreach ($fields_checked as $field) {
+        $value = $_POST[$field];
+        if(preg_match('/[^A-Za-z0-9\-]/', $value)) {
+            $errors[$field] = fieldname_as_text($field) . " contains special characters. Special characters not allowed.";
+        }
+    }
+}
     
     // Build error messages
 function form_errors($errors = array())
