@@ -164,8 +164,10 @@ if (isset($_POST["blog_comment"])){
 
 
             <div class="card-content" >
-                <article style="white-space:pre;"  class="blog-content"  contenteditable="true">
-                     <?php echo htmlentities(strip_tags($blog_content)) ?>
+
+                <article style="white-space:inherit;"  class="blog-content"  contenteditable="true" >
+                    <p><?php echo nl2br(ltrim($blog_content)); ?></p>
+
                 </article>
             </div>
 

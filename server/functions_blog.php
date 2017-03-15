@@ -406,13 +406,18 @@ function check_blog_title($userid, $blog_title){
                     WHERE blog.userID = '{$userid}' 
                     AND blog.Title = '{$blog_title}'";
 
+        $title_results_db = mysqli_query($conn, $title_check);
+        confirm_query($title_results_db);
 
-        if (mysqli_num_rows($title_check) > 0) {
+        if (mysqli_num_rows($title_results_db) > 0) {
+
             //if the blog post already exists
             $title_exists = true;
             return $title_exists;
         }else{
-            //if check is successful are successful
+
+            //if the title does not exits
+
             $title_exists = false;
             return $title_exists;
 

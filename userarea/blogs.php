@@ -29,11 +29,11 @@ if(isset($_POST["blog_post"])){
         $title_exists = check_blog_title($userid, $blog_title);
 
         if($title_exists == true){
-            echo "<script>alert('Blog title cannot be empty')</script>";
+            echo "<script>alert('Blog title already exists')</script>";
         }else{
             //post was successful
             insert_blog_post($userid, $blog_title, $blog_content, $access_rights);
-            redirect_to("blogs.php");
+            //redirect_to("blogs.php");
         }
 
 
