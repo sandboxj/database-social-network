@@ -34,7 +34,7 @@ mysqli_free_result($pic_result);
                     if ($friendship["Status"]) {
                         ?>
                         <form method="post" style="display: inline">
-                            <button type="submit" name="decline_friend" value="<?php echo $friendship["FriendshipID"] ?>" class="btn btn-block">Unfriend</button>
+                            <button type="submit" name="decline_friend" value="<?php echo $friendship["FriendshipID"] ?>" class="btn btn-default btn-block">Unfriend</button>
                         </form>
                         <?php
                     } else {
