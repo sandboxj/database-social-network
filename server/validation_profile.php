@@ -63,8 +63,9 @@ if (isset($_POST["edit_profile"])) {
     }
 
 } elseif(isset($_POST["delete_account"])) {
+    $userid = $_SESSION['UserID'];
     $query = "DELETE From User ";
-    $query .= "WHERE UserID = {$_SESSION['UserID']} ";
+    $query .= "WHERE UserID = '{$userid}' ";
     $result = mysqli_query($conn, $query);
     confirm_query($query);
     $_SESSION['message'] = "Farewell!";
