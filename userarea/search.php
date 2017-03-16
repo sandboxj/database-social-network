@@ -110,7 +110,7 @@ if (mysqli_num_rows($result2)<1) {
             $formatted_date  = display_formatted_date($blog["DatePosted"]);
             $output = "Title: <td> {$blog["Title"]} </td><br />";
             ?>
-            <a href='user_blog.php?title='<?php echo $blog["Title"]; ?>&id=<?php echo $blog["UserID"] ?>'>
+            <a href='user_blog.php?title=<?php echo $blog["Title"]; ?>&id=<?php echo $blog["UserID"] ?>'>
               <div class="polaroid col-md-4 individual-blog">
                 <?php echo $output; ?>
                 <h6><?php echo $formatted_date ?></h6>
