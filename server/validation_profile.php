@@ -62,6 +62,14 @@ if (isset($_POST["edit_profile"])) {
         $_SESSION['message'] = "Please do not leave Email or Date of Birth blank!";
     }
 
-} else {
+} elseif(isset($_POST["delete_account"])) {
+    $query = "DELETE From User ";
+    $query .= "WHERE UserID = {$_SESSION['UserID']} ";
+    $result = mysqli_query($conn, $query);
+    confirm_query($query);
+    $_SESSION['message'] = "Farewell!";
+    redirect_to("login.php");
+}
+else {
     // Do nothing.
 }

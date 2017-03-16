@@ -98,12 +98,12 @@ mysqli_free_result($pic_result);
                       <option value="Reading">Reading</option>
                     </select>
                     <button class="btn btn-primary edit_profile hidden" type="submit" name="edit_profile" value="submit">Save changes</button>
-                    <button class="btn btn-default edit_profile hidden" onclick="$('.edit_profile').toggleClass('hidden');">Cancel</button>
                 </form>
                 <br>
                 <div class="btn-toolbar" role="toolbar" aria-label="blog_options">
                     <div class="btn-group-horizontal" aria-label="blog_options">
-                        <button class="btn btn-primary" onclick="$('.edit_profile').toggleClass('hidden');">Edit profile</button>
+                        <button class="btn btn-primary edit_profile" onclick="$('.edit_profile').toggleClass('hidden');">Edit profile</button>
+                        <button class="btn btn-default edit_profile hidden" onclick="$('.edit_profile').toggleClass('hidden');">Cancel</button>
                         <div class="dropdown">
                             <button  type ="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                                 <span class="glyphicon glyphicon-cog"></span>
@@ -122,8 +122,16 @@ mysqli_free_result($pic_result);
                     </div>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-md-8" style="text-align: center">
+                    <form method="post">
+                    <button type="submit" class="btn btn-danger edit_profile hidden" name="delete_account" onclick="return confirm('Are you sure you want to delete your account? Deletion is permanent.')">Delete account</button>
+                    </form>
+                </div>
+            </div>
 
             </div>
+
         </div>
     </div>
 </section>
