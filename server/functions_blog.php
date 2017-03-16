@@ -466,7 +466,7 @@ function check_blog_title($userid, $blog_title){
 function validate_blog_content($userid, $blog_content){
 
 
-    if(strlen(ltrim($blog_content, " \t\r\n")) == null){
+    if(strlen(ltrim($blog_content, " \t\r\n"))){
 
         $content_empty = false;
 
@@ -523,11 +523,12 @@ function insert_blog_post($userid, $blog_title, $blog_content, $access_rights){
 
 
     if ($result) {
-        echo "Blog Posted";
+        echo "<script>alert('Blog post was successful')</script>";
 
 
     } else {
-        echo "Failed to post blog.";
+        echo "<script>alert('Could not post blog')</script>";
+
     }
 
 }

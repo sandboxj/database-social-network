@@ -56,7 +56,9 @@ if ($check == true) { ?>
                     <label for="phonenum">Phone Number</label>
                     <input type="tel" class="form-control" id="phonenum" name="phone_number" value="<?php echo $phone_number?>" placeholder="">
                 </div>
-              <select name="interests" class="hidden edit_profile form-control">
+                <div class="form-group">
+                    <label for="interest-label">Interests</label>
+              <select name="interests" class="form-control" id="interest-label">
                 <option value="Politics">Politics</option>
                 <option value="Music">Music</option>
                 <option value="Database Systems">Database Systems</option>
@@ -68,7 +70,7 @@ if ($check == true) { ?>
                 <option value="Gaming">Gaming</option>
                 <option value="Reading">Reading</option>
               </select>
-
+                </div>
             </div>
         </div>
     </div>

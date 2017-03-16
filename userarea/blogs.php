@@ -71,7 +71,7 @@ if(isset($_POST["blog_post"])){
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-            <button type="button" class="btn btn-info btn-block" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-pencil"></span> New blog post</button>
+            <button type="button" class="btn btn-success btn-block" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-pencil"></span> New blog post</button>
         </div>
     </div>
 </div>

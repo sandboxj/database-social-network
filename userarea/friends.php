@@ -124,8 +124,7 @@ mysqli_free_result($pic_result);
 mysqli_free_result($accepted_friends);
 ?>
 
-        }
-    } ?>
+
 
 <!--  RECOMMENDATIONS-->
     <h4>People you may know</h4>
@@ -136,25 +135,30 @@ mysqli_free_result($accepted_friends);
     while ($my_friend = mysqli_fetch_assoc($my_friends)) {
         array_push($friends, $my_friend["UserID"]);       
     }
+
     mysqli_free_result($my_friends);
     $friends_of_friends = [];
     foreach($friends as $friend) {
         $friends_of_friends1 = "SELECT * FROM friendship f
                      WHERE f.User1ID = '{$friend}'
                      AND f.User2ID NOT LIKE '{$_SESSION["UserID"]}'
-                     AND f.Status = '1'";
+                     AND f.Status = 1";
         $friend_friendship1 = mysqli_query($conn, $friends_of_friends1);
         $friends_of_friends2 = "SELECT * FROM friendship f
                      WHERE f.User2ID = '{$friend}'
                      AND f.User1ID NOT LIKE '{$_SESSION["UserID"]}'
-                     AND f.Status = '1'";
+                     AND f.Status = 1";
         $friend_friendship2 = mysqli_query($conn, $friends_of_friends2);
+        confirm_query($friend_friendship2);
         while ($friend_f1 = mysqli_fetch_assoc($friend_friendship1)) {
+
             $friend_query1 = "select * from user u
                        where u.UserID = '{$friend_f1["User2ID"]}'";
             $friend_u1 = mysqli_query($conn, $friend_query1);
             $friend_user1 = mysqli_fetch_assoc($friend_u1);
+
             if (!in_array($friend_user1["UserID"], $friends)) {
+
                 if (array_key_exists($friend_user1["UserID"] , $friends_of_friends)) {
                     $friends_of_friends[$friend_user1["UserID"]] = $friends_of_friends[$friend_user1["UserID"]] + 1;
                 } else {
@@ -177,9 +181,13 @@ mysqli_free_result($accepted_friends);
         }
     }
     arsort($friends_of_friends);
+
     $count_total = 0;
+
     foreach($friends_of_friends as $fof => $count) {
+
         $count_total = $count_total + $count;
+
     }
     
     $self_query = "SELECT * FROM user u
@@ -212,7 +220,6 @@ mysqli_free_result($accepted_friends);
         $index = 8;
     } elseif ($self_location == "Swansea") {
         $index = 9;
-    } else {
     }
     
     $distances = array(
@@ -239,12 +246,15 @@ mysqli_free_result($accepted_friends);
             $non_friends[] = $non["UserID"];
         }
     }
+
+
     $scores = [];
     $sum_of_age_differences = 0;
     foreach($non_friends as $nf) {
         $non_friend_query = "SELECT * FROM user u
                              WHERE u.UserID = '{$nf}'";
         $non_friend_result = mysqli_query($conn, $non_friend_query);
+        confirm_query($non_friend_result);
         $non_friend = mysqli_fetch_assoc($non_friend_result);
         $non_friend_dob = strtotime($non_friend["DateOfBirth"]);
         $age_difference = abs($self_dob - $non_friend_dob);
@@ -280,9 +290,7 @@ mysqli_free_result($accepted_friends);
             $index2 = 9;
         } elseif ($non_friend_location == "Swansea") {
             $index2 = 10;
-        } else {
         }
-        
         
         $distance = $distances[$index][$index2];
         $share_interest = 0;

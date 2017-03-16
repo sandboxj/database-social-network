@@ -53,7 +53,7 @@ if (isset($_POST['create-circle'])){
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-            <button type="button" class="btn btn-info btn-block" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-record"></span> Create a circle</button>
+            <button type="button" class="btn btn-success btn-block" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-record"></span> Create a circle</button>
         </div>
     </div>
 </div>
