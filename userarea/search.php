@@ -2,6 +2,8 @@
 <?php require_once("../server/functions.php");?>
 <?php require_once("../server/functions_photos.php");?>
 <?php require_once("../server/functions_friends.php");?>
+<?php require_once("../server/functions_circle.php");?>
+<?php require("../server/functions_blog.php");?>
 <?php require_once("../server/db_connection.php");?>
 <?php require_once("../server/validation_search.php");?>
 <?php require_once("../server/validation_friends.php");?>
@@ -18,7 +20,7 @@
 if (isset($_POST["search_result"]) && $result) {
 ?>
 
-<h4>Search results</h4>
+<h4>User results</h4>
 <?php
 if (mysqli_num_rows($result)<1) {
     echo ("<p style='font-style: italic'>No matches.</p>");
@@ -85,10 +87,40 @@ if (mysqli_num_rows($result)<1) {
     }
 }
 mysqli_free_result($result);
-}
+
 ?>
 
 <hr />
+
+<h4>Blog Results</h4>
+<?php
+if (mysqli_num_rows($result2)<1) {
+    echo ("<p style='font-style: italic'>No matches.</p>");
+} else {
+    while ($blog = mysqli_fetch_assoc($result2)) {
+        $is_in_user_circle = is_in_another_user_circle($blog["UserID"], $_SESSION["UserID"]);
+        $is_friend = check_friendship($blog["UserID"], $_SESSION["UserID"]);
+        if($is_friend == true){
+            $is_friend_of_friend = true;
+        }else{
+            $is_friend_of_friend = check_friends_of_friends($blog["UserID"], $_SESSION["UserID"]);
+        }
+        $check = confirm_access_rights($blog["AccessRights"], $is_friend, $is_in_user_circle, $is_friend_of_friend);
+        if($check == true) {
+            $formatted_date  = display_formatted_date($blog["DatePosted"]);
+            $output = "Title: <td> {$blog["Title"]} </td><br />";
+            ?>
+            <a href='user_blog.php?title='<?php echo $blog["Title"]; ?>&id=<?php echo $blog["UserID"] ?>'>
+              <div class="polaroid col-md-4 individual-blog">
+                <?php echo $output; ?>
+                <h6><?php echo $formatted_date ?></h6>
+              </div></a>
+  <?php }
+    }
+}
+}
+?>
+
 
 <h4>People you may know</h4>
 
@@ -261,12 +293,12 @@ mysqli_free_result($result);
             $mutual_friend_count = $friends_of_friends[$non_friends[$i]];
         }
         if (!$count_total == 0) {
-            $score = 0.5*$mutual_friend_count/$count_total + 0.2*(1-$distance/$sum_of_distances) + 0.2*$share_interest + 0.1*(1-$age_difference/$sum_of_age_differences);
-            //print $non_friends[$i] . " x " . $mutual_friend_count/$count_total . " x " . $distance/$sum_of_distances . " x " . $share_interest . " x " . $age_difference/$sum_of_age_differences . " x " . $score . " z <br/>";
+            $score = 0.7*$mutual_friend_count/$count_total + 0.1*(1-$distance/$sum_of_distances) + 0.1*$share_interest + 0.1*(1-$age_difference/$sum_of_age_differences);
+            //print $non_friends[$i] . " x " . 0.7*$mutual_friend_count/$count_total . " x " . 0.1*(1-$distance/$sum_of_distances) . " x " . 0.1*$share_interest . " x " . 0.1*(1-$age_difference/$sum_of_age_differences) . " x " . $score . " z <br/>";
             $scores[$non_friends[$i]] = $score;
         } else {
-            $score =  0.2*(1-$distance/$sum_of_distances) + 0.2*$share_interest + 0.1*(1-$age_difference/$sum_of_age_differences);
-            //print $non_friends[$i] . " x " . $mutual_friend_count/$count_total . " x " . $distance/$sum_of_distances . " x " . $share_interest . " x " . $age_difference/$sum_of_age_differences . " x " . $score . " z <br/>";
+            $score =  0.1*(1-$distance/$sum_of_distances) + 0.1*$share_interest + 0.1*(1-$age_difference/$sum_of_age_differences);
+            //print $non_friends[$i] . " x " . 0.1*(1-$distance/$sum_of_distances) . " x " . 0.1*$share_interest . " x " . 0.1*(1-$age_difference/$sum_of_age_differences) . " x " . $score . " z <br/>";
             $scores[$non_friends[$i]] = $score;
         }
     }

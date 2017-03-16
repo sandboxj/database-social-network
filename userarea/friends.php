@@ -304,12 +304,12 @@ mysqli_free_result($accepted_friends);
             $mutual_friend_count = $friends_of_friends[$non_friends[$i]];
         }
         if (!$count_total == 0) {
-            $score = 0.5*$mutual_friend_count/$count_total + 0.2*(1-$distance/$sum_of_distances) + 0.2*$share_interest + 0.1*(1-$age_difference/$sum_of_age_differences);
-            //print $non_friends[$i] . " x " . $mutual_friend_count/$count_total . " x " . $distance/$sum_of_distances . " x " . $share_interest . " x " . $age_difference/$sum_of_age_differences . " x " . $score . " z <br/>";
+            $score = 0.7*$mutual_friend_count/$count_total + 0.1*(1-$distance/$sum_of_distances) + 0.1*$share_interest + 0.1*(1-$age_difference/$sum_of_age_differences);
+            //print $non_friends[$i] . " x " . 0.7*$mutual_friend_count/$count_total . " x " . 0.1*(1-$distance/$sum_of_distances) . " x " . 0.1*$share_interest . " x " . 0.1*(1-$age_difference/$sum_of_age_differences) . " x " . $score . " z <br/>";
             $scores[$non_friends[$i]] = $score;
         } else {
-            $score =  0.2*(1-$distance/$sum_of_distances) + 0.2*$share_interest + 0.1*(1-$age_difference/$sum_of_age_differences);
-            //print $non_friends[$i] . " x " . $mutual_friend_count/$count_total . " x " . $distance/$sum_of_distances . " x " . $share_interest . " x " . $age_difference/$sum_of_age_differences . " x " . $score . " z <br/>";
+            $score =  0.1*(1-$distance/$sum_of_distances) + 0.1*$share_interest + 0.1*(1-$age_difference/$sum_of_age_differences);
+            //print $non_friends[$i] . " x " . 0.1*(1-$distance/$sum_of_distances) . " x " . 0.1*$share_interest . " x " . 0.1*(1-$age_difference/$sum_of_age_differences) . " x " . $score . " z <br/>";
             $scores[$non_friends[$i]] = $score;
         }
     }
