@@ -390,6 +390,8 @@ function find_blog_content($blogID){
  * @param $blogID
  * @return string
  */
+
+//CHANGE this
 function find_blog_access_rights($blogID){
     global $conn;
 

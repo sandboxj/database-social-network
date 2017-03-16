@@ -73,20 +73,5 @@ function update_privacy_setting($userid, $privacy_setting){
 }
 
 
-// THIS FUNCTION IS NOT BEING USED ATM
-function convert_privacy_setting_to_enum($privacy_setting){
-    global $conn;
 
-    $query = "SELECT PrivacySettingID FROM privacy_setting 
-  WHERE SearchVisibility = '{$privacy_setting}' ";
-
-    $privacy_results_db = mysqli_query($conn, $query);
-    confirm_query($privacy_results_db);
-
-    $privacy_setting_array = mysqli_fetch_assoc($privacy_results_db);
-    $privacy_setting = $privacy_setting_array['PrivacySettingID'];
-
-    mysqli_free_result($privacy_results_db);
-    return $privacy_setting;
-}
 ?>

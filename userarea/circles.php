@@ -13,7 +13,7 @@ $userid = $_SESSION['UserID'];
 
 if (isset($_POST['create-circle'])){
     $circle_title = $_POST['circle_title'];
-    $circle_photoID = 1;
+
 
     //circle photoID was left to 1 for now
     $title_empty = validate_circle_name($userid, $circle_title);
@@ -26,7 +26,7 @@ if (isset($_POST['create-circle'])){
             echo "<script>alert('You already have a circle with this name, please change the name')</script>";
         }else{
             //method automatically adds admin as a circle member
-            insert_new_circle($userid, $circle_title, $circle_photoID);
+            insert_new_circle($userid, $circle_title);
             //redirect_to("circles.php");
         }
 

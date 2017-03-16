@@ -13,7 +13,7 @@ function find_user_circles($userid)
 {
     global $conn;
 
-    $query = "SELECT c.CircleID, CircleTitle, DateCreated, CirclePhotoID
+    $query = "SELECT c.CircleID, CircleTitle, DateCreated
     FROM circle AS c, circle_member AS cm WHERE c.CircleID = cm.CircleID
         AND MemberUserID = '{$userid}' ";
 
@@ -72,7 +72,7 @@ function check_circle_title($userid, $circle_title){
 
 
 //assume that the person creating the circle is the admin.
-function insert_new_circle($userid, $circle_title, $circle_photoID){
+function insert_new_circle($userid, $circle_title){
     global $conn;
 
     $circle_adminID = $userid;
@@ -80,8 +80,8 @@ function insert_new_circle($userid, $circle_title, $circle_photoID){
 
     $circle_title = mysqli_real_escape_string($conn, $circle_title);
 
-    $query = "INSERT INTO circle (CircleAdminUserID, DateCreated, CircleTitle, CirclePhotoID)
-    VALUES ('{$circle_adminID}', '{$date_created}', '{$circle_title}','{$circle_photoID}')";
+    $query = "INSERT INTO circle (CircleAdminUserID, DateCreated, CircleTitle)
+    VALUES ('{$circle_adminID}', '{$date_created}', '{$circle_title}'";
 
     $result = mysqli_query($conn, $query);
 
@@ -162,21 +162,20 @@ function find_circle_details($circleID){
 
     global $conn;
 
-    $query = "SELECT CirclePhotoID, CircleTitle, CircleAdminUserID FROM circle
+    $query = "SELECT  CircleTitle, CircleAdminUserID FROM circle
             WHERE CircleID = '{$circleID}'";
 
     $circle_details_results_db = mysqli_query($conn, $query);
     confirm_query($circle_details_results_db);
 
     $circle_details_array = mysqli_fetch_assoc($circle_details_results_db);
-    $circle_photoID = $circle_details_array['CirclePhotoID'];
     $circle_title = $circle_details_array['CircleTitle'];
     $circle_adminID = $circle_details_array['CircleAdminUserID'];
 
 
     mysqli_free_result($circle_details_results_db);
 
-    $details_array = array("circle_photo" => $circle_photoID, "circle_title" =>$circle_title,"circle_admin" => $circle_adminID);
+    $details_array = array("circle_title" =>$circle_title,"circle_admin" => $circle_adminID);
     return $details_array;
 
 }

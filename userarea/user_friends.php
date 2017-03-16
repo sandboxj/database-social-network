@@ -58,7 +58,7 @@ $accepted_friends = find_accepted($_GET["id"]);
             <!--Special case where visitors profile is displayed-->
             <?php if($a_friend['UserID']===$_SESSION["UserID"]) { ?>
 
-                <a href="profile.php?>">
+                <a href="profile.php">
                     <div class="col-md-6 polaroid">
                         <div class="col-md-7">
                             <img src="<?php echo $uncached_src ?>" class="img-responsive" alt="Friend's profile picture'">
@@ -100,7 +100,7 @@ $accepted_friends = find_accepted($_GET["id"]);
                                 // If friend request is sent to you, option to accept
                                 if ($friendship["User2ID"]===$_SESSION["UserID"]) {
                                     ?>
-                                    <form  method="post" style="display: inline">
+                                    <form method="post" style="display: inline">
                                         <button type="submit" name="add_friend" value="<?php echo $friendship["FriendshipID"] ?>" class="btn btn-primary">Accept request</button>
                                     </form>
                                     <?php

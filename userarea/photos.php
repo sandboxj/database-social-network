@@ -32,13 +32,18 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            <h4 class="modal-title">Change collection visibility</h4>
+                            <h4 class="modal-title">Change collection visibility - Current setting: <?php echo convert_access_rights_to_string($collection_details["AccessRights"]) ?></h4>
                         </div>
                         <div class="modal-body">
-                            <h4>Select new visibility setting:</h4>
-                            <p>Current setting: <?php echo convert_access_rights_to_string($collection_details["AccessRights"]) ?></p>
+
+
                             <form action="" method="post">
-                                <input type="text" name="collectionid" value="<?php echo "{$_GET['collection']}"?>" class="hidden" readonly>                                    
+
+                                <input id="collection-title" type="text" name="collectionid" value="<?php echo "{$_GET['collection']}"?>" class="hidden" readonly>
+                                <label for="collection-access">Access Rights:</label>
+                                <div class="form-group" id="collection-access">
+                                    <?php print_access_selector()?>
+                                </div>
                                 <input class="btn btn-primary" type="submit" value="Save changes" name="changePrivacy">
                             </form>
                         </div>

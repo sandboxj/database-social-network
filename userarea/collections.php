@@ -45,10 +45,12 @@
                     <div class="modal-body">
                         <p>Enter collection details:</p>
                         <form action="collections.php" method="post">
+
                             Title: <input type="text" name="title" class="form-control"><br />
                             Access Rights: <?php print_access_selector(); ?>                            
                             <br />
-                            <input class="btn" type="submit" name="add_collection" value="Add" />
+                                <input class="btn" type="submit" name="add_collection" value="Add" />
+
                         </form>
                     </div>
                     <!--<div class="modal-footer">

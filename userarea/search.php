@@ -316,7 +316,7 @@ mysqli_free_result($result);
                     <a href="user_profile.php?id=<?php echo $recommend['UserID']?>"><img src="<?php echo $uncached_src ?>" class="img-responsive" alt="Recommended user's profile picture'"></a>
                   </div>
                   <div class="col-md-9">
-                    <a href="user_profile.php?id="<?php echo $recommend['UserID']?>"><h4><?php echo $recommend["FirstName"] . " " . $recommend["LastName"]?></h4></a>
+                    <a href="user_profile.php?id=<?php echo $recommend['UserID']?>"><h4><?php echo $recommend["FirstName"] . " " . $recommend["LastName"]?></h4></a>
                     <br />
                     Location: <?php echo $recommend["CurrentLocation"]?>
                     <br />
