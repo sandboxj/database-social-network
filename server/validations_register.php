@@ -12,6 +12,7 @@ if (isset($_POST["register"])) {
     $date_of_birth = isset($_POST["date_of_birth"]) ? $_POST["date_of_birth"] : date("Y-m-d"); // date format in MySQL
     $location = isset($_POST["location"]) ? trim($_POST["location"]) : "";
     $phone_number = isset($_POST["phone_number"]) ? trim($_POST["phone_number"]) : "";
+    $interest = isset($_POST["interests"]) ? trim($_POST["interests"]) : "";
     // Check if any fields are blank
     if ($password === $password_confirm) {
         $fields_required = array("password", "email", "first_name", "last_name", "date_of_birth", "gender");
@@ -58,9 +59,9 @@ if (isset($_POST["register"])) {
             if (validatePhone($phone_number) == true) {
 
                 // Insert
-                $query = "INSERT INTO User (Password, Email, FirstName, LastName, DateJoined, DateOfBirth, Gender, CurrentLocation, PhoneNumber) ";
+                $query = "INSERT INTO User (Password, Email, FirstName, LastName, DateJoined, DateOfBirth, Gender, CurrentLocation, PhoneNumber, Interest) ";
                 $query .= "VALUES (";
-                $query .= "'{$hashed_password}', '{$user_email}', '{$first_name}', '{$last_name}', '{$date_joined}', '{$date_of_birth}', '{$ismale}', '{$location}', '{$phone_number}'";
+                $query .= "'{$hashed_password}', '{$user_email}', '{$first_name}', '{$last_name}', '{$date_joined}', '{$date_of_birth}', '{$ismale}', '{$location}', '{$phone_number}', '{$interest}'";
                 $query .= ")";
                 $result = mysqli_query($conn, $query);
                 if ($result) {

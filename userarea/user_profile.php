@@ -92,6 +92,7 @@ mysqli_free_result($pic_result);
                 Location: <?php echo $visited_user["CurrentLocation"]?><br/><br/>
                 Email: <?php echo $visited_user["Email"]?><br/><br/>
                 Phone Number: <?php echo $visited_user["PhoneNumber"]?><br/><br/>
+                Interest: <?php echo $visited_user["Interest"]?><br/><br/>
                 <br>
 
             </div>

@@ -81,6 +81,19 @@ mysqli_free_result($pic_result);
                     <input type="text" name="email" value="<?php echo $found_user["Email"]?>" class="hidden edit_profile form-control" style="width: 100%; display: inline"><br/><br/>
                     Phone Number: <span class="edit_profile"><?php echo $found_user["PhoneNumber"]?></span>
                     <input type="text" name="phone_number" value="<?php echo $found_user["PhoneNumber"]?>" class="hidden edit_profile form-control" style="width: 100%; display: inline"><br/><br/>
+                    Interest: <span class="edit_profile"><?php echo $found_user["Interest"]?></span>
+                    <select name="interests" class="hidden edit_profile form-control">
+                      <option value="Politics">Politics</option>
+                      <option value="Music">Music</option>
+                      <option value="Database Systems">Database Systems</option>
+                      <option value="Food">Food</option>
+                      <option value="Philosophy">Philosophy</option>
+                      <option value="Movies">Movies</option>
+                      <option value="Sports">Sports</option>
+                      <option value="Travelling">Travelling</option>
+                      <option value="Gaming">Gaming</option>
+                      <option value="Reading">Reading</option>
+                    </select>
                     <button class="btn btn-primary edit_profile hidden" type="submit" name="edit_profile" value="submit">Save changes</button>
                     <button class="btn edit_profile hidden" onclick="$('.edit_profile').toggleClass('hidden');">Cancel</button>
                 </form>

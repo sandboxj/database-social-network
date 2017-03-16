@@ -173,7 +173,6 @@ if (isset($_POST["blog_comment"])){
         </div>
     </div>
 </div>
-		<a href="logout.php">Logout</a>
 
 
 <?php include("../includes/footer.php"); ?>

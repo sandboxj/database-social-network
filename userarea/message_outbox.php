@@ -71,5 +71,4 @@
     <div class="col-md-1"></div>
 </div>
 <hr/>
-<a href="logout.php">Logout</a>
 <?php include("../includes/footer.php"); ?>

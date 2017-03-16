@@ -8,6 +8,7 @@ if (isset($_POST["edit_profile"])) {
     $new_location = isset($_POST["location"]) ? trim($_POST["location"]) : null;
     $new_email = isset($_POST["email"]) ? trim($_POST["email"]) : "";
     $new_phone = isset($_POST["phone_number"]) ? trim($_POST["phone_number"]) : null;
+    $new_interest = isset($_POST["interests"]) ? trim($_POST["interests"]) : null;
 
     // escaping and stripping tags from firstName, lastName, email and location
     $new_email = mysqli_real_escape_string($conn, $new_email);
@@ -35,7 +36,7 @@ if (isset($_POST["edit_profile"])) {
         if (validateDate($new_dob)) {
             if ($match != false) {
                 $sql = "UPDATE user
-                    SET FirstName = '$new_first_name', LastName = '$new_last_name', Email = '$new_email', DateOfBirth = '$new_dob', CurrentLocation = '$new_location', PhoneNumber = '$new_phone'
+                    SET FirstName = '$new_first_name', LastName = '$new_last_name', Email = '$new_email', DateOfBirth = '$new_dob', CurrentLocation = '$new_location', PhoneNumber = '$new_phone', Interest = '$new_interest'
                     WHERE UserID = '$id_toupdate';";
 
                 $result = mysqli_query($conn, $sql);

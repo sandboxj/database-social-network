@@ -140,5 +140,4 @@ update_status($pageid2);
 </div>
 
 <hr/>
-<a href="logout.php">Logout</a>
 <?php include("../includes/footer.php"); ?>

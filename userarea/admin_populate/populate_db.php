@@ -7,6 +7,11 @@ if (isset($_POST["populate_users"])) {
 		$file->seek($myLine-1);
 		$line = $file->current();
 		$data = explode(',', $line);
+    $myLine = rand(1,10); 
+		$file = new SplFileObject('../userarea/admin_populate/cities.csv');
+		$file->seek($myLine-1);
+		$line = $file->current();
+    $trimline = trim($line, " \t\n\r\0\x0B");
 		$gender = ($data[0] = "B") ? 1 : 0;
 		$first_name = $data[1];
 		$last_name = $data[2];
@@ -20,7 +25,7 @@ if (isset($_POST["populate_users"])) {
 		if (!$email_exists) {
 			$no_users--;
 			$password = password_encrypt($data[3]);
-			$location = $data[4];
+			$location = $trimline;
 			$min = 0;
 			$max = 999999999;
 			$phone_number = "07" . strval(rand($min, $max));
@@ -32,9 +37,12 @@ if (isset($_POST["populate_users"])) {
 			$end = strtotime("1 January 2001");
 			$timestamp = mt_rand($start, $end);
 			$dob = date("Y-m-d", $timestamp);
-			print $first_name . " " . $last_name . " " . $email . " " . $date_joined . " " . $dob . " " . $gender . " " . $location . " " . $phone_number . "<br/>";
-			$population_query = "INSERT INTO user (Email, Password, FirstName, LastName, DateJoined, DateOfBirth, Gender, CurrentLocation, PhoneNumber)
-								           VALUES ('{$email}', '{$password}', '{$first_name}', '{$last_name}', '{$date_joined}', '{$dob}', '{$gender}', '{$location}', '{$phone_number}')";
+      $interests = ["Politics", "Music", "Database Systems", "Food", "Philosophy", "Movies", "Sports", "Travelling", "Gaming", "Reading"];
+      $interest = $interests[rand(0,9)];
+      $privacy = rand(0,3);
+			print $first_name . " " . $last_name . " " . $email . " " . $date_joined . " " . $dob . " " . $gender . " " . $location . " " . $phone_number . " " . $interest . "<br/>";
+			$population_query = "INSERT INTO user (Email, Password, FirstName, LastName, DateJoined, DateOfBirth, Gender, CurrentLocation, PhoneNumber, PrivacySetting, Interest)
+								           VALUES ('{$email}', '{$password}', '{$first_name}', '{$last_name}', '{$date_joined}', '{$dob}', '{$gender}', '{$location}', '{$phone_number}', '{$privacy}', '{$interest}')";
 			$populate = mysqli_query($conn, $population_query);
 		}
 	}
@@ -146,18 +154,19 @@ if (isset($_POST["populate_circles"])) {
 
 if (isset($_POST["populate_circle_members"])) {
   $no_circle_members = $_POST["num_of_circle_members"];
+  
 }
 
 if (isset($_POST["populate_collections"])) {
-	
+	$no_collections = $_POST["num_of_collections"];
 }
 
 if (isset($_POST["populate_photos"])) {
-
+  $no_photos = $_POST["num_of_photos"];
 }
 
 if (isset($_POST["populate_photo_comments"])) {
-
+  $no_photo_comments = $_POST["num_of_photo_comments"];
 }
 
 if (isset($_POST["populate_blogs"])) {

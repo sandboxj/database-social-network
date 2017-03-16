@@ -11,7 +11,6 @@
 <?php include("../includes/header.php"); ?>
 <?php include("navbar.php"); ?>
 
-
 <?php echo message()?>
 
 
@@ -34,17 +33,17 @@ if (mysqli_num_rows($result)<1) {
             $uncached_src = $profile_picture_src . "?" . filemtime($profile_picture_src);
             mysqli_free_result($pic_result);
             ?>
-            <div class="row polaroid">
-              <div class="col-md-3">
-                <a href="user_profile.php?id=<?php echo $search_friend['UserID']?>"><img src="<?php echo $uncached_src ?>" class="img-responsive" alt="Friend's profile picture'"></a>
-              </div>
-            <div class="col-md-9">
-                <a href="user_profile.php?id=<?php echo $search_friend['UserID']?>"><h4><?php echo $search_friend["FirstName"] . " " . $search_friend["LastName"]?></h4></a>
-                <br />
-		<br />
-              </div>
-            </div>
-        <?php
+	    <div class="row polaroid">
+  		<div class="col-md-3">
+    		     <a href="user_profile.php?id=<?php echo $search_friend['UserID']?>"><img src="<?php echo $uncached_src ?>" class="img-responsive" alt="Friend's profile picture'"></a>
+  		</div>
+  	    	<div class="col-md-9">
+    		     <a href="user_profile.php?id=<?php echo $search_friend['UserID']?>"><h4><?php echo $search_friend["FirstName"] . " " . $search_friend["LastName"]?></h4></a>
+    		     <br />
+    		     <br />
+  	    	</div>
+	    </div>
+	<?php
         } elseif ($search_friend["PrivacySetting"] == "1") {
             $friends_of_searched_result = find_accepted($search_friend["UserID"]);
             while ($f_of_s = mysqli_fetch_assoc($friends_of_searched_result)) {
@@ -67,17 +66,17 @@ if (mysqli_num_rows($result)<1) {
                 $uncached_src = $profile_picture_src . "?" . filemtime($profile_picture_src);
                 mysqli_free_result($pic_result);
                 ?>
-                <div class="row polaroid">
-                  <div class="col-md-3">
-                    <a href="user_profile.php?id=<?php echo $search_friend['UserID']?>"><img src="<?php echo $uncached_src ?>" class="img-responsive" alt="Friend's profile picture'"></a>
-                  </div>
-                  <div class="col-md-9">
-                    <a href="user_profile.php?id=<?php echo $search_friend['UserID']?>"><h4><?php echo $search_friend["FirstName"] . " " . $search_friend["LastName"]?></h4></a>
-                    <br />
-		    <br />
-                  </div>
-                </div>
-                <?php
+	    <div class="row polaroid">
+  		<div class="col-md-3">
+    		    <a href="user_profile.php?id=<?php echo $search_friend['UserID']?>"><img src="<?php echo $uncached_src ?>" class="img-responsive" alt="Friend's profile picture'"></a>
+  		</div>
+  		<div class="col-md-9">
+    		    <a href="user_profile.php?id=<?php echo $search_friend['UserID']?>"><h4><?php echo $search_friend["FirstName"] . " " . $search_friend["LastName"]?></h4></a>
+    		    <br />
+    		    <br />
+  		</div>
+	    </div>
+	    <?php
             } else {
                  echo ("<p style='font-style: italic'>No matches.</p>");
             }
@@ -95,7 +94,6 @@ mysqli_free_result($result);
 
 <?php
     $my_friends = find_accepted($_SESSION["UserID"]);
-
     $friends = [];
     while ($my_friend = mysqli_fetch_assoc($my_friends)) {
         array_push($friends, $my_friend["UserID"]);       
@@ -141,64 +139,186 @@ mysqli_free_result($result);
         }
     }
     arsort($friends_of_friends);
-    $no_recommends = 3;
+    $count_total = 0;
     foreach($friends_of_friends as $fof => $count) {
-        if ($no_recommends > 0) {
+        $count_total = $count_total + $count;
+    }
+    
+    $self_query = "SELECT * FROM user u
+                   WHERE u.UserID = '{$_SESSION["UserID"]}'";
+    $self_result = mysqli_query($conn, $self_query);
+    $self = mysqli_fetch_assoc($self_result);
+    $self_location = $self["CurrentLocation"];
+    if ($self_location == "") {
+        $self_location = "null";
+    }
+    $sum_of_distances = 0;
+    $index = -1;
+    if ($self_location == "Aberdeen") {
+        $index = 0;
+    } elseif ($self_location == "Belfast") {
+        $index = 1;
+    } elseif ($self_location == "Birmingham") {
+        $index = 2;
+    } elseif ($self_location == "Cardiff") {
+        $index = 3;
+    } elseif ($self_location == "Dublin") {
+        $index = 4;
+    } elseif ($self_location == "Edinburgh") {
+        $index = 5;
+    } elseif ($self_location == "Glasgow") {
+        $index = 6;
+    } elseif ($self_location == "London") {
+        $index = 7;
+    } elseif ($self_location == "Manchester") {
+        $index = 8;
+    } elseif ($self_location == "Swansea") {
+        $index = 9;
+    } else {
+    }
+    
+    $distances = array(
+      array(4040,0,371,519,634,498,149,195,640,408,626),
+      array(2809,371,0,355,392,140,230,176,518,271,356),
+      array(2570,519,355,0,142,308,395,406,162,113,170),
+      array(2948,634,392,142,0,294,497,492,211,231,55),
+      array(2875,498,140,308,294,0,350,308,463,266,248),
+      array(2987,149,230,395,497,350,0,67,534,281,484),
+      array(2966,195,176,406,492,308,67,0,555,295,472),
+      array(3609,640,518,162,211,463,534,555,0,262,264),
+      array(2363,408,271,113,231,266,281,295,262,0,236),
+      array(2911,626,356,170,55,248,484,472,264,236,0)
+    );
+    
+    $sum_of_distances = $distances[$index][0];
+    $self_interest = $self["Interest"];
+    $self_dob = strtotime($self["DateOfBirth"]);
+    
+    $nons = find_non_friends($_SESSION["UserID"]);
+    $non_friends = [];
+    while ($non = mysqli_fetch_assoc($nons)) {
+        if ($non["UserID"] != 1) {
+            $non_friends[] = $non["UserID"];
+        }
+    }
+    $scores = [];
+    $sum_of_age_differences = 0;
+    foreach($non_friends as $nf) {
+        $non_friend_query = "SELECT * FROM user u
+                             AND u.UserID = '{$nf}'";
+        $non_friend_result = mysqli_query($conn, $non_friend_query);
+        $non_friend = mysqli_fetch_assoc($non_friend_result);
+        $non_friend_dob = strtotime($non_friend["DateOfBirth"]);
+        $age_difference = abs($self_dob - $non_friend_dob);
+        $sum_of_age_differences = $sum_of_age_differences + $age_difference;
+    }
+    for ($i = 0; $i < count($non_friends); $i++) {
+        $non_friend_query = "SELECT * FROM user u
+                             WHERE u.UserID = '{$non_friends[$i]}'";
+        $non_friend_result = mysqli_query($conn, $non_friend_query);
+        $non_friend = mysqli_fetch_assoc($non_friend_result);
+        $non_friend_dob = strtotime($non_friend["DateOfBirth"]);
+        $age_difference = abs($self_dob - $non_friend_dob);
+        $non_friend_location = $non_friend["CurrentLocation"];
+        
+        $index2 = 0;
+        if ($non_friend_location == "Aberdeen") {
+            $index2 = 1;
+        } elseif ($non_friend_location == "Belfast") {
+            $index2 = 2;
+        } elseif ($non_friend_location == "Birmingham") {
+           $index2 = 3;
+        } elseif ($non_friend_location == "Cardiff") {
+            $index2 = 4;
+        } elseif ($non_friend_location == "Dublin") {
+            $index2 = 5;
+        } elseif ($non_friend_location == "Edinburgh") {
+            $index2 = 6;
+        } elseif ($non_friend_location == "Glasgow") {
+            $index2 = 7;
+        } elseif ($non_friend_location == "London") {
+            $index2 = 8;
+        } elseif ($non_friend_location == "Manchester") {
+            $index2 = 9;
+        } elseif ($non_friend_location == "Swansea") {
+            $index2 = 10;
+        } else {
+        }
+        
+        
+        $distance = $distances[$index][$index2];
+        $share_interest = 0;
+        $non_friend_query = "SELECT * FROM user u
+                             WHERE u.Interest = '{$self_interest}'
+                             AND u.UserID = '{$non_friends[$i]}'";
+        $non_friend_result = mysqli_query($conn, $non_friend_query);
+        $non_friend = mysqli_fetch_assoc($non_friend_result);
+        if ($non_friend["Interest"] != "") {
+            $share_interest = 1;
+        }
+        $mutual_friend_count = 0;
+        if (array_key_exists($non_friends[$i], $friends_of_friends)) {
+            $mutual_friend_count = $friends_of_friends[$non_friends[$i]];
+        }
+        $score = 0.5*$mutual_friend_count/$count_total + 0.2*(1-$distance/$sum_of_distances) + 0.2*$share_interest + 0.1*(1-$age_difference/$sum_of_age_differences);
+        //print $non_friends[$i] . " x " . $mutual_friend_count/$count_total . " x " . $distance/$sum_of_distances . " x " . $share_interest . " x " . $age_difference/$sum_of_age_differences . " x " . $score . " z <br/>";
+        $scores[$non_friends[$i]] = $score;
+    }
+    arsort($scores);
+    $no_recommends = 0;
+    foreach ($scores as $nf => $score) {
+        if ($no_recommends < 3) {
             $do_not_recommend_query = "SELECT * FROM do_not_recommend d
-                                       WHERE d.UserID = '{$_SESSION["UserID"]}' AND d.UnknownUserID = '{$fof}'";
+                                       WHERE d.UserID = '{$_SESSION["UserID"]}' AND d.UnknownUserID = '{$nf}'";
             $do_not_recommend = mysqli_query($conn, $do_not_recommend_query);
 			      $no_recommend = mysqli_fetch_assoc($do_not_recommend);
             $pending_query = "SELECT * FROM friendship f
-                                       WHERE ((f.User1ID = '{$_SESSION["UserID"]}' AND f.User2ID = '{$fof}')
-                                       OR (f.User2ID = '{$_SESSION["UserID"]}' AND f.User1ID = '{$fof}'))
-                                       AND f.Status = '0'";
+                              WHERE ((f.User1ID = '{$_SESSION["UserID"]}' AND f.User2ID = '{$nf}')
+                              OR (f.User2ID = '{$_SESSION["UserID"]}' AND f.User1ID = '{$nf}'))
+                              AND f.Status = '0'";
             $pending = mysqli_query($conn, $pending_query);
 			      $ispending = mysqli_fetch_assoc($pending);
-		$should_recommend = 0;
+		        $can_recommend = 0;
             if ($no_recommend["UserID"] == "") {
                 if ($ispending["User1ID"] == "") {
-                    $should_recommend = 1;
+                    $can_recommend = 1;
                 } else {
-                    $should_recommend = 0;
+                    $can_recommend = 0;
                 }
             }
-            if ($should_recommend) {
-                if ($count >= count($friends)/5) {
-                    $recommended = "SELECT * FROM user u
-                                    WHERE u.UserID = '{$fof}'";
-                    $recommendable = mysqli_query($conn, $recommended);
-                    $recommend = mysqli_fetch_assoc($recommendable);
-                    $profile_picture = find_profile_pic($recommend["UserID"]);
-                    $picture = mysqli_fetch_assoc($profile_picture);
-                    $picture_src = file_exists("img/Profilepictures" . $recommend["UserID"] . "/" . $picture["FileSource"]) ? "img/Profilepictures" . $recommend["UserID"] . "/" . $picture["FileSource"] : "img/" . $picture["FileSource"];
-                    $uncached_src = $picture_src . "?" . filemtime($picture_src);
-                    ?>
-                    <div class="row polaroid">
-                        <div class="col-md-3">
-                            <a href="user_profile.php?id=<?php echo $recommend['UserID']?>"><img src="<?php echo $uncached_src ?>" class="img-responsive" alt="Recommended user's profile picture'"></a>
-                                </div>
-                                    <div class="col-md-9">
-                                        <a href="user_profile.php?id=<?php echo $recommend['UserID']?>"><h4><?php echo $recommend["FirstName"] . " " . $recommend["LastName"]?></h4></a>
-					<br />
-					<br />
-                                        <form method="post" style="display: inline">
-                                          <button type="submit" name="do_not_recommend" value="<?php echo $recommend['UserID']?>" class="btn btn-primary">Don't know this person</button>
-                                        </form>
-                                        <form method="post" style="display: inline">
-                                          <button type="submit" name="add_request" value="<?php echo $recommend['UserID']?>" class="btn btn-primary">Add friend</button>
-                                        </form>
-                                    </div>
-                                </div>
-                        </div>
-                    </div>
-                    <?php
-                }
-            $no_recommends--;
+            if ($can_recommend) {
+                $recommended = "SELECT * FROM user u
+                                WHERE u.UserID = '{$nf}'";
+                $recommendable = mysqli_query($conn, $recommended);
+                $recommend = mysqli_fetch_assoc($recommendable);
+                $profile_picture = find_profile_pic($recommend["UserID"]);
+                $picture = mysqli_fetch_assoc($profile_picture);
+                $picture_src = file_exists("img/Profilepictures" . $recommend["UserID"] . "/" . $picture["FileSource"]) ? "img/Profilepictures" . $recommend["UserID"] . "/" . $picture["FileSource"] : "img/" . $picture["FileSource"];
+                $uncached_src = $picture_src . "?" . filemtime($picture_src);
+                $no_recommends++;
+                ?>
+                <div class="row polaroid">
+                  <div class="col-md-3">
+                    <a href="user_profile.php?id="<?php echo $recommend['UserID']?>"><img src="<?php echo $uncached_src ?>" class="img-responsive" alt="Recommended user's profile picture'"></a>
+                  </div>
+                  <div class="col-md-9">
+                    <a href="user_profile.php?id="<?php echo $recommend['UserID']?>"><h4><?php echo $recommend["FirstName"] . " " . $recommend["LastName"]?></h4></a>
+                    <br />
+                    <br />
+                    <form method="post" style="display: inline">
+                      <button type="submit" name="do_not_recommend" value="<?php echo $recommend['UserID']?>" class="btn btn-primary">Don't know this person</button>
+                    </form>
+                    <form method="post" style="display: inline">
+                      <button type="submit" name="add_request" value="<?php echo $recommend['UserID']?>" class="btn btn-primary">Add friend</button>
+                    </form>
+                  </div>
+                </div>
+            <?php
             }
         }
     }
+    
 ?>
 
-<a href="logout.php">Logout</a>
 
 <?php include("../includes/footer.php"); ?>

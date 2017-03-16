@@ -136,5 +136,4 @@ while ($row = mysqli_fetch_array($result2)) {
     <div class="col-sm-1"></div>
 </div>
 <hr/>
-<a href="logout.php">Logout</a>
 <?php include("../includes/footer.php"); ?>
