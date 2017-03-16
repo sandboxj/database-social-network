@@ -133,7 +133,14 @@ while($circle_members=mysqli_fetch_assoc($circle_members_results)){
         <div class="col-md-4">
 <!--            COULD include the profile picture here-->
             <ul class="list-group">
+                <?php if($viewer_userID == $member_userID){
+                    ?>
+                <li class="list-group-item" role="presentation" class="member-name"><a href="profile.php?id=<?php echo $member_userID ?>"><?php echo "{$first_name} {$last_name}";?></a></li>
+                <?php }else{
+                    ?>
                 <li class="list-group-item" role="presentation" class="member-name"><a href="user_profile.php?id=<?php echo $member_userID ?>"><?php echo "{$first_name} {$last_name}";?></a></li>
+                <?php } ?>
+
             </ul>
 
         </div>
