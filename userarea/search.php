@@ -302,6 +302,14 @@ mysqli_free_result($result);
                 $picture_src = file_exists("img/Profilepictures" . $recommend["UserID"] . "/" . $picture["FileSource"]) ? "img/Profilepictures" . $recommend["UserID"] . "/" . $picture["FileSource"] : "img/" . $picture["FileSource"];
                 $uncached_src = $picture_src . "?" . filemtime($picture_src);
                 $no_recommends++;
+                $share_interest = 0;
+                if ($recommend["Interest"] == $self_interest) {
+                    $share_interest = 1;
+                }
+                $mutual_friend_count = 0;
+                if (array_key_exists($nf, $friends_of_friends)) {
+                    $mutual_friend_count = $friends_of_friends[$nf];
+                }
                 ?>
                 <div class="row polaroid">
                   <div class="col-md-3">
@@ -310,7 +318,14 @@ mysqli_free_result($result);
                   <div class="col-md-9">
                     <a href="user_profile.php?id="<?php echo $recommend['UserID']?>"><h4><?php echo $recommend["FirstName"] . " " . $recommend["LastName"]?></h4></a>
                     <br />
+                    Location: <?php echo $recommend["CurrentLocation"]?>
                     <br />
+                    You have <?php echo $mutual_friend_count?> mutual friends.
+                    <br />
+                    <?php if ($share_interest) {
+                              echo $recommend["Interest"] . " is a shared interest. <br/>";
+                          }?>
+                    <br/>
                     <form method="post" style="display: inline">
                       <button type="submit" name="do_not_recommend" value="<?php echo $recommend['UserID']?>" class="btn btn-primary">Don't know this person</button>
                     </form>

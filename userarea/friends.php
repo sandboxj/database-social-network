@@ -108,6 +108,14 @@
             <div class="col-md-5">
                 <h4><?php echo $a_friend["FirstName"] . " " . $a_friend["LastName"]?></h4><br /><br />
             </div>
+            <?php $exist_relation = find_friendship($_SESSION["UserID"], $a_friend["UserID"]);
+                  $rows =mysqli_num_rows($exist_relation);
+                  if (mysqli_num_rows($exist_relation)>0) {
+                      $friendship = mysqli_fetch_assoc($exist_relation);
+                  }?>
+            <form method="post" style="display: inline">
+              <button type="submit" name="decline_friend" value="<?php echo $friendship['FriendshipID'] ?>" class="btn">Unfriend</button>
+            </form>
      </div>
 </a>
 <?php
@@ -127,7 +135,7 @@ mysqli_free_result($accepted_friends);
 
 
 <!--  RECOMMENDATIONS-->
-    <h4>People you may know</h4>
+<h4>People you may know</h4>
 
 <?php
     $my_friends = find_accepted($_SESSION["UserID"]);
@@ -135,7 +143,6 @@ mysqli_free_result($accepted_friends);
     while ($my_friend = mysqli_fetch_assoc($my_friends)) {
         array_push($friends, $my_friend["UserID"]);       
     }
-
     mysqli_free_result($my_friends);
     $friends_of_friends = [];
     foreach($friends as $friend) {
@@ -149,16 +156,12 @@ mysqli_free_result($accepted_friends);
                      AND f.User1ID NOT LIKE '{$_SESSION["UserID"]}'
                      AND f.Status = 1";
         $friend_friendship2 = mysqli_query($conn, $friends_of_friends2);
-        confirm_query($friend_friendship2);
         while ($friend_f1 = mysqli_fetch_assoc($friend_friendship1)) {
-
             $friend_query1 = "select * from user u
                        where u.UserID = '{$friend_f1["User2ID"]}'";
             $friend_u1 = mysqli_query($conn, $friend_query1);
             $friend_user1 = mysqli_fetch_assoc($friend_u1);
-
             if (!in_array($friend_user1["UserID"], $friends)) {
-
                 if (array_key_exists($friend_user1["UserID"] , $friends_of_friends)) {
                     $friends_of_friends[$friend_user1["UserID"]] = $friends_of_friends[$friend_user1["UserID"]] + 1;
                 } else {
@@ -181,13 +184,9 @@ mysqli_free_result($accepted_friends);
         }
     }
     arsort($friends_of_friends);
-
     $count_total = 0;
-
     foreach($friends_of_friends as $fof => $count) {
-
         $count_total = $count_total + $count;
-
     }
     
     $self_query = "SELECT * FROM user u
@@ -246,15 +245,12 @@ mysqli_free_result($accepted_friends);
             $non_friends[] = $non["UserID"];
         }
     }
-
-
     $scores = [];
     $sum_of_age_differences = 0;
     foreach($non_friends as $nf) {
         $non_friend_query = "SELECT * FROM user u
                              WHERE u.UserID = '{$nf}'";
         $non_friend_result = mysqli_query($conn, $non_friend_query);
-        confirm_query($non_friend_result);
         $non_friend = mysqli_fetch_assoc($non_friend_result);
         $non_friend_dob = strtotime($non_friend["DateOfBirth"]);
         $age_difference = abs($self_dob - $non_friend_dob);
@@ -291,6 +287,7 @@ mysqli_free_result($accepted_friends);
         } elseif ($non_friend_location == "Swansea") {
             $index2 = 10;
         }
+        
         
         $distance = $distances[$index][$index2];
         $share_interest = 0;
@@ -348,27 +345,43 @@ mysqli_free_result($accepted_friends);
                 $picture_src = file_exists("img/Profilepictures" . $recommend["UserID"] . "/" . $picture["FileSource"]) ? "img/Profilepictures" . $recommend["UserID"] . "/" . $picture["FileSource"] : "img/" . $picture["FileSource"];
                 $uncached_src = $picture_src . "?" . filemtime($picture_src);
                 $no_recommends++;
+                $share_interest = 0;
+                if ($recommend["Interest"] == $self_interest) {
+                    $share_interest = 1;
+                }
+                $mutual_friend_count = 0;
+                if (array_key_exists($nf, $friends_of_friends)) {
+                    $mutual_friend_count = $friends_of_friends[$nf];
+                }
                 ?>
-                <div class="row polaroid">
-                  <div class="col-md-3">
-                    <a href="user_profile.php?id=<?php echo $recommend['UserID']?>"><img src="<?php echo $uncached_src ?>" class="img-responsive" alt="Recommended user's profile picture'"></a>
-                  </div>\
-                  <div class="col-md-9">
-                    <a href="user_profile.php?id="<?php echo $recommend['UserID']?>"><h4><?php echo $recommend["FirstName"] . " " . $recommend["LastName"]?></h4></a>
-                    <br />
-                    <br />
-                    <form method="post" style="display: inline">
-                      <button type="submit" name="do_not_recommend" value="<?php echo $recommend['UserID']?>" class="btn btn-primary">Don't know this person</button>
-                    </form>
-                    <form method="post" style="display: inline">
-                      <button type="submit" name="add_request" value="<?php echo $recommend['UserID']?>" class="btn btn-primary">Add friend</button>
-                    </form>
-                  </div>
-                </div>
-            <?php
+<div class="row polaroid">
+  <div class="col-md-3">
+    <a href="user_profile.php?id=<?php echo $recommend['UserID']?>"><img src="<?php echo $uncached_src ?>" class="img-responsive" alt="Recommended user's profile picture'"></a>
+  </div>
+  <div class="col-md-9">
+    <a href="user_profile.php?id=<?php echo $recommend['UserID']?>"><h4><?php echo $recommend["FirstName"] . " " . $recommend["LastName"]?></h4></a>
+    <br />
+    Location: <?php echo $recommend["CurrentLocation"]?>
+    <br />
+    You have <?php echo $mutual_friend_count?> mutual friends.
+    <br />
+    <?php if ($share_interest) {
+                              echo $recommend["Interest"] . " is a shared interest. <br/>";
+                          }?>
+    <br/>
+    <form method="post" style="display: inline">
+      <button type="submit" name="do_not_recommend" value="<?php echo $recommend['UserID']?>" class="btn btn-primary">Don't know this person</button>
+    </form>
+    <form method="post" style="display: inline">
+      <button type="submit" name="add_request" value="<?php echo $recommend['UserID']?>" class="btn btn-primary">Add friend</button>
+    </form>
+  </div>
+</div>
+<?php
             }
         }
     }
+    
 ?>
 
 
