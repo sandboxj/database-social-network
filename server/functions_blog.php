@@ -139,7 +139,7 @@ function display_formatted_date($date_posted){
             break;
     }
 
-    $output = "Posted on {$month} {$day} at {$time[0]}:{$time[1]} {$time_suffix}";
+    $output = "{$month} {$day} at {$time[0]}:{$time[1]} {$time_suffix}";
     return $output;
 }
 
@@ -294,6 +294,32 @@ function find_blog_date($blogID){
 
     mysqli_free_result($date_posted_db);
     return $post_date;
+
+
+}
+
+function find_blog_details($blogID){
+    global $conn;
+
+
+    $query = "SELECT Content, Title, DatePosted FROM blog
+            WHERE blog.BlogID = '{$blogID}'
+            LIMIT 1";
+
+    $blog_details_db = mysqli_query($conn, $query);
+    confirm_query($blog_details_db);
+
+    //associative array with date posted
+    $blog_details_array = mysqli_fetch_assoc($blog_details_db);
+
+    $blog_content = $blog_details_array["Content"];
+    $blog_title = $blog_details_array["Title"];
+    $blog_date = $blog_details_array["DatePosted"];
+
+
+    mysqli_free_result($blog_details_db);
+    $blog_details_array=array("blog_content" => $blog_content, "blog_title" => $blog_title, "blog_date" => $blog_date);
+    return $blog_details_array;
 
 
 }
@@ -545,11 +571,15 @@ function update_blog_access_rights($blogID, $updated_access_rights){
 
 
 
-    $updated_access_rights_int = convert_access_rights_to_int($updated_access_rights);
+ //   $updated_access_rights_int = convert_access_rights_to_int($updated_access_rights);
 
 
-    $query = "UPDATE blog SET AccessRights='{$updated_access_rights_int}'
-    WHERE BlogID='{$blogID}'";
+    $query = "UPDATE blog SET AccessRights=(
+              SELECT AccessRightID FROM access_rights 
+              WHERE AccessRightName='{$updated_access_rights}')
+              WHERE BlogID='{$blogID}'";
+
+    echo $query;
 
 
     $result = mysqli_query($conn, $query);
@@ -649,12 +679,15 @@ function insert_comment($blogID, $commenter_userid, $comment_content){
     $comment_content = mysqli_real_escape_string($conn, $comment_content);
 
     $post_time = date('Y-m-d H:i:s');
+
+
     // Enter post into DB
 
     $query = "INSERT INTO blog_comment (BlogID, CommenterUserID, DatePosted, Content)
         VALUES ('{$blogID}', '{$commenter_userid}', '{$post_time}', '{$comment_content}')";
 
     $result = mysqli_query($conn, $query);
+
 
     if ($result) {
         echo "<script>alert('Comment Posted);</script>";
@@ -685,6 +718,20 @@ function delete_blog_comment($commentID){
     }
 }
 
+function count_blog_comments($blogID){
+    global $conn;
+
+    $query="SELECT COUNT(BlogCommentID) as CommentCount FROM blog_comment
+            WHERE BlogID='{$blogID}'";
+
+    $comment_count_db = mysqli_query($conn, $query);
+    confirm_query($comment_count_db);
+
+    $comment_count_array = mysqli_fetch_assoc($comment_count_db);
+    $comment_count = $comment_count_array['CommentCount'];
+
+    return $comment_count;
+}
 
 //saved this here in case we need it later
 //function find_commentID($commenter_userID,$comment_date, $comment_content ){

@@ -56,11 +56,12 @@ if(isset($_POST["blog_post"])){
 <?php include("navbar.php"); ?>
 
 
-<section class="jumbotron blog-jumbotron">
+<section class="jumbotron jumbotron-blog">
 <div class="container">
     <div class="row text-center">
 
-        <h1>Your Blogs</h1>
+
+        <h1 style="padding-top: 60px;">Your Blogs</h1>
 
     </div>
 

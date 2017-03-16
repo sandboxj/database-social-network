@@ -3,17 +3,32 @@
 <?php require_once("../server/functions.php");?>
 <?php require_once("../server/functions_photos.php");?>
 <?php require_once("../server/functions_friends.php");?>
-<?php require_once("../server/blog_functions.php");?>
-<?php require_once("../server/circle_functions.php");?>
+<?php require_once("../server/functions_blog.php");?>
+<?php require_once("../server/functions_circle.php");?>
 <?php $visited_user = find_user_by_id($_GET["id"]); ?>
 <?php $page_title= "{$visited_user["FirstName"]} {$visited_user["LastName"]}'s Collections"?>
 <?php confirm_logged_in(); ?>
 <?php include("../includes/header.php"); ?>
 <?php include("navbar.php"); ?>
 
-    <h2><?php echo "{$visited_user["FirstName"]} {$visited_user["LastName"]}'s Collections" ?></h2>
-    <?php include("user_navbar.php"); ?><br />
+
+<section class="jumbotron jumbotron-photocollections" >
     <div class="container">
+        <div class="row">
+            <div class="col-md-3 content">
+                <?php include("user_navbar.php"); ?>
+            </div>
+            <div class="col-md-1">
+
+            </div>
+            <div class="col-md-4 text-center">
+                <h2><?php echo "{$visited_user["FirstName"]} {$visited_user["LastName"]}'s Collections'";?></h2>
+            </div>
+        </div>
+    </div>
+</section>
+
+    <div class="container ">
         <?php
             $viewer_userID = $_SESSION['UserID'];
             $user_collections = find_collections($visited_user["UserID"]);
@@ -27,42 +42,29 @@
             if(!$check) {
                 continue;
             }
-            // if ($access_rights==0) {
-            //     continue;
-            // } else {
-			// 	if($access_rights==1) {
-			// 		$exist_friendship = find_friendship($viewer_userID, $visited_user["UserID"]);
-			// 		if (mysqli_num_rows($exist_friendship)<1) {
-			// 			continue;
-			// 		} else {}
-			// 	} elseif ($access_rights == 3) {
-			// 		if(!is_in_another_user_circle($visited_user["UserID"], $viewer_userID)) {
-            //             continue;
-            //         }
-			// 	} elseif ($access_rights == 4) {
-			// 		if(!check_friends_of_friends($visited_user["UserID"], $viewer_userID)) {
-            //             continue;
-            //         }
                 if (($count == 0)) {
                     echo "<div class='row'>";
                 } else {
                 }
         ?>
-        <div class='polaroid col-md-3'>
+
+
+        <div class='polaroid col-md-3 text-center '>
+
+            <a class="photo-collection-anchor" href='user_photos.php?id=<?php echo $visited_user["UserID"] ?>&collection=<?php echo $collection["CollectionID"] ?>'>
             <figure>
                 <?php 
                     $newest_photo = newest_photo_src($collection["CollectionID"]);
                     $newest_src = (isset($newest_photo)) ? "img/" . $collection["CollectionID"] . "/" . $newest_photo["FileSource"] : "img/empty.png";
                 ?>
-                <a href='user_photos.php?id=<?php echo $visited_user["UserID"] ?>&collection=<?php echo $collection["CollectionID"] ?>'>
-                <img src="<?php echo $newest_src; ?>" alt='thumbnail' class="center-block img-responsive"><br />
-                </a>
-                <figcaption>
-                <a href='user_photos.php?id=<?php echo $visited_user["UserID"] ?>&collection=<?php echo $collection["CollectionID"] ?>'>
-                <?php echo $collection["CollectionTitle"] ?> 
-                </a>
-                </figcaption>
+
+                <img  src="<?php echo $newest_src; ?>" alt='thumbnail' class="center-block img-responsive"><br />
+
+
+                <p><?php echo $collection["CollectionTitle"] ?></p>
+
             </figure>
+            </a>
         </div>
         <?php
 				if (($count == 3)) {
@@ -79,6 +81,5 @@
         ?>
     </div></div>
         
-    <hr />
 
 <?php include("../includes/footer.php"); ?>

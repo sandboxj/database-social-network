@@ -1,0 +1,48 @@
+.jumbotron-photocollections{
+    display: flex;
+    align-items: center;
+    background: url("../userarea/img/photocollection.jpg") no-repeat center;
+    background-size: cover;
+    color: #eeeaec;
+
+    text-shadow: 1px 1px 1px #000000;
+}
+
+.jumbotron-photocollections h1{
+    font-weight: bold;
+}
+
+.polaroid {
+    background-color: white;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 10px;
+    padding: 10px;
+
+}
+
+.polaroid img{
+    width: 300px;
+    height: 300px;
+}
+
+
+.photo-collection-anchor{
+    /*Remove underline*/
+    text-decoration: none;
+}
+
+.photo-collection-anchor:hover{
+    /*Remove underline*/
+    text-decoration: none;
+}
+
+.polaroid:hover{
+    border-style: solid;
+    border-color: black;
+
+}
+
+
+.polaroid:hover p {
+    color: white;
+}

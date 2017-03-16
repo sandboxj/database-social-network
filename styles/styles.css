@@ -9,12 +9,12 @@ hr {
     margin: 18px 0;
 }
 
-.jumbotron {
-    display: flex;
-    align-items: center;
-    color: #eeeaec;
-    height: 250px;
-    text-shadow: 1px 1px 1px #000000;
+#gradient-back{
+    background: lightcyan; /* For browsers that do not support gradients */
+    background: -webkit-linear-gradient(lightcyan, deepskyblue,cadetblue); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(lightcyan, deepskyblue,cadetblue); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(lightcyan, deepskyblue,cadetblue); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(lightcyan, deepskyblue, cadetblue); /* Standard syntax */
 }
 
 
@@ -38,19 +38,15 @@ hr {
     text-align: center;
 }
 
-.polaroid {
-    background-color: white;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    border-radius: 10px;
-    padding: 10px;
-}
+
 
 .search_form {
-     width: 200px;
+
      box-sizing: border-box;
      border: 2px solid #ccc;
      border-radius: 4px;
      font-size: 18px;
+    width:200px;
      background-color: white;
      /*background-position: 10px 10px;*/
      background-repeat: no-repeat;
@@ -58,6 +54,7 @@ hr {
      /*margin: 5px 0px 5px 0px;*/
      -webkit-transition: width 0.4s ease-in-out;
      transition: width 0.4s ease-in-out;
+
  }
 
 
@@ -75,10 +72,20 @@ td.noBorder{
     border: hidden;
 }
 
-.navbar-color{
-    background-color: lightcyan;
+
+.navbar-links{
+    font-size: 18px;
+    color: white;
+    font-family: "Courier New";
+    background-color: #7EC0EE;
+
+    font-weigth: bold;
 }
 
+#disabled-anchor{
+    pointer-events: none;
+    cursor: default;
+}
 .so-shall-logo{
     font-family: 'Lobster', cursive;
     color: red;
@@ -100,3 +107,4 @@ td.noBorder{
     color:red;
 
 }
+

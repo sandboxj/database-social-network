@@ -6,6 +6,5 @@
 <?php include("../includes/header.php"); ?>
 <?php include("navbar.php"); ?>
 
-<hr />
-<a href="logout.php">Logout</a>
+
 <?php include("../includes/footer.php"); ?>

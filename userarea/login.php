@@ -8,7 +8,16 @@
 <section class="jumbotron login-jumbotron">
     <div class="container">
         <div class="row text-center">
+            <div class="col-md-1">
+            </div>
+            <div class="col-md-4">
+                <img class="img-responsive img-circle"  src="img/SoShallNetwork_Logo.png"/>
+            </div>
+            <div col="col-md-4 text-center">
+            <br>
+                <br>
             <h1> Login </h1>
+            </div>
         </div>
 </section>
 
@@ -22,9 +31,9 @@
 
     <div class="container">
         <div class="col-md-4">
-            <img class="img-responsive img-circle"  src="img/SoShallNetwork_Logo.png"/>
+
         </div>
-        <div class="col-md-4 col-md-offset-3">
+        <div class="col-md-4">
             <div class="panel panel-default">
                 <div class="panel-body">
                     <form action="login.php" method="post">

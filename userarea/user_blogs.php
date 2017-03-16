@@ -1,12 +1,14 @@
 <?php require_once("../server/sessions.php"); ?>
 <?php require("../server/functions_blog.php");?>
-<?php require("../server/user_functions.php");?>
+<?php require("../server/functions_user.php");?>
 <?php require_once("../server/functions_circle.php");?>
 <?php require_once("../server/functions_friends.php");?>
 <?php require_once("../server/functions.php");?>
 <?php require_once("../server/db_connection.php");?>
 <?php confirm_logged_in(); ?>
 <?php include("../includes/header.php"); ?>
+<?php $visited_user = find_user_by_id($_GET["id"]); ?>
+<?php $page_title= "{$visited_user["FirstName"]} {$visited_user["LastName"]}'s Profile"?>
 <?php include("navbar.php"); ?>
 
 <?php
@@ -34,10 +36,19 @@ $is_friend_of_friend = check_friends_of_friends($author_userid, $viewer_userID);
 }
 ?>
 
-<section class="jumbotron blog-jumbotron">
+<section class="jumbotron title" id="jumbotron-user-blogs">
     <div class="container">
-        <div class="row text-center">
+        <div class="row ">
+            <div class="col-md-3">
+                <?php include("user_navbar.php"); ?>
+            </div>
+            <div class="col-md-1">
+
+
+            </div>
+            <div class="col-md-4 text-center">
             <h1><?php echo $name ?></h1>
+            </div>
         </div>
     </div>
 </section>
@@ -71,7 +82,7 @@ $is_friend_of_friend = check_friends_of_friends($author_userid, $viewer_userID);
                 ?>
 
 
-    <a href='user_blog.php?title=<?php echo $title; ?>&user=<?php echo $author_userid ?>>
+    <a href='user_blog.php?title=<?php echo $title; ?>&id=<?php echo $author_userid ?>'>
                 <div class="polaroid col-md-4 individual-blog">
 
                     <?php echo $output; ?>
@@ -86,6 +97,6 @@ $is_friend_of_friend = check_friends_of_friends($author_userid, $viewer_userID);
 ?>
 
 </div>
-<hr />
+
 
 <?php include("../includes/footer.php"); ?>

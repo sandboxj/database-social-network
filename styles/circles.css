@@ -12,14 +12,6 @@
 }
 
 
-/*html { */
-  /*background: url("../userarea/img/buildings.jpg") no-repeat center center fixed;*/
-  /*-webkit-background-size: cover;*/
-  /*-moz-background-size: cover;*/
-  /*-o-background-size: cover;*/
-  /*background-size: cover;*/
-/*}*/
-
 #bg {
   position: fixed; 
   top: 0; 
@@ -30,22 +22,27 @@
   min-height: 100%;
 }
 
-.circle-jumbotron{
+.jumbotron-circle{
     background: url("../userarea/img/buildings.jpg") no-repeat center;
     background-size: cover;
     min-height: 350px;
 
 }
 
-
-.individual-circle {
-    background-color: antiquewhite;
-    border-color: blue;
-    border-style: solid;
-
+.jumbotron-circle h1{
+    font-weight: bold;
+    color: white;
 }
 
-.individual-circle:hover {
-    background-color: lightcyan;
 
+
+.polaroid-circle{
+    background-color: white;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.polaroid-circle:hover{
+    background-color: lightcyan;
 }

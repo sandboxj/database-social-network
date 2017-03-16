@@ -114,4 +114,25 @@ function check_friends_of_friends($not_friend_userID, $viewer_userID){
     return $is_friend_of_friend;
 }
 
+
+//$accepted_friends is a result set
+function count_friends_output($accepted_friends)
+{
+
+    $friend_count_output = "";
+
+    if (mysqli_num_rows($accepted_friends) < 1) {
+        $friend_count_output=("<p style='font-style: italic'>Number of friends: 0 friends </p>");
+    } else {
+        $friend_count = mysqli_num_rows($accepted_friends);
+        if ($friend_count == 1) {
+            //singular for only one friend
+            $friend_count_output = "<p style='font-style: italic'>Number of friends: " . $friend_count . " friend.</p>";
+        } else {
+            $friend_count_output = "<p style='font-style: italic'>Number of friends: " . $friend_count . " friends.</p>";
+        }
+
+    }
+    return $friend_count_output;
+}
 ?>

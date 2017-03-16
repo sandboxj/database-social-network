@@ -8,10 +8,32 @@
 <?php include("../includes/header.php"); ?>
 <?php include("navbar.php"); ?>
 
-        <h2>Your Photo Collections</h2>
-        <button type="button" class="btn"  data-toggle="modal" data-target="#addCollection">Add new collection</button>
-        <button class="btn" onclick="$('.coldelete').toggleClass('hidden');">Delete Collection</button>
-        <?php echo message()?>
+
+<section class="jumbotron jumbotron-photocollections">
+
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-md-4">
+            </div>
+            <div class="col-md-4">
+                <h1> Your Photo Collections </h1>
+                <?php echo message()?>
+            </div>
+            <div class="col-md-4 pull-right">
+                <div class="btn-toolbar" role="toolbar" aria-label="blog_options">
+                    <div class="btn-group-horizontal" aria-label="blog_options">
+                <button type="button" class="btn btn-primary"  data-toggle="modal" data-target="#addCollection"><i class="glyphicon glyphicon-plus"></i> New collection</button>
+                <button class="btn btn-danger" onclick="$('.coldelete').toggleClass('hidden');"><i class="glyphicon glyphicon-trash"></i> Delete Collection</button>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
         <!-- Modal -->
         <div id="addCollection" class="modal fade" role="dialog">
             <div class="modal-dialog">
@@ -23,7 +45,7 @@
                     <div class="modal-body">
                         <p>Enter collection details:</p>
                         <form action="collections.php" method="post">
-                            Title: <input type="text" name="title" class="form-control"></input><br />
+                            Title: <input type="text" name="title" class="form-control"><br />
                             Access Rights: <?php print_access_selector(); ?>                            
                             <br />
                             <input class="btn" type="submit" name="add_collection" value="Add" />
@@ -36,7 +58,8 @@
                 </div>
             </div>
         </div>
-        <hr />
+
+
         <div class="container">
         <?php
             $user_collections = find_collections($_SESSION["UserID"]);
@@ -85,8 +108,6 @@
             mysqli_free_result($user_collections);
         ?>
         </div></div>
-        
-        <hr />
-        
+
 
 <?php include("../includes/footer.php"); ?>

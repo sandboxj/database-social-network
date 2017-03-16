@@ -2,7 +2,7 @@
 <?php require_once("../server/functions.php");?>
 <?php require_once("../server/db_connection.php");?>
 <?php require("../server/functions_circle.php");?>
-<?php require("../server/user_functions.php");?>
+<?php require("../server/functions_user.php");?>
 <?php require("../server/functions_friends.php");?>
 <?php require("../server/functions_messages.php");?>
 <?php $page_title="Circles"?>

@@ -135,5 +135,5 @@ while ($row = mysqli_fetch_array($result2)) {
     </div>
     <div class="col-sm-1"></div>
 </div>
-<hr/>
+
 <?php include("../includes/footer.php"); ?>

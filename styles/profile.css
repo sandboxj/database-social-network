@@ -4,11 +4,19 @@
     background: url("../userarea/img/clouds.jpg") no-repeat center;
     background-size: cover;
     color: #eeeaec;
-    height: 700px;
+
     text-shadow: 1px 1px 1px #000000;
+    height: 700px;
+
 }
 
 .user-navbar li a{
     color: white;
+
+}
+
+#privacy li a{
+    color: white;
+    font-weight: bold;
 
 }

@@ -2,7 +2,7 @@
 <?php require("../server/functions_blog.php"); ?>
 <?php require_once("../server/functions.php"); ?>
 <?php require_once("../server/db_connection.php"); ?>
-<?php require_once("../server/user_functions.php"); ?>
+<?php require_once("../server/functions_user.php"); ?>
 <?php $page_title = "Blogs" ?>
 <?php require_once("../server/db_connection.php");?>
 <?php confirm_logged_in(); ?>
@@ -17,13 +17,17 @@ $userid = $_SESSION["UserID"];
 $blog_title = $_GET['title'];
 $current_blogID = find_blog_id($userid, $blog_title);
 
-//This avoids any \n\r type of characters in the output
-$trimmed_blog_title = find_blog_title($current_blogID);
 
-$date_posted = find_blog_date($current_blogID);
+//packaged the old queries into one
+$blog_details = find_blog_details($current_blogID);
+
+$blog_content = $blog_details["blog_content"];
+//This avoids any \n\r type of characters in the output
+$trimmed_blog_title = $blog_details["blog_title"];
+$date_posted = $blog_details["blog_date"];
 $formatted_datetime = display_formatted_date($date_posted);
 
-$blog_content = find_blog_content($current_blogID);
+
 $blog_access_rights=find_blog_access_rights($current_blogID);
 
 
@@ -105,100 +109,157 @@ if (isset($_POST["blog_comment"])){
 <?php include("navbar.php"); ?>
 
 
-<!--THIS PAGE IS FOR AN INDIVIDUAL BLOG POST-->
-<!--TITLE, AUTHOR and DATE-->
-<div class="container-fluid"  >
-    <div class="row top-buffer" >
-        <div class="col-md-9" id="card-header" >
+<section class="jumbotron jumbotron-blog">
+    <div class="container-fluid">
 
-                <div class="card-title" >
-                    <h1><?php echo "Title: {$trimmed_blog_title}" ?></h1>
-                    <h4 ><?php echo $formatted_datetime ?></h4>
+        <div class="row">
+
+            <div class="col-lg-4">
+
+            </div>
+            <div class="col-lg-4 text-center title">
+
+
+                    <h1><?php echo "{$trimmed_blog_title}" ?></h1></p>
                     <br>
-                </div>
-
-        </div>
-        <div class="col-md-3" >
-            <div class="btn-toolbar" role="toolbar" aria-label="blog_options">
-                <div class="btn-group-vertical" aria-label="blog_options">
-
-                    <form action="blog.php?title=<?php echo $blog_title; ?>&blogID=<?php echo $current_blogID; ?>" method="post">
-
-
-                    <button type="submit" onclick="return confirm('Are you sure you want to delete this blog?')" name="delete_blog" class="btn btn-danger "><span class="glyphicon glyphicon-trash"></span> Delete Post
-                    </button>
-
-                    </form>
-
-                    <!--DELETE AND ACCESS RIGHTS-->
-                    <div class="dropdown">
-                        <button  type ="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                            <span class="glyphicon glyphicon-cog"></span> <?php echo $blog_access_rights;?>
-                            <span class="caret"></span></button>
-
-
-
-                        <ul class="dropdown-menu" name="access">
-                            <li><a href="blog.php?title=<?php echo $blog_title ?>&access=Only me">Only me</a></li>
-                            <li><a href="blog.php?title=<?php echo $blog_title ?>&access=Friends">Friends</a></li>
-                            <li><a href="blog.php?title=<?php echo $blog_title ?>&access=Everybody">Everybody</a></li>
-                            <li><a href="blog.php?title=<?php echo $blog_title ?>&access=Circles">Circles</a></li>
-                        </ul>
-
-                    </div>
-
-
-
+                    <h4 ><?php echo $formatted_datetime ?></h4>
                 </div>
             </div>
 
 
+
+
+            <div class="col-lg-4 pull-right">
+
+                <div class="btn-toolbar pull-right" role="toolbar" aria-label="blog_options">
+                    <div class="btn-group-vertical" aria-label="blog_options">
+
+                        <form action="blog.php?title=<?php echo $blog_title; ?>&blogID=<?php echo $current_blogID; ?>" method="post">
+
+
+                            <button type="submit" onclick="return confirm('Are you sure you want to delete this blog?')" name="delete_blog" class="btn btn-danger "><span class="glyphicon glyphicon-trash"></span> Delete Post
+                            </button>
+
+                        </form>
+
+                        <!--DELETE AND ACCESS RIGHTS-->
+                        <div class="dropdown">
+                            <button  type ="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                <span class="glyphicon glyphicon-cog"></span> <?php echo $blog_access_rights;?>
+                                <span class="caret"></span></button>
+
+
+
+                            <ul class="dropdown-menu" name="access">
+
+
+                                <li for="presentation"><a href="blog.php?title=<?php echo $blog_title ?>&access=Only me">Only me</a></li>
+                                <li for="presentation"><a href="blog.php?title=<?php echo $blog_title ?>&access=Friends">Friends</a></li>
+                                <li for="presentation"><a href="blog.php?title=<?php echo $blog_title ?>&access=Everybody">Everybody</a></li>
+                                <li for="presentation"><a href="blog.php?title=<?php echo $blog_title ?>&access=Circles">Circles</a></li>
+                                <li for="presentation"><a href="blog.php?title=<?php echo $blog_title ?>&access=Friends of friends">Friends of friends</a></li>
+                            </ul>
+
+                        </div>
+
+
+
+                    </div>
+                </div>
+
+
+            </div>
+
+            </div>
+
         </div>
+
     </div>
-    <br>
+</section>
+<!--THIS PAGE IS FOR AN INDIVIDUAL BLOG POST-->
+<!--TITLE, AUTHOR and DATE-->
+
 
 <!--    BLOG CONTENT-->
-    <div class="row top-buffer">
-        <div class="col-md-9" id="card-content">
-            <br>
 
 
-            <div class="card-content" >
 
-                <article style="white-space:inherit;"  class="blog-content"  contenteditable="true" >
+<div class="container">
+    <div class="row" >
+        <div class="col-md-1">
+        </div>
+        <div class="col-md-10" id="card-content">
+
+
+                <article style="white-space:inherit;"    contenteditable="true" >
                     <p><?php echo nl2br(ltrim($blog_content)); ?></p>
 
                 </article>
-            </div>
+
 
         </div>
-        <div class="col-md-3">
-            <button  class="btn btn-primary" onClick="return alert('Your changes were saved')" id="save_changes"><span class="glyphicon glyphicon-pencil"></span> Save Changes
-            </button>
+        <div class="col-md-1">
+
         </div>
 
 
     </div>
+    <br>
 
+    <div class="row">
+        <div class="col-md-3 pull-right">
+        <button  class="btn btn-primary " onClick="return alert('Your changes were saved')" id="save_changes"><span class="glyphicon glyphicon-pencil"></span> Save Changes
+        </button>
+        </div>
+    </div>
+
+</div>
 </div>
 
 <br>
 <br>
-<!--Comment section header-->
-<div class="container-fluid comment-section">
-    <div class="row top-buffer">
-        <div class="col-md-3">
-            <h3>Comments:</h3>
+
+
+<?php
+$blog_comment_count = count_blog_comments($current_blogID);
+?>
+
+<!--ADD A COMMENT-->
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-1">
+
+        </div>
+        <div class="col-md-10">
+            <form action="blog.php?title=<?php echo $blog_title?>" method="post">
+                <textarea style="width:100%;"  name="blog_comment" placeholder="Write your comment here..."></textarea><br />
+                <button type="submit" class="btn btn-primary pull-right">Add a comment</button>
+
+            </form>
+        </div>
+        <div class="col-md-1">
+
         </div>
     </div>
 </div>
 
+<br>
 
 <!--COMMENTS-->
-<div class="container-fluid">
+<div class="container-fluid" style="border-style: solid; background-color: white">
     <div class="row ">
+        <div class="col-md-3">
+            <h2><?php echo $blog_comment_count; if($blog_comment_count ==1){echo " Comment:";}else{ echo " Comments:";} ?></h2>
+        </div>
+    </div>
+    <br>
+    <div class="row">
 
 <?php $blog_comment_results = find_blog_comments($current_blogID);
+
+if (mysqli_num_rows($blog_comment_results)<1) {
+    echo ("<p style='font-style: italic; padding-left: 10px'>  No comments yet. Be the first comment on this blog. </p>");
+}
 
 while($blog_comments = mysqli_fetch_assoc($blog_comment_results)) {
     $commenter_userID = $blog_comments['CommenterUserID'];
@@ -220,51 +281,55 @@ while($blog_comments = mysqli_fetch_assoc($blog_comment_results)) {
     ?>
 
    <div class="container-fluid">
-        <div class="col-md-7" id="comment">
-        <br>
 
-            <?php
-            /*
-           * If statement here to change the hyperlink from the commenter name. It will send users
-           * to their own profile view (profile.php) if they click on their own name; it will send them
-           * to the correct profile if they press another user's name (user_profile.php)
-           */
-            if($commenter_userID == $userid) {
+       <div class="row">
+           <div class="col-md-2">
+
+           </div>
+           <div class="col-md-8">
+
+               <br>
+
+               <?php
+               /*
+              * If statement here to change the hyperlink from the commenter name. It will send users
+              * to their own profile view (profile.php) if they click on their own name; it will send them
+              * to the correct profile if they press another user's name (user_profile.php)
+              */
+               if($commenter_userID == $userid) {
 
 
-                ?>
-                <p><?php echo "<a href='../profile.php'>" . $comment_author . "</a>" ?>
-                    said: <?php echo "<h4>{$comment_content}</h4>"; ?></p>
-                <hr>
-                <?php
-            }else{
-                ?>
-                <p><?php echo "<a href='user_profile.php?id={$commenter_userID}'>" . $comment_author . "</a>" ?>
-                    said: <?php echo "<h4>{$comment_content}</h4>"; ?></p>
-                <hr>
-                <?php
-            }//closing else
-            ?>
+                   ?>
+                   <p><?php echo "<a href='profile.php'>" . $comment_author . "</a>" ?> - <?php echo "{$comment_date_formatted}"; ?></p>
+                   <p></p><?php echo "<h4>{$comment_content}</h4>"; ?></p>
+                   <hr>
+                   <?php
+               }else{
+                   ?>
+                   <p><?php echo "<a href='user_profile.php?id={$commenter_userID}'>" . $comment_author . "</a>" ?> - <?php echo "{$comment_date_formatted}"; ?></p>
+                   <p><?php echo "<h5>{$comment_content}</h5>"; ?></p>
+                   <hr>
+                   <?php
+               }//closing else
+               ?>
 
-    <p><?php echo "<h5>{$comment_date_formatted}</h5>"; ?></p>
-    <br>
-        </div>
 
-        <div class="col-md-3 " >
-            <form action="blog.php?title=<?php echo $blog_title; ?>&blogID=<?php echo $current_blogID; ?>
+               <br>
+           </div>
+
+           <div class="col-md-2 pull-right">
+               <form  action="blog.php?title=<?php echo $blog_title; ?>&blogID=<?php echo $current_blogID; ?>
             &commentID=<?php echo $commentID ?>" method="post">
 
 
-                <button type="submit" onclick="return confirm('Are you sure you want to delete this comment?')" name="delete_comment" class="btn btn-danger "><span class="glyphicon glyphicon-trash"></span>
-                </button>
+                   <button type="submit" onclick="return confirm('Are you sure you want to delete this comment?')" name="delete_comment" class="btn btn-danger "><span class="glyphicon glyphicon-trash"></span>
+                   </button>
 
-            </form>
+               </form>
+           </div>
+       </div>
 
-        </div>
    </div>
-
-<br>
-
     <?php
 //bracket to close the while loop
 }
@@ -272,23 +337,13 @@ while($blog_comments = mysqli_fetch_assoc($blog_comment_results)) {
 
 
 
+
     </div>
 </div>
 <br>
 
 
-<!--ADD A COMMENT-->
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-7">
-            <form action="blog.php?title=<?php echo $blog_title?>" method="post">
-            <h4>Comment</h4><textarea style="width:95%;"  name="blog_comment" placeholder="Write your comment here..."></textarea><br />
-            <button type="submit" class="btn btn-primary">Add a comment</button>
 
-            </form>
-        </div>
-    </div>
-</div>
 
 
     <br/><br/>
@@ -299,8 +354,6 @@ while($blog_comments = mysqli_fetch_assoc($blog_comment_results)) {
 mysqli_free_result($blog_comment_results);
 ?>
 
-
-<a href="logout.php">Logout</a>
 
 <!--SCRIPT FOR THE SAVE CHANGES FUNCTION; INCLUDED AT THE END TO MAKE SURE THAT TEH AFFECTED ELEMENT IS RENDERED-->
 <script type="text/javascript">

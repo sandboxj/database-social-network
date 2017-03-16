@@ -40,10 +40,10 @@ if (isset($_POST['create-circle'])){
 }
 ?>
 
-<section class="jumbotron circle-jumbotron">
+<section class="jumbotron jumbotron-circle">
     <div class="container">
         <div class="row text-center">
-            <h1 style="color: dodgerblue;">Your Circles</h1>
+            <h1 >Your Circles</h1>
         </div>
 
     </div>
@@ -128,7 +128,7 @@ if (isset($_POST['create-circle'])){
         ?>
 
             <a href="circle.php?circleID=<?php echo $circleID;?>&count=<?php echo $member_count?>">
-   <div class="col-md-6 polaroid individual-circle">
+   <div class="col-md-6 polaroid-circle">
 
         <div class="col-md-3 col-centered">
             <img class="img-responsive img-circle" src="img/1.jpg" />

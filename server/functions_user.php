@@ -22,6 +22,8 @@ function find_full_name($userid){
             WHERE UserID= '{$userid}'
             LIMIT 1 ";
 
+
+
     $user_results_db = mysqli_query($conn, $query);
     confirm_query($user_results_db);
 
@@ -65,12 +67,7 @@ function update_privacy_setting($userid, $privacy_setting){
 
     $result = mysqli_query($conn, $query);
 
-    if($result){
-        echo "<script>alert('Privacy settings were successfully updated')</script>";
-
-    }else{
-        echo "<script>alert('Failed to update privacy settings')</script>";
-    }
+   return $result;
 
 
 }

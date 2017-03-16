@@ -1,0 +1,10 @@
+.jumbotron-friends{
+    display: flex;
+    align-items: center;
+    background: url("../userarea/img/friends.jpg") no-repeat center ;
+    background-size: cover;
+    color: #eeeaec;
+
+    text-shadow: 1px 1px 1px #000000;
+
+}

@@ -10,32 +10,9 @@ hr {
     margin: 18px 0;
 }
 
-.profile-picture{
-    width:150px;
-    height: 150px;
 
 
-    border-radius: 50%;
-}
 
-.navbar-links{
-    font-size: 18px;
-    color: white;
-    font-family: "Courier New";
-    background-color: #7EC0EE;
-
-    font-weigth: bold;
-}
-
-div #card-header{
-
-    background-image: url("../userarea/img/blue.jpg");
-    background-repeat: no-repeat;
-    background-size:cover;
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-    transition: 0.3s;
-
-}
 
 div #card-content {
     border-style: solid;
@@ -76,13 +53,32 @@ div #comment{
 }
 
 
-.blog-jumbotron{
+.jumbotron-blog{
+    background: url("../userarea/img/blog.jpg") no-repeat bottom;
+    background-size: cover;
+    min-height: 350px;
+
+}
+#jumbotron-user-blogs{
+
     background: url("../userarea/img/blog.jpg") no-repeat center;
     background-size: cover;
     min-height: 350px;
 
 }
 
-.jumbotron h1{
-    color: burlywood;
+
+
+
+
+.title h1{
+    color: white;
+   font-weight:bold;
+    font-family: 'Anton', sans-serif;
+}
+
+.title h4{
+    color: black;
+    font-weight:bold;
+
 }

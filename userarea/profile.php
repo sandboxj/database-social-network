@@ -1,7 +1,7 @@
 <?php require_once("../server/sessions.php"); ?>
 <?php require_once("../server/db_connection.php");?>
 <?php require_once("../server/functions.php");?>
-<?php require_once("../server/user_functions.php");?>
+<?php require_once("../server/functions_user.php");?>
 <?php require_once("../server/functions_photos.php");?>
 <?php require_once("../server/validation_upload.php");?>
 <?php require_once("../server/validation_profile.php");?>
@@ -12,11 +12,14 @@
 $userid = $_SESSION['UserID'];
 $privacy_setting = find_user_privacy_setting($userid);
 
-if(isset($_POST['update_privacy'])){
-    $updated_privacy = $_POST['privacy_setting'];
+if(isset($_GET['updated_privacy'])){
+    $updated_privacy = $_GET['privacy_setting'];
     echo $updated_privacy;
 
-    update_privacy_setting($userid, $updated_privacy);
+    $result = update_privacy_setting($userid, $updated_privacy);
+    if($result){
+
+    }
     redirect_to("profile.php");
 
 }
@@ -95,13 +98,27 @@ mysqli_free_result($pic_result);
                       <option value="Reading">Reading</option>
                     </select>
                     <button class="btn btn-primary edit_profile hidden" type="submit" name="edit_profile" value="submit">Save changes</button>
-                    <button class="btn edit_profile hidden" onclick="$('.edit_profile').toggleClass('hidden');">Cancel</button>
+                    <button class="btn btn-default edit_profile hidden" onclick="$('.edit_profile').toggleClass('hidden');">Cancel</button>
                 </form>
                 <br>
                 <div class="btn-toolbar" role="toolbar" aria-label="blog_options">
                     <div class="btn-group-horizontal" aria-label="blog_options">
                         <button class="btn btn-primary" onclick="$('.edit_profile').toggleClass('hidden');">Edit profile</button>
-                        <button class="btn btn-default" data-toggle="modal" data-target="#myModal"> <span class="glyphicon glyphicon-cog"></span> Privacy Settings</button>
+                        <div class="dropdown">
+                            <button  type ="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                <span class="glyphicon glyphicon-cog"></span>
+                                Privacy Settings</button>
+
+                            <ul class="dropdown-menu dropdown-menu-right" id="privacy">
+
+                                <li class="dropdown-header">Search Visibility: <?php echo $privacy_setting?></li>
+                                <li for="presentation"><a  href="profile.php?updated_privacy=<?php echo true?>&privacy_setting=<?php echo "0" ?>">Friend</a></li>
+                                <li for="presentation"><a  href="profile.php?updated_privacy=<?php echo true?>&privacy_setting=<?php echo 1 ?>">Friends of friends</a></li>
+                                <li  for="presentation"><a href="profile.php?updated_privacy=<?php echo true?>&privacy_setting=<?php echo "2" ?>">Everyone</a></li>
+                                <li  for="presentation"><a href="profile.php?updated_privacy=<?php echo true?>&privacy_setting=<?php echo "3" ?>">Unsearchable</a></li>
+                            </ul>
+
+                        </div>
                     </div>
                 </div>
             </div>
@@ -110,63 +127,6 @@ mysqli_free_result($pic_result);
         </div>
     </div>
 </section>
-
-<!-- Modal -->
-<div id="myModal" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Change your privacy settings:</h4>
-            </div>
-            <div class="modal-body">
-
-                <div class="row ">
-                    <div class="col-md-12" >
-
-                        <h3>Current privacy setting: <?php echo $privacy_setting;?> </h3>
-                        <form action="profile.php" method="post">
-
-
-                            <br>
-                            <br>
-
-                            <label for="privacy">SearchVisibility:</label>
-                            <select id="privacy" name ="privacy_setting">
-                                <option value="0" selected="0">Friends</option>
-                                <option value="1">Friends of friends</option>
-                                <option value="2">Everyone</option>
-                                <option value="3">Unsearchable</option>
-
-                            </select>
-
-                            <button type="submit" class="btn btn-primary pull-right"  name="update_privacy" >Update privacy</button>
-
-
-                        </form>
-                    </div>
-
-                </div>
-
-
-
-            </div>
-
-            <!--<div class="modal-footer">
-
-
-
-
-              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-
-            </div>-->
-
-        </div>
-
-    </div>
-</div>
 
 
 

@@ -24,10 +24,12 @@ if (!isset($page_title)) {
         <link rel="stylesheet" href="../styles/styles.css">
         <link rel="stylesheet" href="../styles/profile.css">
         <link rel="stylesheet" href="../styles/messages.css">
+        <link rel="stylesheet" href="../styles/photocollections.css">
+        <link rel="stylesheet" href="../styles/friends.css">
 
 <!--        FONTS-->
         <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
-
+        <link href="https://fonts.googleapis.com/css?family=Anton" rel="stylesheet">
 
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
             <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -44,7 +46,7 @@ if (!isset($page_title)) {
     </head>
 
           
-    <body>
+    <body id="gradient-back">
 
 
 

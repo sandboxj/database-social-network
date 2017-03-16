@@ -48,7 +48,7 @@ mysqli_free_result($pic_result);
                         } else {
                             ?>
                             <form method="post" style="display: inline">
-                                <button type="submit" name="decline_friend" value="<?php echo $friendship["FriendshipID"] ?>" class="btn btn-block">Pending / Cancel request</button>
+                                <button type="submit" name="decline_friend" value="<?php echo $friendship["FriendshipID"] ?>" class="btn btn-default btn-block">Pending / Cancel request</button>
                             </form>
                             <?php
                         }
