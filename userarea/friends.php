@@ -243,7 +243,7 @@ mysqli_free_result($accepted_friends);
     $sum_of_age_differences = 0;
     foreach($non_friends as $nf) {
         $non_friend_query = "SELECT * FROM user u
-                             AND u.UserID = '{$nf}'";
+                             WHERE u.UserID = '{$nf}'";
         $non_friend_result = mysqli_query($conn, $non_friend_query);
         $non_friend = mysqli_fetch_assoc($non_friend_result);
         $non_friend_dob = strtotime($non_friend["DateOfBirth"]);
@@ -298,9 +298,15 @@ mysqli_free_result($accepted_friends);
         if (array_key_exists($non_friends[$i], $friends_of_friends)) {
             $mutual_friend_count = $friends_of_friends[$non_friends[$i]];
         }
-        $score = 0.5*$mutual_friend_count/$count_total + 0.2*(1-$distance/$sum_of_distances) + 0.2*$share_interest + 0.1*(1-$age_difference/$sum_of_age_differences);
-        //print $non_friends[$i] . " x " . $mutual_friend_count/$count_total . " x " . $distance/$sum_of_distances . " x " . $share_interest . " x " . $age_difference/$sum_of_age_differences . " x " . $score . " z <br/>";
-        $scores[$non_friends[$i]] = $score;
+        if (!$count_total == 0) {
+            $score = 0.5*$mutual_friend_count/$count_total + 0.2*(1-$distance/$sum_of_distances) + 0.2*$share_interest + 0.1*(1-$age_difference/$sum_of_age_differences);
+            //print $non_friends[$i] . " x " . $mutual_friend_count/$count_total . " x " . $distance/$sum_of_distances . " x " . $share_interest . " x " . $age_difference/$sum_of_age_differences . " x " . $score . " z <br/>";
+            $scores[$non_friends[$i]] = $score;
+        } else {
+            $score =  0.2*(1-$distance/$sum_of_distances) + 0.2*$share_interest + 0.1*(1-$age_difference/$sum_of_age_differences);
+            //print $non_friends[$i] . " x " . $mutual_friend_count/$count_total . " x " . $distance/$sum_of_distances . " x " . $share_interest . " x " . $age_difference/$sum_of_age_differences . " x " . $score . " z <br/>";
+            $scores[$non_friends[$i]] = $score;
+        }
     }
     arsort($scores);
     $no_recommends = 0;
@@ -356,7 +362,6 @@ mysqli_free_result($accepted_friends);
         }
     }
 ?>
-<hr />
 
 
 <?php include("../includes/footer.php"); ?>
