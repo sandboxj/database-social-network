@@ -4,7 +4,6 @@
 <?php require_once("../server/functions_friends.php");?>
 <?php require_once("../server/db_connection.php");?>
 <?php require_once("../server/validation_friends.php");?>
-<?php require_once("../userarea/unrecommend.php");?>
 <?php $page_title="{$_SESSION["FirstName"]} {$_SESSION["LastName"]}'s Friends"?>
 <?php confirm_logged_in(); ?>
 <?php include("../includes/header.php"); ?>

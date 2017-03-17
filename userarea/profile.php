@@ -52,6 +52,7 @@ mysqli_free_result($pic_result);
                    <img src="<?php echo $uncached_src ?>" class="img-responsive img-circle" alt="Profile picture">
                    </div>
                 <?php echo message();?>
+                <div style="text-align: left; padding-left: 80px; "><?php echo $message; ?></div>
                 <h2><?php echo $_SESSION["FirstName"] . " " . $_SESSION["LastName"]?></h2>
                    <br><br>
 
@@ -84,18 +85,18 @@ mysqli_free_result($pic_result);
                     <input type="text" name="email" value="<?php echo $found_user["Email"]?>" class="hidden edit_profile form-control" style="width: 100%; display: inline"><br/><br/>
                     Phone Number: <span class="edit_profile"><?php echo $found_user["PhoneNumber"]?></span>
                     <input type="text" name="phone_number" value="<?php echo $found_user["PhoneNumber"]?>" class="hidden edit_profile form-control" style="width: 100%; display: inline"><br/><br/>
-                    Interest: <span class="edit_profile"><?php echo $found_user["Interest"]?></span>
+                    Interest: <span class="edit_profile"><?php echo $interest = $found_user["Interest"]?></span>
                     <select name="interests" class="hidden edit_profile form-control">
-                      <option value="Politics">Politics</option>
-                      <option value="Music">Music</option>
-                      <option value="Database Systems">Database Systems</option>
-                      <option value="Food">Food</option>
-                      <option value="Philosophy">Philosophy</option>
-                      <option value="Movies">Movies</option>
-                      <option value="Sports">Sports</option>
-                      <option value="Travelling">Travelling</option>
-                      <option value="Gaming">Gaming</option>
-                      <option value="Reading">Reading</option>
+                        <option value="Politics" <?php echo ($interest=='Politics') ? "selected" : "" ?>>Politics</option>
+                        <option value="Music" <?php echo ($interest=='Music') ? "selected" : "" ?>>Music</option>
+                        <option value="Database Systems" <?php echo ($interest=='Database Systems') ? "selected" : "" ?>>Database Systems</option>
+                        <option value="Food" <?php echo ($interest=='Food') ? "selected" : "" ?>>Food</option>
+                        <option value="Philosophy" <?php echo ($interest=='Philosophy') ? "selected" : "" ?>>Philosophy</option>
+                        <option value="Movies" <?php echo ($interest=='Movies') ? "selected" : "" ?>>Movies</option>
+                        <option value="Sports" <?php echo ($interest=='Sports') ? "selected" : "" ?>>Sports</option>
+                        <option value="Travelling" <?php echo ($interest=='Travelling') ? "selected" : "" ?>>Travelling</option>
+                        <option value="Gaming" <?php echo ($interest=='Gaming') ? "selected" : "" ?>>Gaming</option>
+                        <option value="Reading" <?php echo ($interest=='Reading') ? "selected" : "" ?>>Reading</option>
                     </select>
                     <button class="btn btn-primary edit_profile hidden" type="submit" name="edit_profile" value="submit">Save changes</button>
                 </form>

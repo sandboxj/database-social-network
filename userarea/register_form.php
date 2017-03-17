@@ -58,18 +58,18 @@ if ($check == true) { ?>
                 </div>
                 <div class="form-group">
                     <label for="interest-label">Interests</label>
-              <select name="interests" class="form-control" id="interest-label">
-                <option value="Politics" <?php echo ($interest=='Politics') ? "selected" : "" ?>>Politics</option>
-                <option value="Music" <?php echo ($interest=='Music') ? "selected" : "" ?>>Music</option>
-                <option value="Database Systems" <?php echo ($interest=='Database Systems') ? "selected" : "" ?>>Database Systems</option>
-                <option value="Food" <?php echo ($interest=='Food') ? "selected" : "" ?>>Food</option>
-                <option value="Philosophy" <?php echo ($interest=='Philosophy') ? "selected" : "" ?>>Philosophy</option>
-                <option value="Movies" <?php echo ($interest=='Movies') ? "selected" : "" ?>>Movies</option>
-                <option value="Sports" <?php echo ($interest=='Sports') ? "selected" : "" ?>>Sports</option>
-                <option value="Travelling" <?php echo ($interest=='Travelling') ? "selected" : "" ?>>Travelling</option>
-                <option value="Gaming" <?php echo ($interest=='Gaming') ? "selected" : "" ?>>Gaming</option>
-                <option value="Reading" <?php echo ($interest=='Reading') ? "selected" : "" ?>>Reading</option>
-              </select>
+                <select name="interests" class="form-control" id="interest-label">
+                    <option value="Politics" <?php echo ($interest=='Politics') ? "selected" : "" ?>>Politics</option>
+                    <option value="Music" <?php echo ($interest=='Music') ? "selected" : "" ?>>Music</option>
+                    <option value="Database Systems" <?php echo ($interest=='Database Systems') ? "selected" : "" ?>>Database Systems</option>
+                    <option value="Food" <?php echo ($interest=='Food') ? "selected" : "" ?>>Food</option>
+                    <option value="Philosophy" <?php echo ($interest=='Philosophy') ? "selected" : "" ?>>Philosophy</option>
+                    <option value="Movies" <?php echo ($interest=='Movies') ? "selected" : "" ?>>Movies</option>
+                    <option value="Sports" <?php echo ($interest=='Sports') ? "selected" : "" ?>>Sports</option>
+                    <option value="Travelling" <?php echo ($interest=='Travelling') ? "selected" : "" ?>>Travelling</option>
+                    <option value="Gaming" <?php echo ($interest=='Gaming') ? "selected" : "" ?>>Gaming</option>
+                    <option value="Reading" <?php echo ($interest=='Reading') ? "selected" : "" ?>>Reading</option>
+                </select>
                 </div>
             </div>
         </div>
