@@ -45,7 +45,7 @@ function find_collections($userid)
 function find_photos_from_collection($collection_id)
 {
     global $conn;
-    $query = "SELECT * FROM Photo ";
+    $query = "SELECT PhotoID, CollectionID, Caption, DatePosted, FileSource FROM Photo ";
     $query .= "WHERE CollectionID = '{$collection_id}' ";
     $query .= "ORDER BY DatePosted DESC";
     $photos_results = mysqli_query($conn, $query);
@@ -60,6 +60,21 @@ function find_photo_comments($photo_id) {
     $photo_comments_results = mysqli_query($conn, $query);
     confirm_query($photo_comments_results);
     return $photo_comments_results;
+}
+
+function count_photo_comments($photo_id) {
+    global $conn;
+    $query = "SELECT COUNT(PhotoCommentID) as c FROM Photo_comment ";
+    $query .= "WHERE PhotoID = '{$photo_id}';";
+    $photo_comments_count_results = mysqli_query($conn, $query);
+    confirm_query($photo_comments_count_results);
+
+    $photo_comments_count_array =mysqli_fetch_assoc($photo_comments_count_results);
+    $photo_comments_count = $photo_comments_count_array['c'];
+
+
+    mysqli_free_result($photo_comments_count_results);
+    return $photo_comments_count;
 }
 
 function newest_photo_src($collection_id) {

@@ -13,9 +13,10 @@ function find_user_circles($userid)
 {
     global $conn;
 
-    $query = "SELECT c.CircleID, CircleTitle, DateCreated
+    $query = "SELECT c.CircleID, CircleAdminUserID, CircleTitle, DateCreated
     FROM circle AS c, circle_member AS cm WHERE c.CircleID = cm.CircleID
         AND MemberUserID = '{$userid}' ";
+
 
     $circle_results_db = mysqli_query($conn, $query);
     confirm_query($circle_results_db);
@@ -30,6 +31,7 @@ function validate_circle_name($userid, $circle_title){
     if(strlen(trim($circle_title))){
 
       $title_empty= false;
+      return $title_empty;
 
 
     }else{
@@ -48,23 +50,31 @@ function check_circle_title($userid, $circle_title){
 
 
 
+
+
+    $title_exists = false;
         $circle_title = mysqli_real_escape_string($conn, $circle_title);
 
-        $title_check= "SELECT  CircleTitle
-        FROM circle WHERE CircleAdminUserID= '{$userid}'
-        AND CircleTitle = '{$circle_title}'";
-
-        $title_results_db = mysqli_query($conn, $title_check);
+        $title_check= "SELECT  CircleAdminUserID
+        FROM circle WHERE CircleTitle = '{$circle_title}'
+        AND CircleAdminUserID = '{$userid}'" ;
 
 
-        if(mysqli_num_rows($title_results_db) > 0){
+        $circle_admin_results_db = mysqli_query($conn, $title_check);
+        confirm_query($circle_admin_results_db);
+
+
+
+
+        if(mysqli_num_rows($circle_admin_results_db) > 0){
             //circle name already exists
+
             $title_exists = true;
             return $title_exists;
         }
 
         //nothing to output if the checks are successful
-        $title_exists = false;
+
         return $title_exists;
 
 
@@ -81,18 +91,20 @@ function insert_new_circle($userid, $circle_title){
     $circle_title = mysqli_real_escape_string($conn, $circle_title);
 
     $query = "INSERT INTO circle (CircleAdminUserID, DateCreated, CircleTitle)
-    VALUES ('{$circle_adminID}', '{$date_created}', '{$circle_title}'";
+    VALUES ('{$circle_adminID}', '{$date_created}', '{$circle_title}')";
 
     $result = mysqli_query($conn, $query);
+    confirm_query($result);
 
     $circleID = mysqli_insert_id($conn);
-
 
     if($result){
         //also need to insert the user in the circle_members table
 
-        insert_new_circle_member($circleID, $userid);
-
+        $new_member_result = insert_new_circle_member($circleID, $userid);
+        if($new_member_result){
+            echo "<script>alert('Circle Created Successfully')</script>";
+        }
 
     }else{
         echo "<script>alert('Failed to create circle')</script>";
@@ -104,25 +116,23 @@ function insert_new_circle($userid, $circle_title){
 }
 
 
-
-function insert_new_circle_member($circleID, $userid ){
+function insert_new_circle_member($circleID, $userid_to_add ){
     global $conn;
 
     $date_joined= date('Y-m-d H:i:s');
 
     $query = "INSERT INTO circle_member (CircleID, MemberUserID, DateJoined)
-          VALUES ('{$circleID}', '{$userid}','{$date_joined}')";
+          VALUES ('{$circleID}', '{$userid_to_add}','{$date_joined}')";
 
     $result = mysqli_query($conn, $query);
 
-    if($result){
-        echo "<script>alert('Member was successfully added')</script>";
-
-    }else{
-        echo "<script>alert('Failed to add new member')</script>";
-    }
+    return $result;
 
 }
+
+
+
+
 
 function count_circle_members($circleID){
     global $conn;
@@ -219,21 +229,6 @@ function find_circle_title($circleID){
 
 }
 
-// function toggle_invite_menu(){
-//     echo "<br><br>
-//     <div class='container' style='border-style: solid;'>
-//             <div class='row'>
-//             <h2>Choose a friend to invite to your circle:</h2>
-//              <div class='col-md-5'>
-            
-//                  <ul>
-//                     <li> Name here</li>
-//                     </ul>
-//                </div>
-//             </div>
-//            </div>";
-
-// }
 
 
 //might not be needed anymore
@@ -298,27 +293,7 @@ function is_in_specific_circle($userid, $circleID){
             
 }
 
-function add_circle_member($circleID, $userid_to_add){
-    global $conn;
 
-    $date_joined = date('Y-m-d H:i:s');
-
-    $query = "INSERT INTO circle_member (CircleID, MemberUserID, DateJoined)
-    VALUES('{$circleID}', '{$userid_to_add}', '{$date_joined}')";
-
-    
-    $result = mysqli_query($conn, $query);
-
-
-    if ($result) {
-        echo "<script>alert('Member was added successfully')</script>";
-
-
-    } else {
-        echo  "<script>alert('Failed to add member')</script>";
-    }
-
-}
 
 //finish this afterwards; userid is the userid of the person that sets the access rights
 //here compare this to check whether a user is in any of the circles

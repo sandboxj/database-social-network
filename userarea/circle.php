@@ -34,8 +34,8 @@ if(isset($_POST['invitation'])){
 
     echo $circleID;
     foreach($invited_friendsID as $invited_friendID){
-        
-        add_circle_member($circleID, $invited_friendID);
+
+        insert_new_circle_member($circleID, $invited_friendID);
     }
 
 
@@ -58,7 +58,7 @@ $circle_members_results = find_circle_members($circleID);
 
 //packaged previous queries into a single one
 $circle_details =  find_circle_details($circleID);
-$circle_photoID = $circle_details['circle_photo'];
+
 $circle_title = $circle_details['circle_title'];
 $circle_adminID = $circle_details['circle_admin'];
 
@@ -67,25 +67,19 @@ $circle_adminID = $circle_details['circle_admin'];
 
 
 
-<div class="jumbotron">
+<div class="jumbotron jumbotron-circle">
     <div class="container">
         <div class="row text-center">
             <div class="col-md-3">
-            <div class="circle-profile">
-
-                <img class="img-responsive img-circle" src="img/1.jpg"  />             
-
-            </div>
+           
             </div>
             <div class="col-md-4">
-                <h2><?php echo $circle_title?></h2>
-                <h4>Number of members: <?php echo $circle_member_count; ?> </h4>
-                </div>
+                <h1><?php echo $circle_title?></h1>
+                <h4 style="color:white;">Number of members: <?php echo $circle_member_count; ?> </h4>
+            </div>
 
             <div class="col-md-3">
-                <div class="container" style="border-style: solid;">
 
-                </div>
 
             </div>
             <div class="col-md-2 pull-right">
@@ -99,6 +93,12 @@ $circle_adminID = $circle_details['circle_admin'];
                 <button type="submit" onclick="return confirm('Are you sure you leave this circle?')" name="leave_circle" class="btn btn-primary btn-block">Leave Circle</button>
                 <?php } //closing else statement; the button only appears to non-admin members?>
             </form>
+                <br>
+                <br>
+                <!-- Trigger the modal with a button -->
+                <?php if($viewer_userID == $circle_adminID){?>
+                    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Add a Friend</button>
+                <?php } ?>
             </div>
 
             
@@ -113,43 +113,106 @@ $circle_adminID = $circle_details['circle_admin'];
         <div class="col-md-5">
 
 
-        <h2>Circle Members:</h2>
-        <?php
-while($circle_members=mysqli_fetch_assoc($circle_members_results)){
-    $member_userID = $circle_members['MemberUserID'];
+            <h2>Circle Members:</h2>
+            <?php
+            while($circle_members=mysqli_fetch_assoc($circle_members_results)){
+                $member_userID = $circle_members['MemberUserID'];
 
 
-    $full_name_array = find_full_name($member_userID);
+                $full_name_array = find_full_name($member_userID);
 
-    $first_name = $full_name_array['FirstName'];
-    $last_name = $full_name_array['LastName'];
-
-
-
-?>
+                $first_name = $full_name_array['FirstName'];
+                $last_name = $full_name_array['LastName'];
 
 
-<div class="row">
-        <div class="col-md-4">
-<!--            COULD include the profile picture here-->
-            <ul class="list-group">
-                <?php if($viewer_userID == $member_userID){
-                    ?>
-                <li class="list-group-item" role="presentation" class="member-name"><a href="profile.php?id=<?php echo $member_userID ?>"><?php echo "{$first_name} {$last_name}";?></a></li>
-                <?php }else{
-                    ?>
-                <li class="list-group-item" role="presentation" class="member-name"><a href="user_profile.php?id=<?php echo $member_userID ?>"><?php echo "{$first_name} {$last_name}";?></a></li>
-                <?php } ?>
 
-            </ul>
+                ?>
 
+
+                <div class="row" >
+
+
+                    <div class="col-md-12">
+                        <!--            COULD include the profile picture here-->
+                        <ul class="nav nav-pills nav-stacked" style="background-color: white;">
+                            <?php if($viewer_userID == $member_userID){
+                                ?>
+                                <li role="presentation"><a href="profile.php?id=<?php echo $member_userID ?>"><i class="glyphicon glyphicon-user"></i> <?php echo "{$first_name} {$last_name}";?></a></li>
+                            <?php }else{
+                                ?>
+                                <li role="presentation"><a href="user_profile.php?id=<?php echo $member_userID ?>"><i class="glyphicon glyphicon-user"></i> <?php echo "{$first_name} {$last_name}";?></a></li>
+                            <?php } ?>
+
+                        </ul>
+
+                    </div>
+
+                </div>
+
+            <?php } ?>
+
+            <br>
+            <br>
+            <br>
+
+            <div class="row">
+                <div class="col-md-12">
+
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h2>Send a message to this circle:</h2>
+                        </div>
+                        <div class="panel-body">
+                            <form name="form_message" method="post" action="circle.php?circleID=<?php echo $circleID ?>&count=<?php echo $circle_member_count?>">
+                                <table class="col-md-10">
+                                     <tr>
+                                        <td height="10"></td>
+                                         <input type="hidden" value="C<?php echo $circleID; ?>" name="to_user">
+                                    </tr>
+                                    <tr>
+                                        <td><label class="message_label" for="title">Title:</label></td>
+                                        <td><input type="text" class="form-control" id="title" name="title" value=""
+                                                   required placeholder="Subject">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td height="10"></td>
+                                    </tr>
+                                    <tr>
+                                        <td align="top"><label class="message_label" for="message_content_field">Message:</label></td>
+                                        <td><textarea class="form-control" contenteditable="true" id="message_content_field"
+                                                      rows="5" style="width: 100%" aria-describedby="message_helper"
+                                                      name="message_content"
+                                                      required></textarea>
+                                            <small id="message_helper" class="form-text text-muted">Max. 2500 Characters</small></td>
+                                    </tr>
+                                    <tr>
+                                        <td height="10"></td>
+                                        <td>
+                                            <input type="submit" name="send" value="Send Message" class="btn btn-primary"/><br>
+                                            <?php
+                                            require_once("../server/validation_message.php");
+                                            ?>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </form>
+
+                        </div>
+                        <?php
+                        if ($check == false) { ?>
+                            <div class="alert alert-danger"><?php echo "$message" ?></div>
+                        <?php };
+                        if ($check2 == true) { ?>
+                            <div class="alert alert-success"><?php echo "$message" ?></div>
+                        <?php }; ?>
+                    </div>
+
+                </div>
+
+            </div>
         </div>
-
-</div>
-
-<?php } ?>
-        </div>
-        <div class="col-md-7">
+        <div class="col-md-6 col-md-offset-1 " >
 
         <h2>Circle Messages</h2>
             <?php
@@ -167,15 +230,17 @@ while($circle_members=mysqli_fetch_assoc($circle_members_results)){
 
             ?>
 
-        <div class="row">
+        <div class="row polaroid-circle-messages">
             <div class="col-md-7">
+                <p><?php echo $date_final; ?></p>
                 <p><? echo "{$message_sender_first_name} {$message_sender_last_name} said:" ?></p>
                 <h3>Title: <?php echo $message_title; ?></h3>
 
                 <p><?php echo $message_content; ?></p>
-                <p>Date: <?php echo $date_final; ?></p>
+
             </div>
         </div>
+                <br>
         <?php } //closing while loop?>
         </div>
 
@@ -183,11 +248,8 @@ while($circle_members=mysqli_fetch_assoc($circle_members_results)){
     </div>
 
 
-<!-- Trigger the modal with a button -->
-<?php if($viewer_userID == $circle_adminID){?>
-<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Add a Friend</button>
-<?php } ?>
-<br>
+
+
 
 <!-- Modal -->
 <div id="myModal" class="modal fade" role="dialog">

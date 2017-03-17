@@ -246,10 +246,10 @@ $blog_comment_count = count_blog_comments($current_blogID);
 <br>
 
 <!--COMMENTS-->
-<div class="container-fluid" style="border-style: solid; background-color: white">
+<div class="container-fluid" >
     <div class="row ">
         <div class="col-md-3">
-            <h2><?php echo $blog_comment_count; if($blog_comment_count ==1){echo " Comment:";}else{ echo " Comments:";} ?></h2>
+            <h3><?php echo $blog_comment_count; if($blog_comment_count ==1){echo " Comment:";}else{ echo " Comments:";} ?></h3>
         </div>
     </div>
     <br>
@@ -282,11 +282,9 @@ while($blog_comments = mysqli_fetch_assoc($blog_comment_results)) {
 
    <div class="container-fluid">
 
-       <div class="row">
-           <div class="col-md-2">
+       <div class="row polaroid-circle-messages">
 
-           </div>
-           <div class="col-md-8">
+           <div class="col-md-10">
 
                <br>
 
@@ -302,13 +300,13 @@ while($blog_comments = mysqli_fetch_assoc($blog_comment_results)) {
                    ?>
                    <p><?php echo "<a href='profile.php'>" . $comment_author . "</a>" ?> - <?php echo "{$comment_date_formatted}"; ?></p>
                    <p></p><?php echo "<h4>{$comment_content}</h4>"; ?></p>
-                   <hr>
+
                    <?php
                }else{
                    ?>
                    <p><?php echo "<a href='user_profile.php?id={$commenter_userID}'>" . $comment_author . "</a>" ?> - <?php echo "{$comment_date_formatted}"; ?></p>
                    <p><?php echo "<h5>{$comment_content}</h5>"; ?></p>
-                   <hr>
+
                    <?php
                }//closing else
                ?>
@@ -322,7 +320,7 @@ while($blog_comments = mysqli_fetch_assoc($blog_comment_results)) {
             &commentID=<?php echo $commentID ?>" method="post">
 
 
-                   <button type="submit" onclick="return confirm('Are you sure you want to delete this comment?')" name="delete_comment" class="btn btn-danger "><span class="glyphicon glyphicon-trash"></span>
+                   <button type="submit" onclick="return confirm('Are you sure you want to delete this comment?')" name="delete_comment" class="btn btn-danger pull-right"><span class="glyphicon glyphicon-trash"></span>
                    </button>
 
                </form>
@@ -330,6 +328,7 @@ while($blog_comments = mysqli_fetch_assoc($blog_comment_results)) {
        </div>
 
    </div>
+    <br>
     <?php
 //bracket to close the while loop
 }

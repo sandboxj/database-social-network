@@ -99,23 +99,31 @@ if(isset($_POST["blog_post"])){
 
 
                         <form action="blogs.php" method="post">
-                            <h4>Title</h4><textarea rows="1" style="width: 80%" name="blog_title" required></textarea><br />
-                            <h4>Content</h4><textarea class="col-md-12" rows="20" name="blog_content" contenteditable="true" required></textarea><br />
+                            <label for="blog-title-text">Title:</label>
+                            <input type="text" id="blog-title-text" rows="1" style="width: 80%" name="blog_title" required/><br />
+                            <br>
+                            <label for="blog-content-text">Content:</label>
+                            <textarea class="col-md-12" id="blog-content-text" rows="13" name="blog_content" contenteditable="true" required></textarea><br />
 
                             <br>
                             <br>
 
-                            <select  name ="access">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <br>
+                                   <div class="form-group" >
+                            <select  class="form-control" name ="access">
                                 <option value="0">Only me</option>
                                 <option value="1" selected="1">Friends</option>
                                 <option value="2">Everybody</option>
                                 <option value="3">Circles</option>
                                 <option value="4">Friends of friends</option>
-
                             </select>
+                                   </div>
 
-                            <button type="submit" class="btn btn-primary pull-right" name="blog_post" >Post</button>
-
+                            <button type="submit" class="btn btn-primary btn-block pull-right" name="blog_post" >Post</button>
+                            </div>
+                            </div>
                             <!--                                <input type="submit" name="blog_post" value="Post" />-->
 
                         </form>

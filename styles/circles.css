@@ -7,9 +7,7 @@
 
 
 
-.member-name a{
-    color: #FF6707;
-}
+
 
 
 #bg {
@@ -23,7 +21,7 @@
 }
 
 .jumbotron-circle{
-    background: url("../userarea/img/buildings.jpg") no-repeat center;
+    background: url("../userarea/img/buildings.jpg") no-repeat bottom;
     background-size: cover;
     min-height: 350px;
 
@@ -43,6 +41,23 @@
     padding: 10px;
 }
 
+.polaroid-circle-messages{
+    background-color: white;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 10px;
+    padding: 10px;
+}
+
 .polaroid-circle:hover{
     background-color: lightcyan;
+}
+
+.circle-message{
+
+
+}
+
+#circle-modal{
+    background: url("../userarea/img/circle-pencils.jpg") no-repeat center;
+    background-size: cover;
 }
