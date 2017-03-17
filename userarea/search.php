@@ -105,7 +105,9 @@ if (isset($_POST["search_result"]) && $result) {
 
     </div>
     <div class="col-md-6">
-    <h1 class="lobster-title">Blog Results</h1>
+
+    <h1 class="lobster-title">Blog Results:</h1>
+
     <?php
     if (mysqli_num_rows($result2)<1) {
         echo ("<p style='font-style: italic'>No matches.</p>");
@@ -145,7 +147,9 @@ if (isset($_POST["search_result"]) && $result) {
 
 
 
-    <h1 class="lobster-title">People you may know </h1>
+
+    <h1 class="lobster-title">People you may know:</h1>
+
 
 <?php include("recommendations.php")?>
 <?php include("../includes/footer.php"); ?>

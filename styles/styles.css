@@ -128,5 +128,9 @@ td.noBorder{
     font-weight: bold;
 }
 
-
+.lobster-title{
+    color: white;
+    font-family: 'Lobster', cursive;
+    font-weight: bold;
+}
 

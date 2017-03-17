@@ -17,14 +17,14 @@
     <div class="container-fluid">
         <div class="row">
 
-            <ul class="nav nav-pills col-md-3">
+            <ul class="nav nav-pills col-md-2">
                 <li role="presentation">
                     <a id="disabled-anchor">Logged in as <?php echo "{$_SESSION['FirstName']} {$_SESSION['LastName']}"?></a></li>
             </ul>
 
 
     
-    <ul class="nav nav-pills col-md-6 ">
+    <ul class="nav nav-pills col-md-7 ">
         
         <li role="presentation" <?php if ($page_title == "{$_SESSION["FirstName"]} {$_SESSION["LastName"]}'s Profile") { ?> class="active" <?php }; ?> >
             <a href="profile.php"><i class="glyphicon glyphicon-home"></i> Profile</a></li>
