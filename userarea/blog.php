@@ -262,6 +262,10 @@ if (mysqli_num_rows($blog_comment_results)<1) {
 }
 
 while($blog_comments = mysqli_fetch_assoc($blog_comment_results)) {
+    $seen_query = "UPDATE blog_comment
+                   SET Seen = '1'
+                   WHERE BlogCommentID = '{$blog_comments["BlogCommentID"]}'";
+    $seen = mysqli_query($conn, $seen_query);
     $commenter_userID = $blog_comments['CommenterUserID'];
     $commenter_full_name = find_full_name($commenter_userID);
     $commenter_first_name= $commenter_full_name["FirstName"];

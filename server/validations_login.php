@@ -30,3 +30,4 @@ if (isset($_POST["login"])) {
     $email = "";
     $message = "<b>Please enter your login details.</b>";
 }
+?>

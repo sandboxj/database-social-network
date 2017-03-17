@@ -59,6 +59,7 @@ if ($check == true) { ?>
                 <div class="form-group">
                     <label for="interest-label">Interests</label>
                 <select name="interests" class="form-control" id="interest-label">
+                    <option value="None" <?php echo ($interest=='None') ? "selected" : "" ?>>None</option>
                     <option value="Politics" <?php echo ($interest=='Politics') ? "selected" : "" ?>>Politics</option>
                     <option value="Music" <?php echo ($interest=='Music') ? "selected" : "" ?>>Music</option>
                     <option value="Database Systems" <?php echo ($interest=='Database Systems') ? "selected" : "" ?>>Database Systems</option>

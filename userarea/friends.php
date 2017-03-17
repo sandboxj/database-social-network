@@ -235,6 +235,9 @@ mysqli_free_result($accepted_friends);
     
     $sum_of_distances = $distances[$index][0];
     $self_interest = $self["Interest"];
+    if ($self_interest = "None") {
+        $self_interest = "";
+    }
     $self_dob = strtotime($self["DateOfBirth"]);
     
     $nons = find_non_friends($_SESSION["UserID"]);

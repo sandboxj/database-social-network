@@ -21,6 +21,62 @@ if (isset($_POST["search_result"]) && $result) {
 
 <h4>User results</h4>
 <?php
+$my_friends = find_accepted($_SESSION["UserID"]);
+$friends = [];
+while ($my_friend = mysqli_fetch_assoc($my_friends)) {
+    array_push($friends, $my_friend["UserID"]);       
+}
+mysqli_free_result($my_friends);
+$friends_of_friends = [];
+foreach($friends as $friend) {
+    $friends_of_friends1 = "SELECT * FROM friendship f
+                            WHERE f.User1ID = '{$friend}'
+                            AND f.User2ID NOT LIKE '{$_SESSION["UserID"]}'
+                            AND f.Status = '1'";
+    $friend_friendship1 = mysqli_query($conn, $friends_of_friends1);
+    $friends_of_friends2 = "SELECT * FROM friendship f
+                            WHERE f.User2ID = '{$friend}'
+                            AND f.User1ID NOT LIKE '{$_SESSION["UserID"]}'
+                            AND f.Status = '1'";
+    $friend_friendship2 = mysqli_query($conn, $friends_of_friends2);
+    while ($friend_f1 = mysqli_fetch_assoc($friend_friendship1)) {
+        $friend_query1 = "select * from user u
+                          where u.UserID = '{$friend_f1["User2ID"]}'";
+        $friend_u1 = mysqli_query($conn, $friend_query1);
+        $friend_user1 = mysqli_fetch_assoc($friend_u1);
+        if (!in_array($friend_user1["UserID"], $friends)) {
+            if (array_key_exists($friend_user1["UserID"] , $friends_of_friends)) {
+                $friends_of_friends[$friend_user1["UserID"]] = $friends_of_friends[$friend_user1["UserID"]] + 1;
+            } else {
+                $friends_of_friends[$friend_user1["UserID"]] = 1;
+            }
+        }
+    }
+    while ($friend_f2 = mysqli_fetch_assoc($friend_friendship2)) {
+        $friend_query2 = "select * from user u
+                          where u.UserID = '{$friend_f2["User1ID"]}'";
+        $friend_u2 = mysqli_query($conn, $friend_query2);
+        $friend_user2 = mysqli_fetch_assoc($friend_u2);
+        if (!in_array($friend_user2["UserID"], $friends)) {
+            if (array_key_exists($friend_user2["UserID"] , $friends_of_friends)) {
+                $friends_of_friends[$friend_user2["UserID"]] = $friends_of_friends[$friend_user2["UserID"]] + 1;
+            } else {
+                $friends_of_friends[$friend_user2["UserID"]] = 1;
+            }
+        }
+    }
+}
+arsort($friends_of_friends);
+$self_query = "SELECT * FROM user u
+               WHERE u.UserID = '{$_SESSION["UserID"]}'";
+$self_result = mysqli_query($conn, $self_query);
+$self = mysqli_fetch_assoc($self_result);
+$self_interest = $self["Interest"];
+$self_location = $self["CurrentLocation"];
+if ($self_location == "") {
+    $self_location = "null";
+}
+
 if (mysqli_num_rows($result)<1) {
     echo ("<p style='font-style: italic'>No matches.</p>");
 } else {
@@ -34,6 +90,14 @@ if (mysqli_num_rows($result)<1) {
             $profile_picture_src = file_exists("img/Profilepictures" . $search_friend["UserID"] . "/" . $profile_picture["FileSource"]) ? "img/Profilepictures" . $search_friend["UserID"] . "/" . $profile_picture["FileSource"] : "img/" . $profile_picture["FileSource"];
             $uncached_src = $profile_picture_src . "?" . filemtime($profile_picture_src);
             mysqli_free_result($pic_result);
+            $share_interest = 0;
+            if ($search_friend["Interest"] == $self_interest) {
+                $share_interest = 1;
+            }
+            $mutual_friend_count = 0;
+            if (array_key_exists($search_friend["UserID"], $friends_of_friends)) {
+                $mutual_friend_count = $friends_of_friends[$search_friend["UserID"]];
+            }
             ?>
 	    <div class="row polaroid">
   		<div class="col-md-3">
@@ -41,7 +105,13 @@ if (mysqli_num_rows($result)<1) {
   		</div>
   	    <div class="col-md-9">
     		    <a href="user_profile.php?id=<?php echo $search_friend['UserID']?>"><h4><?php echo $search_friend["FirstName"] . " " . $search_friend["LastName"]?></h4></a>
-    		    <br /><br />
+    		    <br />
+                    Location: <?php echo $search_friend["CurrentLocation"]?>
+          <br/>
+                    <?php if ($share_interest) {
+                              echo $search_friend["Interest"] . " is a shared interest. <br/>";
+                          }?>
+                    <br/>
                                 <?php
                 $exist_relation = find_friendship($_SESSION["UserID"], $search_friend["UserID"]);
                 // If relation exists, accept or unfriend
@@ -49,6 +119,7 @@ if (mysqli_num_rows($result)<1) {
                     $friendshipzz = mysqli_fetch_assoc($exist_relation);
                     if ($friendshipzz["Status"]) {
                         ?>
+          <br/>
                         <form method="post" style="display: inline">
                             <button type="submit" name="decline_friend" value="<?php echo $friendshipzz["FriendshipID"] ?>" class="btn btn-default">Unfriend</button>
                         </form>
@@ -57,12 +128,18 @@ if (mysqli_num_rows($result)<1) {
                         // If friend request is sent to you, option to accept
                         if ($friendshipzz["User2ID"]===$_SESSION["UserID"]) {
                             ?>
+          
+                    You have <?php echo $mutual_friend_count?> mutual friends.
+                    <br /><br/>
                             <form method="post" style="display: inline">
                                 <button type="submit" name="add_friend" value="<?php echo $friendshipzz["FriendshipID"] ?>" class="btn btn-primary">Accept request</button>
                             </form>
                             <?php
                         } else {
                             ?>
+          
+                    You have <?php echo $mutual_friend_count?> mutual friends.
+                    <br /><br/>
                             <form method="post" style="display: inline">
                                 <button type="submit" name="decline_friend" value="<?php echo $friendshipzz["FriendshipID"] ?>" class="btn btn-default">Pending / Cancel request</button>
                             </form>
@@ -73,6 +150,9 @@ if (mysqli_num_rows($result)<1) {
                 // If no relation exists, option to add friend
                 else {
                     ?>
+          
+                    You have <?php echo $mutual_friend_count?> mutual friends.
+                    <br /><br/>
                     <form method="post" style="display: inline">
                         <button type="submit" name="add_request" value="<?php echo $search_friend['UserID'] ?>" class="btn btn-primary">Add friend</button>
                     </form>
@@ -111,6 +191,14 @@ if (mysqli_num_rows($result)<1) {
   		<div class="col-md-9">
     		    <a href="user_profile.php?id=<?php echo $search_friend['UserID']?>"><h4><?php echo $search_friend["FirstName"] . " " . $search_friend["LastName"]?></h4></a>
     		    <br /><br />
+                    Location: <?php echo $search_friend["CurrentLocation"]?>
+                    <br />
+                    You have <?php echo $mutual_friend_count?> mutual friends.
+                    <br />
+                    <?php if ($share_interest) {
+                              echo $search_friend["Interest"] . " is a shared interest. <br/>";
+                          }?>
+                    <br/>
                 <?php
                 $exist_relation = find_friendship($_SESSION["UserID"], $search_friend["UserID"]);
                 // If relation exists, accept or unfriend
@@ -210,12 +298,12 @@ if (mysqli_num_rows($result2)<1) {
         $friends_of_friends1 = "SELECT * FROM friendship f
                      WHERE f.User1ID = '{$friend}'
                      AND f.User2ID NOT LIKE '{$_SESSION["UserID"]}'
-                     AND f.Status = '1'";
+                     AND f.Status = 1";
         $friend_friendship1 = mysqli_query($conn, $friends_of_friends1);
         $friends_of_friends2 = "SELECT * FROM friendship f
                      WHERE f.User2ID = '{$friend}'
                      AND f.User1ID NOT LIKE '{$_SESSION["UserID"]}'
-                     AND f.Status = '1'";
+                     AND f.Status = 1";
         $friend_friendship2 = mysqli_query($conn, $friends_of_friends2);
         while ($friend_f1 = mysqli_fetch_assoc($friend_friendship1)) {
             $friend_query1 = "select * from user u
@@ -280,7 +368,6 @@ if (mysqli_num_rows($result2)<1) {
         $index = 8;
     } elseif ($self_location == "Swansea") {
         $index = 9;
-    } else {
     }
     
     $distances = array(
@@ -298,6 +385,9 @@ if (mysqli_num_rows($result2)<1) {
     
     $sum_of_distances = $distances[$index][0];
     $self_interest = $self["Interest"];
+    if ($self_interest = "None") {
+        $self_interest = "";
+    }
     $self_dob = strtotime($self["DateOfBirth"]);
     
     $nons = find_non_friends($_SESSION["UserID"]);
@@ -348,7 +438,6 @@ if (mysqli_num_rows($result2)<1) {
             $index2 = 9;
         } elseif ($non_friend_location == "Swansea") {
             $index2 = 10;
-        } else {
         }
         
         
@@ -362,6 +451,7 @@ if (mysqli_num_rows($result2)<1) {
         if ($non_friend["Interest"] != "") {
             $share_interest = 1;
         }
+        
         $mutual_friend_count = 0;
         if (array_key_exists($non_friends[$i], $friends_of_friends)) {
             $mutual_friend_count = $friends_of_friends[$non_friends[$i]];
@@ -417,36 +507,35 @@ if (mysqli_num_rows($result2)<1) {
                     $mutual_friend_count = $friends_of_friends[$nf];
                 }
                 ?>
-                <div class="row polaroid">
-                  <div class="col-md-3">
-                    <a href="user_profile.php?id=<?php echo $recommend['UserID']?>"><img src="<?php echo $uncached_src ?>" class="img-responsive" alt="Recommended user's profile picture'"></a>
-                  </div>
-                  <div class="col-md-9">
-                    <a href="user_profile.php?id=<?php echo $recommend['UserID']?>"><h4><?php echo $recommend["FirstName"] . " " . $recommend["LastName"]?></h4></a>
-                    <br />
-                    Location: <?php echo $recommend["CurrentLocation"]?>
-                    <br />
-                    You have <?php echo $mutual_friend_count?> mutual friends.
-                    <br />
-                    <?php if ($share_interest) {
+<div class="row polaroid">
+  <div class="col-md-3">
+    <a href="user_profile.php?id=<?php echo $recommend['UserID']?>"><img src="<?php echo $uncached_src ?>" class="img-responsive" alt="Recommended user's profile picture'"></a>
+  </div>
+  <div class="col-md-9">
+    <a href="user_profile.php?id=<?php echo $recommend['UserID']?>"><h4><?php echo $recommend["FirstName"] . " " . $recommend["LastName"]?></h4></a>
+    <br />
+    Location: <?php echo $recommend["CurrentLocation"]?>
+    <br />
+    You have <?php echo $mutual_friend_count?> mutual friends.
+    <br />
+    <?php if ($share_interest) {
                               echo $recommend["Interest"] . " is a shared interest. <br/>";
                           }?>
-                    <br/>
-                    <form method="post" style="display: inline">
-                      <button type="submit" name="do_not_recommend" value="<?php echo $recommend['UserID']?>" class="btn btn-primary">Don't know this person</button>
-                    </form>
-                    <form method="post" style="display: inline">
-                      <button type="submit" name="add_request" value="<?php echo $recommend['UserID']?>" class="btn btn-primary">Add friend</button>
-                    </form>
-                  </div>
-                </div>
-            <?php
+    <br/>
+    <form method="post" style="display: inline">
+      <button type="submit" name="do_not_recommend" value="<?php echo $recommend['UserID']?>" class="btn btn-primary">Don't know this person</button>
+    </form>
+    <form method="post" style="display: inline">
+      <button type="submit" name="add_request" value="<?php echo $recommend['UserID']?>" class="btn btn-primary">Add friend</button>
+    </form>
+  </div>
+</div>
+<?php
             }
         }
     }
     
 ?>
-
 
 
 <?php include("../includes/footer.php"); ?>

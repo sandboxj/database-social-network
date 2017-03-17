@@ -33,7 +33,7 @@ function validate_min_length($fields_min_length, $min_length)
     foreach ($fields_min_length as $field) {
             $value = $_POST[$field];
         if (!has_min_length($value, $min_length)) {
-            $errors[$field] = fieldname_as_text($field) . " is too short. Minimum of " . $min_length . " characters are required.";
+            $errors[$field] = fieldname_as_text($field) . " is too short. More than " . $min_length . " characters are required.";
         }
     }
 }

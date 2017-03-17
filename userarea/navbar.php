@@ -41,6 +41,8 @@
                     href="messages.php"><i class="glyphicon glyphicon-envelope"></i> Messages</a></li>
         <li role="presentation" <?php if ($page_title == "{$_SESSION["FirstName"]} {$_SESSION["LastName"]}'s Friends") { ?> class="active" <?php }; ?> >
             <a href="friends.php"><i class="glyphicon glyphicon-user"></i> Friends</a></li>
+        <li role="presentation" <?php if ($page_title == "{$_SESSION["FirstName"]} {$_SESSION["LastName"]}'s Notifications") { ?> class="active" <?php }; ?> >
+            <a href="notifications.php"><i class="glyphicon glyphicon-exclamation-sign"></i> Notifications</a></li>
 
 
     </ul>

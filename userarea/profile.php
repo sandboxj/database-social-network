@@ -39,7 +39,21 @@ $uncached_src = $profile_picture_src . "?" . filemtime($profile_picture_src);
 mysqli_free_result($pic_result);
 ?>
 
-
+<?php
+if ($message != "") {
+        if($check) {
+    ?>
+    <div class="alert alert-danger">
+      <?php echo $message; ?>
+    </div>
+    <?php } else { ?>
+    <div class="alert alert-success">
+      <?php echo $message; ?>
+    </div>
+    <?php
+    }
+}
+?>
 <section class="jumbotron jumbotron-profile">
     <div class="container">
         <div class="row">
@@ -47,16 +61,14 @@ mysqli_free_result($pic_result);
 
             </div>
                <div class="col-md-4 text-center">
-
                    <div class="container">
                    <img src="<?php echo $uncached_src ?>" class="img-responsive img-circle" alt="Profile picture">
                    </div>
-                <?php echo message();?>
-                <div style="text-align: left; padding-left: 80px; "><?php echo $message; ?></div>
                 <h2><?php echo $_SESSION["FirstName"] . " " . $_SESSION["LastName"]?></h2>
                    <br><br>
 
                    <form class="hidden edit_profile" action="profile.php" method="post" enctype="multipart/form-data">
+
                        <input type="file"  class="btn btn-default btn-block" name="fileToUpload" id="fileToUpload">
                        <label class="hidden"><?php echo $collection_id?></label>
                        <input type="submit" class="btn btn-primary pull-left btn-block" value="Upload Image" name="submit">
@@ -74,18 +86,19 @@ mysqli_free_result($pic_result);
                 <form method="post">
                     <label class="hidden edit_profile" for="first_last_name">Name:</label>
                     <input type="text" id="first_last_name" name="first_name" value="<?php echo $found_user["FirstName"]?>" class="hidden edit_profile form-control" style="width: 100%; display: inline" required>
-                        <br><br>
+                    <br><br>
                         <input type="text" name="last_name" id="last_name" value="<?php echo $found_user["LastName"]?>" class="hidden edit_profile form-control" style="width: 100%; display: inline"><br/><br>
-                    <label for="dob">Date of Birth: <span class="edit_profile"><?php echo $found_user["DateOfBirth"]?></span></label>
-                    <input type="date" id="dob" name="date_of_birth" value="<?php echo $found_user["DateOfBirth"]?>" class="hidden edit_profile form-control" style="width: 100%; display: inline"><br /> <br />
-                    <label for="location" >Location: <span class="edit_profile"><?php echo $found_user["CurrentLocation"]?></span></label>
-                    <input type="text" id="location" name="location" value="<?php echo $found_user["CurrentLocation"]?>" class="hidden edit_profile form-control" style="width: 100%; display: inline"><br/><br/>
-                    <label for="email" >Email: <span class="edit_profile"><?php echo $found_user["Email"]?></span></label>
-                    <input type="text" id="email" name="email" value="<?php echo $found_user["Email"]?>" class="hidden edit_profile form-control" style="width: 100%; display: inline"><br/><br/>
-                    <label for="phone" >Phone Number: <span class="edit_profile"><?php echo $found_user["PhoneNumber"]?></span></label>
-                    <input type="text" id="phone" name="phone_number" value="<?php echo $found_user["PhoneNumber"]?>" class="hidden edit_profile form-control" style="width: 100%; display: inline"><br/><br/>
-                    <label for="interest" >Interest: <span class="edit_profile"><?php echo $interest = $found_user["Interest"]?></span></label>
-                    <select name="interests" id="interest" class="hidden edit_profile form-control">
+                        <label for="dob">Date of Birth: <span class="edit_profile"><?php echo $found_user["DateOfBirth"]?></span></label>
+                        <input type="date" id="dob" name="date_of_birth" value="<?php echo $found_user["DateOfBirth"]?>" class="hidden edit_profile form-control" style="width: 100%; display: inline"><br /> <br />
+                        <label for="location" >Location: <span class="edit_profile"><?php echo $found_user["CurrentLocation"]?></span></label>
+                        <input type="text" id="location" name="location" value="<?php echo $found_user["CurrentLocation"]?>" class="hidden edit_profile form-control" style="width: 100%; display: inline"><br/><br/>
+                        <label for="email" >Email: <span class="edit_profile"><?php echo $found_user["Email"]?></span></label>
+                        <input type="text" id="email" name="email" value="<?php echo $found_user["Email"]?>" class="hidden edit_profile form-control" style="width: 100%; display: inline"><br/><br/>
+                        <label for="phone" >Phone Number: <span class="edit_profile"><?php echo $found_user["PhoneNumber"]?></span></label>
+                        <input type="text" id="phone" name="phone_number" value="<?php echo $found_user["PhoneNumber"]?>" class="hidden edit_profile form-control" style="width: 100%; display: inline"><br/><br/>
+                        <label for="interest" >Interest: <span class="edit_profile"><?php echo $interest = $found_user["Interest"]?></span></label>
+                        <select name="interests" id="interest" class="hidden edit_profile form-control">
+                        <option value="None" <?php echo ($interest=='None') ? "selected" : "" ?>>None</option>
                         <option value="Politics" <?php echo ($interest=='Politics') ? "selected" : "" ?>>Politics</option>
                         <option value="Music" <?php echo ($interest=='Music') ? "selected" : "" ?>>Music</option>
                         <option value="Database Systems" <?php echo ($interest=='Database Systems') ? "selected" : "" ?>>Database Systems</option>
@@ -104,19 +117,45 @@ mysqli_free_result($pic_result);
                     <div class="btn-group-horizontal" aria-label="blog_options">
                         <button class="btn btn-primary edit_profile" onclick="$('.edit_profile').toggleClass('hidden');">Edit profile</button>
                         <button class="btn btn-default edit_profile hidden" onclick="$('.edit_profile').toggleClass('hidden');">Cancel</button>
+                        <button class="btn btn-primary edit_profile" data-toggle="modal" data-target="#myModal">Change Password</button>
+                        <div id="myModal" class="modal fade" role="dialog">
+                          <div class="modal-dialog">
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="title">Change password</h4>
+                              </div>
+                              <div class="modal-body">
+                                <div class="row ">
+                                  <div class="col-md-12 blog-post-area" >
+                                    <form action="profile.php" method="post">
+                                      <div class="form-group required">
+                                        <input type="password" class="form-control" id="new_password" name="new_password" value="" placeholder="New password" aria-describedby="password_helper" required="">
+                                      </div>
+                                      <div class="form-group required">
+                                        <input type="password" class="form-control" id="password-confirm" name="password_confirm" value="" placeholder="Confirm Password" aria-describedby="password_confirm_helper" required="">
+                                      </div>
+                                      <button type="submit" class="btn btn-primary pull-right" name="change_password" >Change password</button>
+                                    </form>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                         <div class="dropdown">
                             <button  type ="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                                <span class="glyphicon glyphicon-cog"></span>
-                                <?php echo $privacy_setting?></button>
-                            <ul class="dropdown-menu dropdown-menu-right" id="privacy">
-                                <li class="dropdown-header privacy-menu" style="font-weight: bold; font-size: 13px; margin-top: 3px;">Update Privacy Settings:</li>
-                                <li class="privacy-menu" aria-disabled="true" style="font-size: 6px;">-----------------------------------------------------------------------------------------</li>
-                                <li class="privacy-menu"><a href="profile.php?updated_privacy=<?php echo true?>&privacy_setting=<?php echo "0" ?>">Friend</a></li>
-                                <li class="privacy-menu"><a href="profile.php?updated_privacy=<?php echo true?>&privacy_setting=<?php echo "1" ?>">Friends of friends</a></li>
-                                <li class="privacy-menu"><a href="profile.php?updated_privacy=<?php echo true?>&privacy_setting=<?php echo "2" ?>">Everyone</a></li>
-                                <li class="privacy-menu"><a href="profile.php?updated_privacy=<?php echo true?>&privacy_setting=<?php echo "3" ?>">Unsearchable</a></li>
+                                 <span class="glyphicon glyphicon-cog"></span>
+                                 <?php echo $privacy_setting?></button>
+                             <ul class="dropdown-menu dropdown-menu-right" id="privacy">
+                                 <li class="dropdown-header privacy-menu" style="font-weight: bold; font-size: 13px; margin-top: 3px;">Update Privacy Settings:</li>
+                                 <li class="privacy-menu" aria-disabled="true" style="font-size: 6px;">-----------------------------------------------------------------------------------------</li>
+                                 <li class="privacy-menu"><a href="profile.php?updated_privacy=<?php echo true?>&privacy_setting=<?php echo "0" ?>">Friend</a></li>
+                                 <li class="privacy-menu"><a href="profile.php?updated_privacy=<?php echo true?>&privacy_setting=<?php echo "1" ?>">Friends of friends</a></li>
+                                 <li class="privacy-menu"><a href="profile.php?updated_privacy=<?php echo true?>&privacy_setting=<?php echo "2" ?>">Everyone</a></li>
+                                 <li class="privacy-menu"><a href="profile.php?updated_privacy=<?php echo true?>&privacy_setting=<?php echo "3" ?>">Unsearchable</a></li>
                             </ul>
-
                         </div>
                     </div>
                 </div>
@@ -133,7 +172,4 @@ mysqli_free_result($pic_result);
 
         </div>
 </section>
-
-
-
 <?php include("../includes/footer.php"); ?>

@@ -1,6 +1,7 @@
 <?php require_once("../server/validation_functions.php"); ?>
 <?php
 $message = "";
+$check = false;
 if (isset($_POST["edit_profile"])) {
     $id_toupdate = $_SESSION['UserID'];
     $new_first_name = isset($_POST['first_name']) ? trim($_POST["first_name"]) : "";
@@ -60,6 +61,7 @@ if (isset($_POST["edit_profile"])) {
         
 
     } else {
+        $check = true;
         $message .= form_errors($errors);
     }
 
@@ -71,7 +73,33 @@ if (isset($_POST["edit_profile"])) {
     confirm_query($query);
     $_SESSION['message'] = "Farewell!";
     redirect_to("login.php");
-}
-else {
-    // Do nothing.
+} elseif (isset($_POST["change_password"])) {
+
+    $message = "";
+    $new_password = isset($_POST["new_password"]) ? trim($_POST["new_password"]) : "";
+    $new_password_confirm = isset($_POST["password_confirm"]) ? trim($_POST["password_confirm"]) : "";
+
+    if ($new_password != $new_password_confirm) {
+        $errors["Passwords2"] = "Passwords do not match.";
+    }
+    // Check for minimum length
+
+        $min_length = 5;
+        $fields_with_min_length = array("new_password");
+        validate_min_length($fields_with_min_length, $min_length);
+
+        if (empty($errors)) {
+            $new_password = mysqli_real_escape_string($conn, $new_password);
+            $hashed_password = password_encrypt($new_password);
+            $query = "UPDATE user
+                      SET Password = '{$hashed_password}'
+                      WHERE UserID = '{$_SESSION["UserID"]}'";
+            $result = mysqli_query($conn, $query);
+            $message = ($result) ? "Password successfully changed" : "Sorry, something went wrong.";
+        } else {
+            $check = true;
+            $message .= form_errors($errors);
+        }
+
+} else {
 }
