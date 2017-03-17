@@ -22,6 +22,7 @@ mysqli_free_result($pic_result);
     <div class="container">
         <div class="row">
             <div class="col-md-3 content">
+            <p><?php echo message();?></p>
                 <br>
                 <?php include("user_navbar.php"); ?>
                 <br>
@@ -74,7 +75,6 @@ mysqli_free_result($pic_result);
                 <div class="container">
                 <img src="<?php echo $uncached_src ?>" class="img-responsive img-circle" alt="Profile picture">
                 </div>
-                <?php echo message();?>
                 <h2><?php echo "{$visited_user["FirstName"]} {$visited_user["LastName"]}";?></h2>
                 <br><br>
 

@@ -23,13 +23,12 @@ elseif (isset($_POST["add_request"])) {
     $query .= "'{$userid}', '{$id_to_add}', 0, '{$date}')";
     $result = mysqli_query($conn, $query);
     confirm_query($result);
+    $_SESSION["message"] = ($result) ? "Friend request sent." : "Friend request failed.";
 
-    if($result){
-    echo "<script>alert('Request sent')</script>";
-}else{
-       echo "<script>alert('Could not send request')</script>";
-    }
-
+} elseif (isset($_POST["do_not_recommend"])) {
+    $unrecommend_query = "INSERT INTO do_not_recommend (UserID, UnknownUserID)
+						              VALUES ('{$_SESSION["UserID"]}', '{$_POST["do_not_recommend"]}')";
+    $unrecommend = mysqli_query($conn, $unrecommend_query);
 }
 else {
     // Do nothing

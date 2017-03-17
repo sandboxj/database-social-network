@@ -7,7 +7,6 @@
 <?php require_once("../server/db_connection.php");?>
 <?php require_once("../server/validation_search.php");?>
 <?php require_once("../server/validation_friends.php");?>
-<?php require_once("../userarea/unrecommend.php");?>
 <?php $page_title="Search"?>
 <?php confirm_logged_in(); ?>
 <?php include("../includes/header.php"); ?>
@@ -110,11 +109,13 @@ if (mysqli_num_rows($result2)<1) {
             $formatted_date  = display_formatted_date($blog["DatePosted"]);
             $output = "Title: <td> {$blog["Title"]} </td><br />";
             ?>
+            <div class="container-fluid">
             <a href='user_blog.php?title=<?php echo $blog["Title"]; ?>&id=<?php echo $blog["UserID"] ?>'>
               <div class="polaroid col-md-4 individual-blog">
                 <?php echo $output; ?>
                 <h6><?php echo $formatted_date ?></h6>
               </div></a>
+            </div>
   <?php }
     }
 }
