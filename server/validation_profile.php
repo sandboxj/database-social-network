@@ -22,7 +22,7 @@ if (isset($_POST["edit_profile"])) {
     }
     // Validate phone number
     if (!validatePhone($new_phone)) {
-        $errors["Phone"] = "Please input a valid phone number like (07 XXX XXXXXX) (Country Code optional)";
+        $errors["Phone"] = "Please input a valid phone number like (07XXX XXXXXX) (Country Code optional)";
     }
 
 

@@ -23,7 +23,7 @@ if (isset($_POST["register"])) {
     if (!validateDate($date_of_birth)) {
         $errors["Dob"] = "Invalid date";
     }
-    if ($password === $password_confirm) {
+    if ($password !== $password_confirm) {
         $errors["Passwords2"] = "Passwords do not match.";
     }
     // Check for minimum length
@@ -35,7 +35,7 @@ if (isset($_POST["register"])) {
     validate_special_chars($fields_without_specialchar);
     // Validate phone number
     if (!validatePhone($phone_number)) {
-        $errors["Phone"] = "Please input a valid phone number like (07 XXX XXXXXX) (Country Code optional)";
+        $errors["Phone"] = "Please input a valid phone number like (07XXX XXXXXX) (Country Code optional)";
     }
     // Check if email already exists
     $query = "SELECT Email FROM User ";
