@@ -37,7 +37,7 @@ if (isset($_POST["populate_users"])) {
 			$end = strtotime("1 January 2001");
 			$timestamp = mt_rand($start, $end);
 			$dob = date("Y-m-d", $timestamp);
-      $interests = ["Politics", "Music", "Database Systems", "Food", "Philosophy", "Movies", "Sports", "Travelling", "Gaming", "Reading"];
+      $interests = ["None", "Politics", "Music", "Database Systems", "Food", "Philosophy", "Movies", "Sports", "Travelling", "Gaming", "Reading"];
       $interest = $interests[rand(0,9)];
       $privacy = rand(0,3);
 			print $first_name . " " . $last_name . " " . $email . " " . $date_joined . " " . $dob . " " . $gender . " " . $location . " " . $phone_number . " " . $interest . "<br/>";
@@ -275,8 +275,9 @@ if (isset($_POST["populate_blog_comments"])) {
 			    $comment_file->seek($myLine-1);
 			    $comment_line = $comment_file->current();
 			    $comment = $comment_line;
-          $blog_comment_query = "INSERT INTO blog_comment (BlogID, CommenterUserID, DatePosted, Content)
-							                   VALUES ('{$blog_id}', '{$user}', '{$date_created}', '{$comment}')";
+			    $seen = rand(0,1);
+          $blog_comment_query = "INSERT INTO blog_comment (BlogID, CommenterUserID, DatePosted, Content, Seen)
+							                   VALUES ('{$blog_id}', '{$user}', '{$date_created}', '{$comment}', '{$seen}')";
           $blog_comment = mysqli_query($conn, $blog_comment_query);
         } elseif ($specific_blog["AccessRights"] == 4) {
           $circle = $specific_blog["Circle"];
