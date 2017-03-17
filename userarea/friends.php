@@ -137,5 +137,5 @@ mysqli_free_result($accepted_friends);
 <h4>People you may know</h4>
 <br>
 
-<?php include("recommendations.php");?>
+<?php include("recommendations2.php");?>
 <?php include("../includes/footer.php"); ?>

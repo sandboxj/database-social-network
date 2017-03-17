@@ -223,5 +223,5 @@ if (isset($_POST["search_result"]) && $result) {
     <h1 class="lobster-title">People you may know:</h1>
 
 
-<?php include("recommendations.php")?>
+<?php include("recommendations2.php")?>
 <?php include("../includes/footer.php"); ?>
