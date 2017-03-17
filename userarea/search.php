@@ -73,7 +73,7 @@ $self_result = mysqli_query($conn, $self_query);
 $self = mysqli_fetch_assoc($self_result);
 $self_interest = $self["Interest"];
 $self_location = $self["CurrentLocation"];
-if ($self_location == "") {
+if ($self_location == "x") {
     $self_location = "null";
 }
 
