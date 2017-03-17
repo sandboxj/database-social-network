@@ -64,6 +64,29 @@ function delete_friendship($friendship_id) {
     return $result;
 }
 
+function find_mutual_friends($user1id, $user2id) {
+    global $conn;
+    $query = "SELECT * FROM user u 
+                JOIN (
+                SELECT FriendshipID, User1ID as friend, User2ID as other, Date FROM friendship 
+                WHERE User2ID = '{$user1id}' AND Status = 1 
+                UNION ALL 
+                SELECT FriendshipID, User2ID as friend, User1ID as other, Date FROM friendship 
+                WHERE User1ID = '{$user1id}' AND Status = 1
+                ) f
+                ON u.UserID = f.friend 
+                UNION 
+                SELECT * FROM user u 
+                JOIN (
+                SELECT FriendshipID, User1ID as friend, User2ID as other, Date FROM friendship 
+                WHERE User2ID = '{$user2id}' AND Status = 1 
+                UNION ALL 
+                SELECT FriendshipID, User2ID as friend, User1ID as other, Date FROM friendship 
+                WHERE User1ID = '{$user2id}' AND Status = 1
+                ) f
+                ON u.UserID = f.friend ";
+}
+
 //pass results from db here; friend_userid refers to the person whose profile we are viewing
 function check_friendship($friend_userid, $viewer_userID)
 { //checking if the viewer is friend with the user
