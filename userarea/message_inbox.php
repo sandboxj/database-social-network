@@ -10,7 +10,7 @@
 
 
 <!-- The Jumbotron of the website -->
-<section class="jumbotron">
+<section class="jumbotron jumbotron-messages">
     <div class="container">
         <div class="row text-center">
             <h1> Messages </h1>
