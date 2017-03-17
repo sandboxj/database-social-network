@@ -55,8 +55,44 @@ if (isset($_POST["search_result"]) && $result) {
                         </div>
                         <div class="col-md-5">
                             <a href="user_profile.php?id=<?php echo $search_friend['UserID']?>"><h4><?php echo $search_friend["FirstName"] . " " . $search_friend["LastName"]?></h4></a>
-                            <br />
-                            <br />
+                            <br /><br />
+                                            <?php
+                $exist_relation = find_friendship($_SESSION["UserID"], $search_friend["UserID"]);
+                // If relation exists, accept or unfriend
+                if (mysqli_num_rows($exist_relation)>0) {
+                    $friendship = mysqli_fetch_assoc($exist_relation);
+                    if ($friendship["Status"]) {
+                        ?>
+                        <form method="post" style="display: inline">
+                            <button type="submit" name="decline_friend" value="<?php echo $friendship["FriendshipID"] ?>" class="btn btn-default ">Unfriend</button>
+                        </form>
+                        <?php
+                    } else {
+                        // If friend request is sent to you, option to accept
+                        if ($friendship["User2ID"]===$_SESSION["UserID"]) {
+                            ?>
+                            <form method="post" style="display: inline">
+                                <button type="submit" name="add_friend" value="<?php echo $friendship["FriendshipID"] ?>" class="btn btn-primary ">Accept request</button>
+                            </form>
+                            <?php
+                        } else {
+                            ?>
+                            <form method="post" style="display: inline">
+                                <button type="submit" name="decline_friend" value="<?php echo $friendship["FriendshipID"] ?>" class="btn btn-default ">Pending / Cancel request</button>
+                            </form>
+                            <?php
+                        }
+                    }
+                }
+                // If no relation exists, option to add friend
+                else {
+                    ?>
+                    <form method="post" style="display: inline">
+                        <button type="submit" name="add_request" value="<?php echo $search_friend['UserID'] ?>" class="btn btn-primary ">Add friend</button>
+                    </form>
+                    <?php
+                }
+                ?>
                         </div>
                     </div>
                     <?php
@@ -88,8 +124,44 @@ if (isset($_POST["search_result"]) && $result) {
                             </div>
                             <div class="col-md-9">
                                 <a href="user_profile.php?id=<?php echo $search_friend['UserID']?>"><h4><?php echo $search_friend["FirstName"] . " " . $search_friend["LastName"]?></h4></a>
-                                <br />
-                                <br />
+                                <br /><br />
+                                                <?php
+                $exist_relation = find_friendship($_SESSION["UserID"], $search_friend["UserID"]);
+                // If relation exists, accept or unfriend
+                if (mysqli_num_rows($exist_relation)>0) {
+                    $friendship = mysqli_fetch_assoc($exist_relation);
+                    if ($friendship["Status"]) {
+                        ?>
+                        <form method="post" style="display: inline">
+                            <button type="submit" name="decline_friend" value="<?php echo $friendship["FriendshipID"] ?>" class="btn btn-default ">Unfriend</button>
+                        </form>
+                        <?php
+                    } else {
+                        // If friend request is sent to you, option to accept
+                        if ($friendship["User2ID"]===$_SESSION["UserID"]) {
+                            ?>
+                            <form method="post" style="display: inline">
+                                <button type="submit" name="add_friend" value="<?php echo $friendship["FriendshipID"] ?>" class="btn btn-primary ">Accept request</button>
+                            </form>
+                            <?php
+                        } else {
+                            ?>
+                            <form method="post" style="display: inline">
+                                <button type="submit" name="decline_friend" value="<?php echo $friendship["FriendshipID"] ?>" class="btn btn-default ">Pending / Cancel request</button>
+                            </form>
+                            <?php
+                        }
+                    }
+                }
+                // If no relation exists, option to add friend
+                else {
+                    ?>
+                    <form method="post" style="display: inline">
+                        <button type="submit" name="add_request" value="<?php echo $search_friend['UserID'] ?>" class="btn btn-primary ">Add friend</button>
+                    </form>
+                    <?php
+                }
+                ?>
                             </div>
                         </div>
                         <?php
