@@ -70,7 +70,7 @@ if ($message != "") {
                    <form class="hidden edit_profile" action="profile.php" method="post" enctype="multipart/form-data">
 
                        <input type="file"  class="btn btn-default btn-block" name="fileToUpload" id="fileToUpload">
-                       <label class="hidden"><?php echo $collection_id?></label>
+                       <input type="text" name="collectionid" value="<?php echo $collection_id?>" class="hidden" readonly>
                        <input type="submit" class="btn btn-primary pull-left btn-block" value="Upload Image" name="submit">
                    </form>
 
