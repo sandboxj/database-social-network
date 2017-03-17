@@ -56,16 +56,20 @@ div #comment{
 
 
 .jumbotron-blog{
+
     background: url("../userarea/img/blog.jpg") no-repeat bottom;
     background-size: cover;
     min-height: 350px;
+    text-shadow: 1px 1px 1px #000000;
 
 }
 #jumbotron-user-blogs{
 
+
     background: url("../userarea/img/blog.jpg") no-repeat center;
     background-size: cover;
     min-height: 350px;
+    text-shadow: 1px 1px 1px #000000;
 
 }
 

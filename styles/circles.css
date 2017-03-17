@@ -21,15 +21,16 @@
 }
 
 .jumbotron-circle{
+
+    display: flex;
+    align-items: center;
+
     background: url("../userarea/img/buildings.jpg") no-repeat bottom;
     background-size: cover;
     min-height: 350px;
+    color: #eeeaec;
+    text-shadow: 1px 1px 1px #000000;
 
-}
-
-.jumbotron-circle h1{
-    font-weight: bold;
-    color: white;
 }
 
 
@@ -52,10 +53,6 @@
     background-color: lightcyan;
 }
 
-.circle-message{
-
-
-}
 
 #circle-modal{
     background: url("../userarea/img/circle-pencils.jpg") no-repeat center;

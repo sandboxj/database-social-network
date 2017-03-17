@@ -121,12 +121,24 @@ function insert_new_circle_member($circleID, $userid_to_add ){
 
     $date_joined= date('Y-m-d H:i:s');
 
-    $query = "INSERT INTO circle_member (CircleID, MemberUserID, DateJoined)
+
+    $in_circle =is_in_specific_circle($userid_to_add, $circleID);
+
+
+    if(!$in_circle) {
+
+
+        $query = "INSERT INTO circle_member (CircleID, MemberUserID, DateJoined)
           VALUES ('{$circleID}', '{$userid_to_add}','{$date_joined}')";
 
-    $result = mysqli_query($conn, $query);
+        $result = mysqli_query($conn, $query);
 
-    return $result;
+        return $result;
+    }
+    else{
+        echo "<script>alert('Member is already in circle') </script>";
+    }
+
 
 }
 

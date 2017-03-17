@@ -9,7 +9,7 @@ if (isset($_POST['send'])) {
     $message_title = $_POST['title'];
     $receiver = $_POST['to_user'];
 
-    echo $receiver;
+
 
     if (substr($receiver, 0, 1) === "C") {
         $receiver_type = 0;

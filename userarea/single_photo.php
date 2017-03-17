@@ -116,10 +116,12 @@ $photo_comment_count = count_photo_comments($photoID);
         }
 
         while($photo_comments = mysqli_fetch_assoc($photo_comment_results)) {
+
             $seen_query = "UPDATE photo_comment
                            SET Seen = '1'
                            WHERE PhotoCommentID = '{$photo_comments["PhotoCommentID"]}'";
             $seen = mysqli_query($conn, $seen_query);
+
             $commenter_userID = $photo_comments['CommenterUserID'];
             $commenter_full_name = find_full_name($commenter_userID);
             $commenter_first_name= $commenter_full_name["FirstName"];

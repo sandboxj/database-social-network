@@ -122,7 +122,7 @@ if (isset($_POST["blog_comment"])){
 
                     <h1><?php echo "{$trimmed_blog_title}" ?></h1></p>
                     <br>
-                    <h4 ><?php echo $formatted_datetime ?></h4>
+                    <h4><?php echo $formatted_datetime ?></h4>
                 </div>
             </div>
 
@@ -188,11 +188,11 @@ if (isset($_POST["blog_comment"])){
     <div class="row" >
         <div class="col-md-1">
         </div>
-        <div class="col-md-10" id="card-content">
+        <div class="col-md-10" id="card-content" >
 
 
-                <article style="white-space:inherit;"    contenteditable="true" >
-                    <p><?php echo nl2br(ltrim($blog_content)); ?></p>
+                <article style="white-space:inherit;" class="blog-content"   contenteditable="true" >
+                    <?php echo nl2br(ltrim($blog_content)); ?>
 
                 </article>
 

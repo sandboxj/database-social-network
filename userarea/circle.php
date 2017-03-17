@@ -50,7 +50,8 @@ if(isset($_POST['invitation'])){
 
 
 $circleID = $_GET['circleID'];
-$circle_member_count = $_GET['count'];
+$circle_member_count = count_circle_members($circleID);
+
 
 
 $circle_members_results = find_circle_members($circleID);
@@ -71,7 +72,7 @@ $circle_adminID = $circle_details['circle_admin'];
     <div class="container">
         <div class="row text-center">
             <div class="col-md-3">
-           
+
             </div>
             <div class="col-md-4">
                 <h1><?php echo $circle_title?></h1>

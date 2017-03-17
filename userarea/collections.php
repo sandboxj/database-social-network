@@ -19,8 +19,8 @@
                 <h1> Your Photo Collections </h1>
                 <?php echo message()?>
             </div>
-            <div class="col-md-4 pull-right">
-                <div class="btn-toolbar" role="toolbar" aria-label="blog_options">
+            <div class="col-md-4 ">
+                <div class="btn-toolbar pull-right" role="toolbar" aria-label="blog_options">
                     <div class="btn-group-horizontal" aria-label="blog_options">
                 <button type="button" class="btn btn-primary"  data-toggle="modal" data-target="#addCollection"><i class="glyphicon glyphicon-plus"></i> New collection</button>
                 <button class="btn btn-danger" onclick="$('.coldelete').toggleClass('hidden');"><i class="glyphicon glyphicon-trash"></i> Delete Collection</button>

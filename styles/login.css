@@ -32,7 +32,7 @@ header p {
 
     display: flex;
     align-items: center;
-    background-image: url("../userarea/img/blue.jpg");
+    background: url("../userarea/img/pineapple.jpg") no-repeat center;
     background-size: cover;
     color: #eeeaec;
     height: 300px;

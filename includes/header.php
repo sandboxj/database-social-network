@@ -26,8 +26,10 @@ if (!isset($page_title)) {
         <link rel="stylesheet" href="../styles/messages.css">
         <link rel="stylesheet" href="../styles/photocollections.css">
         <link rel="stylesheet" href="../styles/friends.css">
+        <link rel="stylesheet" href="../styles/search.css">
 
-<!--        FONTS-->
+
+        <!--        FONTS-->
         <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Anton" rel="stylesheet">
 

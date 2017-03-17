@@ -4,12 +4,7 @@
     background: url("../userarea/img/photocollection.jpg") no-repeat center;
     background-size: cover;
     color: #eeeaec;
-
     text-shadow: 1px 1px 1px #000000;
-}
-
-.jumbotron-photocollections h1{
-    font-weight: bold;
 }
 
 .polaroid {

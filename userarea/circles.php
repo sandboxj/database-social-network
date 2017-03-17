@@ -44,7 +44,7 @@ if (isset($_POST['create-circle'])){
 <section class="jumbotron jumbotron-circle">
     <div class="container">
         <div class="row text-center">
-            <h1 >Your Circles</h1>
+            <h1>Your Circles</h1>
         </div>
 
     </div>
@@ -135,7 +135,7 @@ if (isset($_POST['create-circle'])){
 
         ?>
 
-            <a href="circle.php?circleID=<?php echo $circleID;?>&count=<?php echo $member_count?>">
+            <a href="circle.php?circleID=<?php echo $circleID;?>">
    <div class="col-md-6 polaroid-circle">
 
 
@@ -175,9 +175,6 @@ if (isset($_POST['create-circle'])){
 
 <!-- Trigger the modal with a button -->
 
-
-
-		<hr />
 
 
 <?php include("../includes/footer.php"); ?>

@@ -22,7 +22,7 @@
 
             </div>
             <div class="col-md-4 text-center">
-                <h2><?php echo "{$visited_user["FirstName"]} {$visited_user["LastName"]}'s Collections'";?></h2>
+                <h1><?php echo "{$visited_user["FirstName"]} {$visited_user["LastName"]}'s Collections'";?></h1>
             </div>
         </div>
     </div>

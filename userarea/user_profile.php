@@ -86,7 +86,7 @@ mysqli_free_result($pic_result);
             <div class="col-md-3">
                 <?php $found_user = find_user_by_email($_SESSION["Email"]); ?>
                 <!--Edits dont do anything yet-->
-                <h2>Profile Details:</h2>
+                <h1>Profile Details:</h1>
                 <br>
                 Date of Birth: <?php echo $visited_user["DateOfBirth"]?> <br /> <br />
                 Location: <?php echo $visited_user["CurrentLocation"]?><br/><br/>

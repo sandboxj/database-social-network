@@ -111,3 +111,22 @@ td.noBorder{
 
 }
 
+.jumbotron h1 {
+    color: white;
+    font-family: 'Lobster', cursive;
+    font-weight: bold;
+}
+.jumbotron h4 {
+    color: white;
+    font-family: 'Lobster', cursive;
+    font-weight: bold;
+}
+
+.jumbotron h2 {
+    color: white;
+    font-family: 'Lobster', cursive;
+    font-weight: bold;
+}
+
+
+

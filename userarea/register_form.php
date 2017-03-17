@@ -5,7 +5,7 @@
 <?php $page_title="Registration"?>
 <?php include("../includes/header.php"); ?>
 
-        <section class="jumbotron register-jumbo">
+        <section class="jumbotron login-jumbotron">
     <div class="container">
         <div class="row text-center">
             <h1> Register </h1>

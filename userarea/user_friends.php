@@ -194,4 +194,5 @@ $accepted_friends = find_accepted($_GET["id"]);
 
  <?php mysqli_free_result($pic_result);
         mysqli_free_result($accepted_friends);?>
+
 <?php include("../includes/footer.php"); ?>
