@@ -92,7 +92,7 @@
                         <input class="form-control" type="text" name="caption" id="caption" placeholder="(optional)"></input><br />
 
                         <input class="form-control" type="file" class ="btn btn-default" name="fileToUpload" id="fileToUpload">
-                        <input class="form-control" type="text" name="collectionid" value="<?php echo "{$_GET['collection']}"?>" class="hidden" readonly>
+                        <input type="text" name="collectionid" value="<?php echo "{$_GET['collection']}"?>" class="hidden form-control" readonly>
 
                         <input class="form-control btn btn-primary" type="submit" value="Upload Image" name="submit">
                     </div>
