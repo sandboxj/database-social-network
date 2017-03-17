@@ -21,6 +21,8 @@ if(isset($_POST["blog_post"])){
     $blog_content = $_POST['blog_content'];
     $access_rights=$_POST['access'];
 
+    $blog_content = strip_tags($blog_content);
+
     $title_empty = validate_blog_title($userid, $blog_title);
     $content_empty = validate_blog_content($userid, $blog_title);
 

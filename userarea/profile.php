@@ -57,9 +57,8 @@ mysqli_free_result($pic_result);
                    <br><br>
 
                    <form class="hidden edit_profile" action="profile.php" method="post" enctype="multipart/form-data">
-
                        <input type="file"  class="btn btn-default btn-block" name="fileToUpload" id="fileToUpload">
-                       <input type="text" name="collectionid" value="<?php echo $collection_id?>" class="hidden" readonly>
+                       <label class="hidden"><?php echo $collection_id?></label>
                        <input type="submit" class="btn btn-primary pull-left btn-block" value="Upload Image" name="submit">
                    </form>
 
@@ -73,20 +72,20 @@ mysqli_free_result($pic_result);
                 <!--Edits dont do anything yet-->
                 <h2>Profile Details:</h2>
                 <form method="post">
-                    <h5 class="hidden edit_profile">Name:</h5>
-                        <input type="text" id="first_last_name" name="first_name" value="<?php echo $found_user["FirstName"]?>" class="hidden edit_profile form-control" style="width: 100%; display: inline" required>
+                    <label class="hidden edit_profile" for="first_last_name">Name:</label>
+                    <input type="text" id="first_last_name" name="first_name" value="<?php echo $found_user["FirstName"]?>" class="hidden edit_profile form-control" style="width: 100%; display: inline" required>
                         <br><br>
-                        <input type="text" name="last_name" value="<?php echo $found_user["LastName"]?>" class="hidden edit_profile form-control" style="width: 100%; display: inline"><br/><br>
-                    Date of Birth: <span class="edit_profile"><?php echo $found_user["DateOfBirth"]?></span>
-                    <input type="date" name="date_of_birth" value="<?php echo $found_user["DateOfBirth"]?>" class="hidden edit_profile form-control" style="width: 100%; display: inline"><br /> <br />
-                    Location: <span class="edit_profile"><?php echo $found_user["CurrentLocation"]?></span>
-                    <input type="text" name="location" value="<?php echo $found_user["CurrentLocation"]?>" class="hidden edit_profile form-control" style="width: 100%; display: inline"><br/><br/>
-                    Email: <span class="edit_profile"><?php echo $found_user["Email"]?></span>
-                    <input type="text" name="email" value="<?php echo $found_user["Email"]?>" class="hidden edit_profile form-control" style="width: 100%; display: inline"><br/><br/>
-                    Phone Number: <span class="edit_profile"><?php echo $found_user["PhoneNumber"]?></span>
-                    <input type="text" name="phone_number" value="<?php echo $found_user["PhoneNumber"]?>" class="hidden edit_profile form-control" style="width: 100%; display: inline"><br/><br/>
-                    Interest: <span class="edit_profile"><?php echo $interest = $found_user["Interest"]?></span>
-                    <select name="interests" class="hidden edit_profile form-control">
+                        <input type="text" name="last_name" id="last_name" value="<?php echo $found_user["LastName"]?>" class="hidden edit_profile form-control" style="width: 100%; display: inline"><br/><br>
+                    <label for="dob">Date of Birth: <span class="edit_profile"><?php echo $found_user["DateOfBirth"]?></span></label>
+                    <input type="date" id="dob" name="date_of_birth" value="<?php echo $found_user["DateOfBirth"]?>" class="hidden edit_profile form-control" style="width: 100%; display: inline"><br /> <br />
+                    <label for="location" >Location: <span class="edit_profile"><?php echo $found_user["CurrentLocation"]?></span></label>
+                    <input type="text" id="location" name="location" value="<?php echo $found_user["CurrentLocation"]?>" class="hidden edit_profile form-control" style="width: 100%; display: inline"><br/><br/>
+                    <label for="email" >Email: <span class="edit_profile"><?php echo $found_user["Email"]?></span></label>
+                    <input type="text" id="email" name="email" value="<?php echo $found_user["Email"]?>" class="hidden edit_profile form-control" style="width: 100%; display: inline"><br/><br/>
+                    <label for="phone" >Phone Number: <span class="edit_profile"><?php echo $found_user["PhoneNumber"]?></span></label>
+                    <input type="text" id="phone" name="phone_number" value="<?php echo $found_user["PhoneNumber"]?>" class="hidden edit_profile form-control" style="width: 100%; display: inline"><br/><br/>
+                    <label for="interest" >Interest: <span class="edit_profile"><?php echo $interest = $found_user["Interest"]?></span></label>
+                    <select name="interests" id="interest" class="hidden edit_profile form-control">
                         <option value="Politics" <?php echo ($interest=='Politics') ? "selected" : "" ?>>Politics</option>
                         <option value="Music" <?php echo ($interest=='Music') ? "selected" : "" ?>>Music</option>
                         <option value="Database Systems" <?php echo ($interest=='Database Systems') ? "selected" : "" ?>>Database Systems</option>
@@ -108,15 +107,14 @@ mysqli_free_result($pic_result);
                         <div class="dropdown">
                             <button  type ="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                                 <span class="glyphicon glyphicon-cog"></span>
-                                Privacy Settings</button>
-
+                                <?php echo $privacy_setting?></button>
                             <ul class="dropdown-menu dropdown-menu-right" id="privacy">
-
-                                <li class="dropdown-header">Search Visibility: <?php echo $privacy_setting?></li>
-                                <li for="presentation"><a  href="profile.php?updated_privacy=<?php echo true?>&privacy_setting=<?php echo "0" ?>">Friend</a></li>
-                                <li for="presentation"><a  href="profile.php?updated_privacy=<?php echo true?>&privacy_setting=<?php echo 1 ?>">Friends of friends</a></li>
-                                <li  for="presentation"><a href="profile.php?updated_privacy=<?php echo true?>&privacy_setting=<?php echo "2" ?>">Everyone</a></li>
-                                <li  for="presentation"><a href="profile.php?updated_privacy=<?php echo true?>&privacy_setting=<?php echo "3" ?>">Unsearchable</a></li>
+                                <li class="dropdown-header privacy-menu" style="font-weight: bold; font-size: 13px; margin-top: 3px;">Update Privacy Settings:</li>
+                                <li class="privacy-menu" aria-disabled="true" style="font-size: 6px;">-----------------------------------------------------------------------------------------</li>
+                                <li class="privacy-menu"><a href="profile.php?updated_privacy=<?php echo true?>&privacy_setting=<?php echo "0" ?>">Friend</a></li>
+                                <li class="privacy-menu"><a href="profile.php?updated_privacy=<?php echo true?>&privacy_setting=<?php echo "1" ?>">Friends of friends</a></li>
+                                <li class="privacy-menu"><a href="profile.php?updated_privacy=<?php echo true?>&privacy_setting=<?php echo "2" ?>">Everyone</a></li>
+                                <li class="privacy-menu"><a href="profile.php?updated_privacy=<?php echo true?>&privacy_setting=<?php echo "3" ?>">Unsearchable</a></li>
                             </ul>
 
                         </div>
@@ -134,7 +132,6 @@ mysqli_free_result($pic_result);
             </div>
 
         </div>
-    </div>
 </section>
 
 

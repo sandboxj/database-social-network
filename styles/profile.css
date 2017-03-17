@@ -15,8 +15,14 @@
 
 }
 
-#privacy li a{
+/*#privacy li a{
     color: white;
     font-weight: bold;
 
+}*/
+
+.privacy-menu {
+    color: black;
+    font-weight: bold;
+    text-shadow: none;
 }
